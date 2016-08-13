@@ -43,5 +43,18 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconType</key>
+			<string>UIApplicationShortcutItemIconTypeAdd</string>
+			<key>UIApplicationShortcutItemSubtitle</key>
+			<string>Make a funny meme</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Create Meme</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>Create</string>
+		</dict>
+	</array>
 </dict>
 </plist>

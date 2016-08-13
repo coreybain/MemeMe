@@ -7,14 +7,48 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		83063FBE1D5B32F800192B7A /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83063FBD1D5B32F800192B7A /* SettingsVC.swift */; };
+		8309C4BB1D5021A2007B1CF7 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8309C4BA1D5021A2007B1CF7 /* DataService.swift */; };
+		8309C4BD1D502431007B1CF7 /* SigninVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8309C4BC1D502431007B1CF7 /* SigninVC.swift */; };
+		8309C4BF1D50883E007B1CF7 /* Meme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8309C4BE1D50883E007B1CF7 /* Meme.swift */; };
+		8309C4C11D508ABC007B1CF7 /* SharedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8309C4C01D508ABC007B1CF7 /* SharedVC.swift */; };
+		8309C4C31D508F8A007B1CF7 /* EditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8309C4C21D508F8A007B1CF7 /* EditorVC.swift */; };
 		830DCB841D4FD1C9009F12AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830DCB831D4FD1C9009F12AC /* AppDelegate.swift */; };
 		830DCB861D4FD1C9009F12AC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830DCB851D4FD1C9009F12AC /* ViewController.swift */; };
 		830DCB891D4FD1C9009F12AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 830DCB871D4FD1C9009F12AC /* Main.storyboard */; };
 		830DCB8B1D4FD1C9009F12AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 830DCB8A1D4FD1C9009F12AC /* Assets.xcassets */; };
 		830DCB8E1D4FD1C9009F12AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 830DCB8C1D4FD1C9009F12AC /* LaunchScreen.storyboard */; };
+		830DCB961D4FD31F009F12AC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 830DCB951D4FD31F009F12AC /* GoogleService-Info.plist */; };
+		830DCB981D4FE922009F12AC /* SwiftColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830DCB971D4FE922009F12AC /* SwiftColorPickerViewController.swift */; };
+		830DCB9E1D4FEC19009F12AC /* Constaints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830DCB9D1D4FEC19009F12AC /* Constaints.swift */; };
+		830DCBA01D4FEC23009F12AC /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830DCB9F1D4FEC23009F12AC /* Strings.swift */; };
+		830DCBA21D500200009F12AC /* RecentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830DCBA11D500200009F12AC /* RecentTableViewCell.swift */; };
+		8342D7A01D52B52C00C5735A /* DataServiceRecentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342D79F1D52B52C00C5735A /* DataServiceRecentVC.swift */; };
+		8342D7A21D5564B600C5735A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342D7A11D5564B600C5735A /* Extensions.swift */; };
+		8342D7A51D55C32E00C5735A /* MemeMeDM.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8342D7A31D55C32E00C5735A /* MemeMeDM.xcdatamodeld */; };
+		8342D7EC1D56B20800C5735A /* FontAttributesDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342D7E61D56B20800C5735A /* FontAttributesDB+CoreDataProperties.swift */; };
+		8342D7ED1D56B20800C5735A /* FontAttributesDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342D7E71D56B20800C5735A /* FontAttributesDB.swift */; };
+		8342D7EE1D56B20800C5735A /* Users+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342D7E81D56B20800C5735A /* Users+CoreDataProperties.swift */; };
+		8342D7EF1D56B20800C5735A /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342D7E91D56B20800C5735A /* Users.swift */; };
+		8342D7F01D56B20800C5735A /* Memes+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342D7EA1D56B20800C5735A /* Memes+CoreDataProperties.swift */; };
+		8342D7F11D56B20800C5735A /* Memes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342D7EB1D56B20800C5735A /* Memes.swift */; };
+		8342D7F31D56FBA700C5735A /* MemeDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342D7F21D56FBA700C5735A /* MemeDetailVC.swift */; };
+		83D001571D50042100B5F778 /* RecentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D001561D50042100B5F778 /* RecentCollectionViewCell.swift */; };
+		83D001591D50098700B5F778 /* RecentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D001581D50098700B5F778 /* RecentVC.swift */; };
+		83D0015B1D500C0E00B5F778 /* MemeMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D0015A1D500C0E00B5F778 /* MemeMain.swift */; };
+		83D0015D1D500E8100B5F778 /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D0015C1D500E8100B5F778 /* Welcome.storyboard */; };
+		B3A1B677375B5DB003EA061B /* Pods_MemeMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0942CDD40CE9C458B469BA6F /* Pods_MemeMe.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0942CDD40CE9C458B469BA6F /* Pods_MemeMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MemeMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		218CD4B1B192A02FC90374DE /* Pods-MemeMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MemeMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MemeMe/Pods-MemeMe.debug.xcconfig"; sourceTree = "<group>"; };
+		83063FBD1D5B32F800192B7A /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		8309C4BA1D5021A2007B1CF7 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		8309C4BC1D502431007B1CF7 /* SigninVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SigninVC.swift; sourceTree = "<group>"; };
+		8309C4BE1D50883E007B1CF7 /* Meme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meme.swift; sourceTree = "<group>"; };
+		8309C4C01D508ABC007B1CF7 /* SharedVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedVC.swift; sourceTree = "<group>"; };
+		8309C4C21D508F8A007B1CF7 /* EditorVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorVC.swift; sourceTree = "<group>"; };
 		830DCB801D4FD1C9009F12AC /* MemeMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemeMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		830DCB831D4FD1C9009F12AC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		830DCB851D4FD1C9009F12AC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +56,26 @@
 		830DCB8A1D4FD1C9009F12AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		830DCB8D1D4FD1C9009F12AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		830DCB8F1D4FD1C9009F12AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		830DCB951D4FD31F009F12AC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		830DCB971D4FE922009F12AC /* SwiftColorPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftColorPickerViewController.swift; sourceTree = "<group>"; };
+		830DCB9D1D4FEC19009F12AC /* Constaints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constaints.swift; sourceTree = "<group>"; };
+		830DCB9F1D4FEC23009F12AC /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		830DCBA11D500200009F12AC /* RecentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentTableViewCell.swift; sourceTree = "<group>"; };
+		8342D79F1D52B52C00C5735A /* DataServiceRecentVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataServiceRecentVC.swift; sourceTree = "<group>"; };
+		8342D7A11D5564B600C5735A /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		8342D7A41D55C32E00C5735A /* MemeMeDM.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MemeMeDM.xcdatamodel; sourceTree = "<group>"; };
+		8342D7E61D56B20800C5735A /* FontAttributesDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "FontAttributesDB+CoreDataProperties.swift"; path = "CoreData/FontAttributesDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		8342D7E71D56B20800C5735A /* FontAttributesDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FontAttributesDB.swift; path = CoreData/FontAttributesDB.swift; sourceTree = "<group>"; };
+		8342D7E81D56B20800C5735A /* Users+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Users+CoreDataProperties.swift"; path = "CoreData/Users+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		8342D7E91D56B20800C5735A /* Users.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Users.swift; path = CoreData/Users.swift; sourceTree = "<group>"; };
+		8342D7EA1D56B20800C5735A /* Memes+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Memes+CoreDataProperties.swift"; path = "CoreData/Memes+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		8342D7EB1D56B20800C5735A /* Memes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Memes.swift; path = CoreData/Memes.swift; sourceTree = "<group>"; };
+		8342D7F21D56FBA700C5735A /* MemeDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeDetailVC.swift; sourceTree = "<group>"; };
+		83D001561D50042100B5F778 /* RecentCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentCollectionViewCell.swift; sourceTree = "<group>"; };
+		83D001581D50098700B5F778 /* RecentVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentVC.swift; sourceTree = "<group>"; };
+		83D0015A1D500C0E00B5F778 /* MemeMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeMain.swift; sourceTree = "<group>"; };
+		83D0015C1D500E8100B5F778 /* Welcome.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Welcome.storyboard; sourceTree = "<group>"; };
+		AE84143D3D7AF50C366D32DD /* Pods-MemeMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MemeMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-MemeMe/Pods-MemeMe.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +83,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3A1B677375B5DB003EA061B /* Pods_MemeMe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7998F4EB33D126C4736559B8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				218CD4B1B192A02FC90374DE /* Pods-MemeMe.debug.xcconfig */,
+				AE84143D3D7AF50C366D32DD /* Pods-MemeMe.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		830DCB771D4FD1C9009F12AC = {
 			isa = PBXGroup;
 			children = (
 				830DCB821D4FD1C9009F12AC /* MemeMe */,
 				830DCB811D4FD1C9009F12AC /* Products */,
+				7998F4EB33D126C4736559B8 /* Pods */,
+				A85C10EAD1D6AC22EC6D7C6D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +120,87 @@
 		830DCB821D4FD1C9009F12AC /* MemeMe */ = {
 			isa = PBXGroup;
 			children = (
+				8342D7A61D55DB7300C5735A /* CoreData */,
+				830DCB9B1D4FEBFC009F12AC /* Controller */,
+				830DCB9A1D4FEBF6009F12AC /* View */,
+				830DCB991D4FEBEC009F12AC /* Model */,
+				830DCB9C1D4FEC04009F12AC /* Utils */,
+				830DCB971D4FE922009F12AC /* SwiftColorPickerViewController.swift */,
 				830DCB831D4FD1C9009F12AC /* AppDelegate.swift */,
 				830DCB851D4FD1C9009F12AC /* ViewController.swift */,
 				830DCB871D4FD1C9009F12AC /* Main.storyboard */,
+				83D0015C1D500E8100B5F778 /* Welcome.storyboard */,
 				830DCB8A1D4FD1C9009F12AC /* Assets.xcassets */,
 				830DCB8C1D4FD1C9009F12AC /* LaunchScreen.storyboard */,
 				830DCB8F1D4FD1C9009F12AC /* Info.plist */,
+				830DCB951D4FD31F009F12AC /* GoogleService-Info.plist */,
+				83D0015A1D500C0E00B5F778 /* MemeMain.swift */,
 			);
 			path = MemeMe;
+			sourceTree = "<group>";
+		};
+		830DCB991D4FEBEC009F12AC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8309C4BA1D5021A2007B1CF7 /* DataService.swift */,
+				8309C4BE1D50883E007B1CF7 /* Meme.swift */,
+				8342D79F1D52B52C00C5735A /* DataServiceRecentVC.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		830DCB9A1D4FEBF6009F12AC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				830DCBA11D500200009F12AC /* RecentTableViewCell.swift */,
+				83D001561D50042100B5F778 /* RecentCollectionViewCell.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		830DCB9B1D4FEBFC009F12AC /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				83D001581D50098700B5F778 /* RecentVC.swift */,
+				8309C4BC1D502431007B1CF7 /* SigninVC.swift */,
+				8309C4C01D508ABC007B1CF7 /* SharedVC.swift */,
+				8309C4C21D508F8A007B1CF7 /* EditorVC.swift */,
+				8342D7F21D56FBA700C5735A /* MemeDetailVC.swift */,
+				83063FBD1D5B32F800192B7A /* SettingsVC.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		830DCB9C1D4FEC04009F12AC /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				830DCB9D1D4FEC19009F12AC /* Constaints.swift */,
+				830DCB9F1D4FEC23009F12AC /* Strings.swift */,
+				8342D7A11D5564B600C5735A /* Extensions.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		8342D7A61D55DB7300C5735A /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				8342D7E61D56B20800C5735A /* FontAttributesDB+CoreDataProperties.swift */,
+				8342D7E71D56B20800C5735A /* FontAttributesDB.swift */,
+				8342D7E81D56B20800C5735A /* Users+CoreDataProperties.swift */,
+				8342D7E91D56B20800C5735A /* Users.swift */,
+				8342D7EA1D56B20800C5735A /* Memes+CoreDataProperties.swift */,
+				8342D7EB1D56B20800C5735A /* Memes.swift */,
+				8342D7A31D55C32E00C5735A /* MemeMeDM.xcdatamodeld */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
+		A85C10EAD1D6AC22EC6D7C6D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0942CDD40CE9C458B469BA6F /* Pods_MemeMe.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +210,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 830DCB921D4FD1C9009F12AC /* Build configuration list for PBXNativeTarget "MemeMe" */;
 			buildPhases = (
+				98FADD4D23C1E24DABA40867 /* 📦 Check Pods Manifest.lock */,
+				8309DD2ACBEC017E91F0EC98 /* [CP] Check Pods Manifest.lock */,
 				830DCB7C1D4FD1C9009F12AC /* Sources */,
 				830DCB7D1D4FD1C9009F12AC /* Frameworks */,
 				830DCB7E1D4FD1C9009F12AC /* Resources */,
+				752E875C4AC39FB7C17917FD /* [CP] Embed Pods Frameworks */,
+				2BF12FFA509CC78589BCFF48 /* [CP] Copy Pods Resources */,
+				02F13FAF13798C792332B345 /* 📦 Embed Pods Frameworks */,
+				67C4162282EE7634B1919A0B /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -122,21 +267,139 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83D0015D1D500E8100B5F778 /* Welcome.storyboard in Resources */,
 				830DCB8E1D4FD1C9009F12AC /* LaunchScreen.storyboard in Resources */,
 				830DCB8B1D4FD1C9009F12AC /* Assets.xcassets in Resources */,
+				830DCB961D4FD31F009F12AC /* GoogleService-Info.plist in Resources */,
 				830DCB891D4FD1C9009F12AC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		02F13FAF13798C792332B345 /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MemeMe/Pods-MemeMe-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2BF12FFA509CC78589BCFF48 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MemeMe/Pods-MemeMe-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		67C4162282EE7634B1919A0B /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MemeMe/Pods-MemeMe-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		752E875C4AC39FB7C17917FD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MemeMe/Pods-MemeMe-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8309DD2ACBEC017E91F0EC98 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		98FADD4D23C1E24DABA40867 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		830DCB7C1D4FD1C9009F12AC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				830DCB981D4FE922009F12AC /* SwiftColorPickerViewController.swift in Sources */,
+				8342D7EC1D56B20800C5735A /* FontAttributesDB+CoreDataProperties.swift in Sources */,
+				8342D7ED1D56B20800C5735A /* FontAttributesDB.swift in Sources */,
+				830DCB9E1D4FEC19009F12AC /* Constaints.swift in Sources */,
+				830DCBA01D4FEC23009F12AC /* Strings.swift in Sources */,
+				8342D7F31D56FBA700C5735A /* MemeDetailVC.swift in Sources */,
+				8342D7F01D56B20800C5735A /* Memes+CoreDataProperties.swift in Sources */,
+				83D001591D50098700B5F778 /* RecentVC.swift in Sources */,
+				8342D7A51D55C32E00C5735A /* MemeMeDM.xcdatamodeld in Sources */,
+				83063FBE1D5B32F800192B7A /* SettingsVC.swift in Sources */,
 				830DCB861D4FD1C9009F12AC /* ViewController.swift in Sources */,
+				83D001571D50042100B5F778 /* RecentCollectionViewCell.swift in Sources */,
+				83D0015B1D500C0E00B5F778 /* MemeMain.swift in Sources */,
+				8309C4C11D508ABC007B1CF7 /* SharedVC.swift in Sources */,
+				8342D7A01D52B52C00C5735A /* DataServiceRecentVC.swift in Sources */,
+				830DCBA21D500200009F12AC /* RecentTableViewCell.swift in Sources */,
+				8342D7EF1D56B20800C5735A /* Users.swift in Sources */,
+				8342D7F11D56B20800C5735A /* Memes.swift in Sources */,
 				830DCB841D4FD1C9009F12AC /* AppDelegate.swift in Sources */,
+				8342D7EE1D56B20800C5735A /* Users+CoreDataProperties.swift in Sources */,
+				8342D7A21D5564B600C5735A /* Extensions.swift in Sources */,
+				8309C4BF1D50883E007B1CF7 /* Meme.swift in Sources */,
+				8309C4BB1D5021A2007B1CF7 /* DataService.swift in Sources */,
+				8309C4BD1D502431007B1CF7 /* SigninVC.swift in Sources */,
+				8309C4C31D508F8A007B1CF7 /* EditorVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,6 +512,7 @@
 		};
 		830DCB931D4FD1C9009F12AC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 218CD4B1B192A02FC90374DE /* Pods-MemeMe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MemeMe/Info.plist;
@@ -260,6 +524,7 @@
 		};
 		830DCB941D4FD1C9009F12AC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AE84143D3D7AF50C366D32DD /* Pods-MemeMe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MemeMe/Info.plist;
@@ -288,8 +553,22 @@
 				830DCB941D4FD1C9009F12AC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		8342D7A31D55C32E00C5735A /* MemeMeDM.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				8342D7A41D55C32E00C5735A /* MemeMeDM.xcdatamodel */,
+			);
+			currentVersion = 8342D7A41D55C32E00C5735A /* MemeMeDM.xcdatamodel */;
+			path = MemeMeDM.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 830DCB781D4FD1C9009F12AC /* Project object */;
 }

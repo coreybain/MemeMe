@@ -20,7 +20,8 @@ extension Memes {
     @NSManaged var savedMeme: String?
     @NSManaged var topLabel: String?
     @NSManaged var memeID: String?
+    @NSManaged var userID: String?
     @NSManaged var users: Users?
-    @NSManaged var fontAttributes: FontAttributes?
+    @NSManaged var fontAttributesDB: FontAttributesDB?
 
 }

@@ -17,6 +17,6 @@ extension Users {
     @NSManaged var uid: String?
     @NSManaged var username: String?
     @NSManaged var auth: String?
-    @NSManaged var memes: NSSet?
+    @NSManaged var memes: Memes?
 
 }

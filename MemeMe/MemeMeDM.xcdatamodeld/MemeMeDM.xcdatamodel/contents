@@ -1,4 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="16A270f" minimumToolsVersion="Xcode 7.0">
-    <elements/>
+    <entity name="FontAttributesDB" representedClassName="FontAttributesDB" syncable="YES">
+        <attribute name="borderColor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fontColor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fontName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fontSize" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="memeID" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="memes" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Memes" inverseName="fontAttributesDB" inverseEntity="Memes" syncable="YES"/>
+    </entity>
+    <entity name="Memes" representedClassName="Memes" syncable="YES">
+        <attribute name="bottomLabel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="memeID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="memeImage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="savedImage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="savedMeme" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="topLabel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userID" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="fontAttributesDB" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FontAttributesDB" inverseName="memes" inverseEntity="FontAttributesDB" syncable="YES"/>
+        <relationship name="users" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Users" inverseName="memes" inverseEntity="Users" syncable="YES"/>
+    </entity>
+    <entity name="Users" representedClassName="Users" syncable="YES">
+        <attribute name="auth" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="memes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Memes" inverseName="users" inverseEntity="Memes" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Users" positionX="81" positionY="-0" width="128" height="103"/>
+        <element name="FontAttributesDB" positionX="-416" positionY="234" width="128" height="133"/>
+        <element name="Memes" positionX="-216" positionY="117" width="128" height="178"/>
+    </elements>
 </model>
