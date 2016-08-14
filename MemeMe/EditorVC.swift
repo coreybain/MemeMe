@@ -39,8 +39,11 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     var editingMeme:Bool = false
     var memeImage: UIImage!
     weak var recentVC : RecentVC?
+    var activeTextField: UITextField?
     var managedObjectContext: NSManagedObjectContext? =
         (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext
+    
+    //MARK: - App Lifecycle 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +53,21 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         
         // Setup View based on version
         UIToggle()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        subscribeToKeyboardNotification()
+        //subscribeToShakeNotifications()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        subscribeToKeyboardNotification()
+        //subscribeToShakeNotifications()
+        
     }
     
     // Hide status bar from editor view
@@ -222,9 +240,80 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     }
 }
 
+//MARK: - Shake to reset while editing meme
+extension EditorVC {
+    
+    // Respond the the shake notification
+    func alertForReset() {
+        let ac = UIAlertController(title: "Reset?", message: "Are you sure you want to reset the font size and type?", preferredStyle: .Alert)
+        let resetAction = UIAlertAction(title: "Reset", style: .Default, handler: { Void in
+            /* Reset to default values and update the Meme's font */
+            self.setFontAttributeDefaults(40.0, fontName: "HelveticaNeue-CondensedBlack", fontColor: UIColor.whiteColor())
+            self.updateMemeFont()
+        })
+        
+        /* Alert user with reset and cancel actions */
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        ac.addAction(resetAction)
+        ac.addAction(cancelAction)
+        presentViewController(ac, animated: true, completion: nil)
+    }
+}
+
+//MARK: - Keyboard Functions with Labels
+extension EditorVC {
+    
+    
+    //Subscribe to Keyboard Notifications from system
+    func subscribeToKeyboardNotification() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditorVC.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditorVC.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    //Unsubscribe to Keyboard Notifications from system
+    func unsubsribeToKeyboardNotification(){
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        /* slide the view up when keyboard appears, using notifications */
+        if activeTextField == bottomLabel && view.frame.origin.y == 0.0 {
+            
+            bottomLabel.frame.origin.y = -getKeyboardHeight(notification)
+            saveButton.enabled = false
+            
+        }
+    }
+    
+    //Push bottom label down on keyboard hide
+    func keyboardWillHide(notification: NSNotification) {
+        bottomLabel.frame.origin.y = 0 // FIX UP
+        saveButton.enabled = canSave()
+    }
+    
+    //Keyboard height from dict notification
+    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+        return keyboardSize.CGRectValue().height
+    }
+    
+    //Hide the keyboard when the user taps anywhere else on the view is tapped
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        view.endEditing(true)
+        // Check if fields are filled and user can save image -- if so enable save button
+        saveButton.enabled = canSave()
+        
+        setuplabels([topLabel, bottomLabel])
+    }
+
+}
 
 
-//# -- MARK Extend UIImagePickerDelegate Methods for MemeEditorViewController
+
+
+//MARK: -  Extend UIImagePickerDelegate Methods
 extension EditorVC {
     
     /* UIImagePickerDelegate methods */

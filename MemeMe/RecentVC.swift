@@ -54,10 +54,13 @@ class RecentVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         if isUdacityFirstApp {
             if let tabBarController = self.tabBarController {
                 let indexToRemove = 1
-                if indexToRemove < tabBarController.viewControllers?.count {
-                    var viewControllers = tabBarController.viewControllers
-                    viewControllers?.removeAtIndex(indexToRemove)
-                    tabBarController.viewControllers = viewControllers
+                print(tabBarController.viewControllers?.count)
+                if tabBarController.viewControllers?.count == 3 {
+                    if indexToRemove < tabBarController.viewControllers?.count {
+                        var viewControllers = tabBarController.viewControllers
+                        viewControllers?.removeAtIndex(indexToRemove)
+                        tabBarController.viewControllers = viewControllers
+                    }
                 }
             }
         }
