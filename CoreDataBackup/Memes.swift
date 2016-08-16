@@ -37,7 +37,7 @@ class Memes: NSManagedObject {
             savedMeme.savedImage = originalImage
             savedMeme.userID = (FIRAuth.auth()?.currentUser?.uid)!
             savedMeme.fontAttributesDB = FontAttributesDB.saveFontAttributes(meme, key:key, inManagedObjectContext: context)
-            savedMeme.users = Users.saveUser((FIRAuth.auth()?.currentUser?.uid)!, username: nil, auth: nil, tagLine: nil, inManagedObjectContext: context)
+            savedMeme.users = Users.saveUser((FIRAuth.auth()?.currentUser?.uid)!, username: nil, auth: nil, inManagedObjectContext: context)
             do {
                 try savedMeme.managedObjectContext?.save()
             } catch {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16A201w" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16A270f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -31,7 +31,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="85.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VTY-ha-de8">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VTY-ha-de8">
                                                     <rect key="frame" x="8" y="8" width="69" height="69.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="VTY-ha-de8" secondAttribute="height" multiplier="1:1" id="xyg-pA-oqA"/>
@@ -242,7 +242,11 @@
                                 <items>
                                     <navigationItem title="Title" id="Txc-cd-bBU">
                                         <leftBarButtonItems>
-                                            <barButtonItem systemItem="action" id="cgZ-zO-TuZ"/>
+                                            <barButtonItem systemItem="action" id="cgZ-zO-TuZ">
+                                                <connections>
+                                                    <action selector="shareButtonPressed:" destination="16h-69-piz" id="7Xk-eo-1p2"/>
+                                                </connections>
+                                            </barButtonItem>
                                             <barButtonItem systemItem="cancel" id="yVH-Oo-l2D">
                                                 <connections>
                                                     <action selector="cancelButtonPressed:" destination="16h-69-piz" id="2rn-NI-v7K"/>
@@ -278,7 +282,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="ghV-KI-CNf"/>
                                     <barButtonItem image="color" id="GmW-AS-DV9">
                                         <connections>
-                                            <segue destination="b6s-PS-Klk" kind="popoverPresentation" popoverAnchorBarButtonItem="GmW-AS-DV9" id="bic-TZ-hhl">
+                                            <segue destination="b6s-PS-Klk" kind="popoverPresentation" identifier="segueColorPickerPopover" popoverAnchorBarButtonItem="GmW-AS-DV9" id="bic-TZ-hhl">
                                                 <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                             </segue>
                                         </connections>
@@ -286,7 +290,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Zvp-No-pfw"/>
                                     <barButtonItem image="font" id="9sl-o2-hCl">
                                         <connections>
-                                            <segue destination="kGb-Z5-Kfp" kind="popoverPresentation" popoverAnchorBarButtonItem="9sl-o2-hCl" id="37D-27-O7f">
+                                            <segue destination="kGb-Z5-Kfp" kind="popoverPresentation" identifier="segueFontPopover" popoverAnchorBarButtonItem="9sl-o2-hCl" id="37D-27-O7f">
                                                 <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                             </segue>
                                         </connections>
@@ -379,6 +383,7 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="FMB-dF-VgE">
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="wgi-fT-e6K">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -426,7 +431,7 @@
         <!--Settings-->
         <scene sceneID="Fop-6N-srM">
             <objects>
-                <tableViewController id="rQt-3G-DcK" sceneMemberID="viewController">
+                <tableViewController id="rQt-3G-DcK" customClass="SettingsVC" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="KeN-3U-5p6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -522,6 +527,9 @@
                                                         </label>
                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qfc-i6-NOU">
                                                             <rect key="frame" x="310" y="0.0" width="51" height="39"/>
+                                                            <connections>
+                                                                <action selector="unlockSwitchPressed:" destination="rQt-3G-DcK" eventType="valueChanged" id="OIa-CG-JRv"/>
+                                                            </connections>
                                                         </switch>
                                                     </subviews>
                                                 </stackView>
@@ -685,7 +693,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LpZ-FK-fPh">
+                                                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LpZ-FK-fPh">
                                                     <rect key="frame" x="154" y="7" width="66" height="30"/>
                                                     <state key="normal" title="Log Out">
                                                         <color key="titleColor" red="0.74117647060000003" green="0.078431372550000003" blue="0.1647058824" alpha="1" colorSpace="calibratedRGB"/>
@@ -708,6 +716,9 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="Ytq-ez-Ht5"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="unlockSwitch" destination="qfc-i6-NOU" id="8sq-5d-Afc"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tgx-Of-Ut0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -790,10 +801,10 @@
             </objects>
             <point key="canvasLocation" x="934.5" y="1630.5"/>
         </scene>
-        <!--Text Size Popover View Controller-->
+        <!--Text Picker View-->
         <scene sceneID="VtU-W7-HTB">
             <objects>
-                <viewController autoresizesArchivedViewToFullSize="NO" modalTransitionStyle="crossDissolve" modalPresentationStyle="formSheet" id="kGb-Z5-Kfp" customClass="TextSizePopoverViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController autoresizesArchivedViewToFullSize="NO" modalTransitionStyle="crossDissolve" modalPresentationStyle="formSheet" id="kGb-Z5-Kfp" customClass="TextPickerView" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="o3S-1Y-zDW"/>
                         <viewControllerLayoutGuide type="bottom" id="EdP-4g-sRH"/>
@@ -855,7 +866,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="300" height="300"/>
                     <connections>
-                        <outlet property="fontPicker" destination="8kl-G6-2UN" id="ovj-K8-7dZ"/>
+                        <outlet property="fontPicker" destination="8kl-G6-2UN" id="YBZ-iK-VMB"/>
                         <outlet property="fontSizeSlider" destination="ZLO-Aq-rq8" id="puh-AW-wY6"/>
                     </connections>
                 </viewController>
@@ -899,6 +910,6 @@
         <image name="tick-inside-a-circle" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="UFG-IQ-uUi"/>
+        <segue reference="oW6-2y-cXJ"/>
     </inferredMetricsTieBreakers>
 </document>

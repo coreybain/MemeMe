@@ -14,7 +14,7 @@ import UIKit
 //
 //
 var isUdacityApp:Bool = true
-var isUdacityFirstApp:Bool = true
+var isUdacityFirstApp:Bool = false
 var udacityEmail:String = "udacity@spiritdevs.com"
 var udacityPassword:String = "udacityMemeMe"
 //

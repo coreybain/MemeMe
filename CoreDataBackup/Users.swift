@@ -14,7 +14,7 @@ class Users: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
 
-    class func saveUser(userID:String, username:String?, auth:String?, tagLine:String?, inManagedObjectContext context: NSManagedObjectContext) -> Users? {
+    class func saveUser(userID:String, username:String?, auth:String?, inManagedObjectContext context: NSManagedObjectContext) -> Users? {
         
         let request = NSFetchRequest(entityName: "Users")
         request.predicate = NSPredicate(format: "uid = %@", userID)
@@ -26,11 +26,7 @@ class Users: NSManagedObject {
             userEntry.uid = userID
             userEntry.username = username
             userEntry.auth = auth
-            if tagLine == nil {
-                userEntry.tagLine = "Trying out MemeMe"
-            } else {
-                userEntry.tagLine = tagLine
-            }
+            //userEntry.tagLine = ""
             return userEntry
         }
         

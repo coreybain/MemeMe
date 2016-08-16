@@ -11,7 +11,7 @@ import UIKit
 import CoreData
 
 class EditorVC: UIViewController, UIImagePickerControllerDelegate,
-UINavigationControllerDelegate, UITextFieldDelegate {
+UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, UIPopoverPresentationControllerDelegate {
     
     //MARK: - Outlets
     // TOP BAR
@@ -182,7 +182,15 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     //MARK: - Actions
     
     @IBAction func cancelButtonPressed(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+        if !editingMeme {
+            if topLabel.text != "" || bottomLabel.text != "" || imageView.image != nil {
+                alertForReset("Reset or Cancel", message: "Do you want to reset the meme or go back to your recent memes?", shake: false)
+            } else {
+                dismissViewControllerAnimated(true, completion: nil)
+            }
+        } else {
+            dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
     @IBAction func galleryButtonPressed(sender: AnyObject) {
@@ -238,25 +246,98 @@ UINavigationControllerDelegate, UITextFieldDelegate {
             alertUser("Problem Saving", message: "The meme is missing the following: ", actions: [UIAlertAction(title: "Ok", style: .Default, handler: nil)])
         }
     }
+    
+    @IBAction func shareButtonPressed(sender: AnyObject) {
+        
+        let shareVC = UIActivityViewController(activityItems: [compileMeme()], applicationActivities: nil)
+        shareVC.completionWithItemsHandler = { activity, success, items, error in
+            if success {
+                self.saveButtonPressed(self)
+            }
+        }
+        presentViewController(shareVC, animated: true, completion: nil)
+    }
+    
+    //MARK: Segue overrides for color and font picker
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "segueFontPopover" {
+            let popoverVC = segue.destinationViewController as! TextPickerView
+            popoverVC.modalPresentationStyle = UIModalPresentationStyle.Popover
+            popoverVC.popoverPresentationController!.delegate = self
+            popoverVC.fontAttributer = fontAttributer
+        }
+        
+        if segue.identifier == "segueColorPickerPopover" {
+            /* Launch color picker in popover view */
+            let colorPopover = segue.destinationViewController as! SwiftColorPickerViewController
+            colorPopover.delegate = self
+            colorPopover.modalPresentationStyle = UIModalPresentationStyle.Popover
+            colorPopover.popoverPresentationController!.delegate = self
+        }
+        
+    }
+    
+    /* Popover delegate method */
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.None
+    }
+    
+    /* SwiftColorPickerDelegate function */
+    func colorSelectionChanged(selectedColor color: UIColor) {
+        fontAttributer.fontColor = color
+        setuplabels([topLabel, bottomLabel])
+    }
+    
 }
+
 
 //MARK: - Shake to reset while editing meme
 extension EditorVC {
     
     // Respond the the shake notification
-    func alertForReset() {
-        let ac = UIAlertController(title: "Reset?", message: "Are you sure you want to reset the font size and type?", preferredStyle: .Alert)
-        let resetAction = UIAlertAction(title: "Reset", style: .Default, handler: { Void in
-            /* Reset to default values and update the Meme's font */
-            self.setFontAttributeDefaults(40.0, fontName: "HelveticaNeue-CondensedBlack", fontColor: UIColor.whiteColor())
-            self.updateMemeFont()
-        })
+    func alertForReset(title:String, message:String, shake:Bool) {
         
-        /* Alert user with reset and cancel actions */
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-        ac.addAction(resetAction)
-        ac.addAction(cancelAction)
-        presentViewController(ac, animated: true, completion: nil)
+        let resetAlert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let resetAll = UIAlertAction(title: "Reset Meme", style: .Default, handler: { Void in
+            /* Reset to default values and update the Meme's font */
+            /*
+             self.setFontAttributeDefaults(40.0, fontName: "HelveticaNeue-CondensedBlack", fontColor: UIColor.whiteColor())
+            self.updateMemeFont() 
+            */
+            self.clearMeme()
+        })
+        var resetAction = UIAlertAction()
+        var cancelAction = UIAlertAction()
+        if shake {
+            resetAction = UIAlertAction(title: "Reset Font", style: .Default, handler: { Void in
+                /*
+                 self.setFontAttributeDefaults(40.0, fontName: "HelveticaNeue-CondensedBlack", fontColor: UIColor.whiteColor())
+                 self.updateMemeFont()
+                 */
+            })
+            cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            
+            resetAlert.addAction(resetAction)
+        } else {
+            cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: { Void in
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+        }
+        resetAlert.addAction(resetAll)
+        resetAlert.addAction(cancelAction)
+        //Present reset alert as popup with reset
+        presentViewController(resetAlert, animated: true, completion: nil)
+    }
+    
+    /* Subsribe to shake notifications */
+    func subscribeToShakeNotifications() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditorVC.alertForReset), name: "shake", object: nil)
+    }
+    
+    /* Unsubsribe to shake notifications */
+    func unsubsribeToShakeNotification() {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "shake", object: nil)
     }
 }
 
@@ -277,7 +358,7 @@ extension EditorVC {
     }
     
     func keyboardWillShow(notification: NSNotification) {
-        /* slide the view up when keyboard appears, using notifications */
+        // slide the bottom textfield up when keyboard it showing
         if activeTextField == bottomLabel && view.frame.origin.y == 0.0 {
             
             bottomLabel.frame.origin.y = -getKeyboardHeight(notification)

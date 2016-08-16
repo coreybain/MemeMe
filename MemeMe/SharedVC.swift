@@ -23,7 +23,20 @@ class SharedVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         let searchBar = UISearchBar()
         searchBar.sizeToFit()
         navigationItem.titleView = searchBar
+        downloadSharedMemes()
     }
+    
+    // Download the recent memes by other users to display on the screen
+    func downloadSharedMemes() {
+        DataService.ds().downloadShared { (meme) in
+            print("DOWNLOADED")
+            print(meme.count)
+            self.memeDict = meme
+            self.collectionView.reloadData()
+        }
+        
+    }
+
     
 }
 

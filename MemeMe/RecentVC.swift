@@ -33,11 +33,8 @@ class RecentVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         recentCollectionView.hidden = true
         recentTableView.hidden = false
         downloadRecentMemes()
-        /*
-        self.managedObjectContext?.performBlock {
-            Memes.deleteMemes((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: self.managedObjectContext!)
-        }
-         */
+       // Memes.shared.deleteMemes((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: managedObjectContext!)
+       // Users.deleteUsers((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: managedObjectContext!)
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -84,7 +81,7 @@ class RecentVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     // Download the recent memes for the logged in user to display on the screen
     func downloadRecentMemes() {
         
-        self.managedObjectContext?.performBlock {
+        managedObjectContext?.performBlock {
             if let memeDictRaw = Memes.ms().loadMemeLocal((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: self.managedObjectContext!) {
                 self.memeDict.removeAll()
                 self.memeDict = memeDictRaw

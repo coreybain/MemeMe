@@ -60,7 +60,7 @@ class DataService {
         FIRAuth.auth()?.signInWithEmail(udacityEmail, password: udacityPassword) { (fireUser, error) in
             if let user = fireUser?.uid {
                 self.managedObjectContext?.performBlock {
-                    _ = Users.saveUser(user, username: udacityEmail, auth: nil, inManagedObjectContext: self.managedObjectContext!)
+                    _ = Users.saveUser(user, username: udacityEmail, auth: nil, tagLine: nil, inManagedObjectContext: self.managedObjectContext!)
                 }
                 self.setupUser(udacityEmail, userID: fireUser!, complete: {
                     print("YAY")
@@ -74,13 +74,25 @@ class DataService {
     func loginUser(username:String, password:String, complete:DownloadComplete) {
         FIRAuth.auth()?.signInWithEmail(username, password: password) { (user, error) in
             if user?.uid != nil {
-                self.managedObjectContext?.performBlock {
-                    _ = Users.saveUser((user?.uid)!, username: username, auth: nil, inManagedObjectContext: self.managedObjectContext!)
-                }
-                print("YAY")
-                complete()
+                self.downloadUserMemes((user?.uid)!, complete: { (user, meme) in
+                    self.managedObjectContext?.performBlock {
+                        _ = Users.saveUser(user.userID, username: user.username, auth: user.auth, tagLine: user.tagLine, inManagedObjectContext: self.managedObjectContext!)
+                    }
+                    print("YAY")
+                    complete()
+                })
             }
         }
+    }
+    
+    //MARK: -- Download User details and Memes
+    func downloadUserMemes(userID:String, complete:(user:User, meme:[Meme]) -> ()) {
+        ref.child("users").child(userID).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            if snapshot.exists() {
+                let username = snapshot.value!["username"] as! String
+                let 
+            }
+        })
     }
     
     //MARK: - setup user entry in database
@@ -89,6 +101,7 @@ class DataService {
         let userDatabase = ["username":username, "auth":"default"]
         ref.child("users").child(user).setValue(userDatabase, withCompletionBlock: { (err, database) in
             if err == nil {
+                print(database.description())
                 complete()
             }
         })
@@ -107,9 +120,6 @@ class DataService {
     func signUpUser(username:String, password:String, complete:Bool -> ()) {
         FIRAuth.auth()?.createUserWithEmail(username, password: password) { (user, error) in
             if (user != nil) {
-                self.managedObjectContext?.performBlock {
-                    Users.saveUser((user?.uid)!, username: username, auth: "default", inManagedObjectContext: self.managedObjectContext!)
-                }
                 self.addUsernameToList(username)
                 self.setupUser(username, userID: user!, complete: {
                     complete(true)
@@ -128,6 +138,9 @@ class DataService {
         let memeImageData:NSURL = NSURL(fileURLWithPath: "\(MemeFunctions.fileInDocumentsDirectory("meme-\(imageName)"))")
         let memeRef = storageRef.child("meme-\(imageName)")
         
+        //Get UserID of the user uploading the photo
+        let userID = FIRAuth.auth()?.currentUser?.uid
+        
         //Image total size
         let imageSize = MemeFunctions.sizeForLocalFilePath(MemeFunctions.fileInDocumentsDirectory("meme-\(imageName)"))
         
@@ -142,12 +155,12 @@ class DataService {
         print(fontColor)
         let borderColor = meme.fontAttribute.borderColor.htmlRGBaColor
         
-        var imageDetails = ["fontAttributes":["fontSize":fontSize, "fontName":fontName, "fontColor":fontColor, "borderColor":borderColor],"topLabel":meme.topLabel, "bottomLabel":meme.bottomLabel, "savedImage":"saved-\(imageName)", "savedMeme": "meme-\(uploadName)", "memeImage":"\(memeRef)"]
-        print(imageDetails.description)
-        
         if let userID = FIRAuth.auth()?.currentUser?.uid {
+            let imageDetails = ["fontAttributes":["fontSize":fontSize, "fontName":fontName, "fontColor":fontColor, "borderColor":borderColor],"topLabel":meme.topLabel, "bottomLabel":meme.bottomLabel, "savedImage":"saved-\(imageName)", "savedMeme": "meme-\(uploadName)", "memeImage":"\(memeRef)", "userID":"\(userID)"]
+        
             if meme.memeID == "" {
                 self.ref.child("memes").childByAutoId().setValue(imageDetails) { (err, database) in
+                    print(database.key)
                     let test = database.key
                     self.ref.child("users").child(userID).child("memes").child(test).setValue(test, withCompletionBlock: { (err, database) in
                         if err == nil {
@@ -159,6 +172,9 @@ class DataService {
                             }
                         }
                     })
+                    if err != nil {
+                        print(err.debugDescription)
+                    }
                 }
             } else {
                 let memeID = meme.memeID
