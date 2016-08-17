@@ -217,7 +217,7 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
     @IBAction func saveButtonPressed(sender: AnyObject) {
         if canSave() {
             
-            let meme = Meme(topLabel: topLabel.text, bottomLabel: bottomLabel.text, savedImage: imageView.image!, savedMeme: nil, memedImage: compileMeme(), fontAttributer: fontAttributer, memeID: nil)
+            let meme = Meme(topLabel: topLabel.text, bottomLabel: bottomLabel.text, savedImage: imageView.image!, savedMeme: nil, memedImage: compileMeme(), fontAttributer: fontAttributer, memeID: nil, memedImageString: nil, savedImageString: nil)
             
             if editingMeme {
                 if let meme = self.meme {

@@ -13,7 +13,7 @@ extension DataService {
     
     //MARK: - Download the recent memes for the USERID
     
-    func downloadRecents(complete:[Meme] -> ()) {
+    func downloadRecents(complete:[Meme]? -> ()) {
         if let userID = FIRAuth.auth()?.currentUser?.uid {
             ref.child("users").child(userID).child("memes").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                 if snapshot.exists() {
@@ -44,7 +44,7 @@ extension DataService {
                                                         print(savedMeme)
                                                         if let savedImageFile = MemeFunctions.loadImageFromPath(MemeFunctions.fileInDocumentsDirectory("\(savedImage)")) {
                                                             if let memeImage = MemeFunctions.loadImageFromPath(MemeFunctions.fileInDocumentsDirectory("\(savedMeme).jpg")) {
-                                                                let memeCell = Meme(topLabel: top, bottomLabel: bottom, savedImage: savedImageFile, savedMeme: savedMeme, memedImage: memeImage, fontAttributer: self.fontAttribute, memeID: nil)
+                                                                let memeCell = Meme(topLabel: top, bottomLabel: bottom, savedImage: savedImageFile, savedMeme: savedMeme, memedImage: memeImage, fontAttributer: self.fontAttribute, memeID: nil, memedImageString: savedMeme, savedImageString: savedImage)
                                                                 self.memeDict.append(memeCell)
                                                                 if self.memeCounter == self.memeDict.count {
                                                                     complete(self.memeDict)
@@ -63,6 +63,7 @@ extension DataService {
                     }
                 } else {
                     print("ERROR SNAPSHOT DOES NOT EXIST")
+                    complete(nil)
                 }
                 
                 
@@ -90,7 +91,7 @@ extension DataService {
                                         if self.setFontAttributes(fontSize as! String, fontName: fontName as! String, fontColor: fontColor as! String, borderColor: borderColor as! String) {
                                             if let savedImageFile = MemeFunctions.loadImageFromPath(MemeFunctions.fileInDocumentsDirectory("\(savedImage)")) {
                                                 if let memeImage = MemeFunctions.loadImageFromPath(MemeFunctions.fileInDocumentsDirectory("\(savedMeme).jpg")) {
-                                                    let memeCell = Meme(topLabel: top, bottomLabel: bottom, savedImage: savedImageFile, savedMeme: savedMeme, memedImage: memeImage, fontAttributer: self.fontAttribute, memeID: nil)
+                                                    let memeCell = Meme(topLabel: top, bottomLabel: bottom, savedImage: savedImageFile, savedMeme: savedMeme, memedImage: memeImage, fontAttributer: self.fontAttribute, memeID: nil, memedImageString: savedMeme, savedImageString: savedImage)
                                                     self.memeDict.append(memeCell)
                                                     if self.memeCounter == self.memeDict.count {
                                                         complete(self.memeDict)

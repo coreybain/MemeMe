@@ -18,6 +18,8 @@ class Meme {
     var _bottomLabel:String?
     var _savedMeme:String?
     var _memeID:String?
+    var _savedImageString: String!
+    var _memedImageString: String!
     var _savedImage: UIImage!
     var _memedImage: UIImage!
     var fontAttribute: FontAttribute!
@@ -58,6 +60,24 @@ class Meme {
         }
     }
     
+    var savedImageString:String {
+        get {
+            if _savedImageString == nil {
+                _savedImageString = ""
+            }
+            return _savedImageString!
+        }
+    }
+    
+    var memedImageString:String {
+        get {
+            if _memedImageString == nil {
+                _memedImageString = ""
+            }
+            return _memedImageString!
+        }
+    }
+    
     var savedImage:UIImage {
         get {
             return _savedImage
@@ -70,7 +90,7 @@ class Meme {
         }
     }
     
-    init(topLabel:String?, bottomLabel:String?, savedImage:UIImage, savedMeme:String?, memedImage:UIImage, fontAttributer:FontAttribute, memeID:String?) {
+    init(topLabel:String?, bottomLabel:String?, savedImage:UIImage, savedMeme:String?, memedImage:UIImage, fontAttributer:FontAttribute, memeID:String?, memedImageString:String?, savedImageString:String?) {
         _topLabel = topLabel
         _bottomLabel = bottomLabel
         _savedImage = savedImage
@@ -78,6 +98,8 @@ class Meme {
         fontAttribute = fontAttributer
         _savedMeme = savedMeme
         _memeID = memeID
+        _savedImageString = savedImageString
+        _memedImageString = memedImageString
     }
 }
 

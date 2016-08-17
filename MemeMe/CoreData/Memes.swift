@@ -33,7 +33,7 @@ class Memes: NSManagedObject {
             savedMeme.memeID = key
             savedMeme.bottomLabel = meme.bottomLabel
             savedMeme.topLabel = meme.topLabel
-            savedMeme.memeImage = memeImage
+            savedMeme.memeImage = "\(memeImage).jpg"
             savedMeme.savedImage = originalImage
             savedMeme.userID = (FIRAuth.auth()?.currentUser?.uid)!
             savedMeme.fontAttributesDB = FontAttributesDB.saveFontAttributes(meme, key:key, inManagedObjectContext: context)
@@ -43,6 +43,30 @@ class Memes: NSManagedObject {
             } catch {
                 let saveError = error as NSError
                 print(saveError)
+            }
+        }
+    }
+    
+    func saveDownloadedMeme(memes:[Meme], inManagedObjectContext context: NSManagedObjectContext) {
+        
+        for meme in memes {
+            print(meme.memedImageString)
+            print(meme.savedImageString)
+            if let savedMeme = NSEntityDescription.insertNewObjectForEntityForName("Memes", inManagedObjectContext: context) as? Memes {
+                savedMeme.memeID = meme.memeID
+                savedMeme.bottomLabel = meme.bottomLabel
+                savedMeme.topLabel = meme.topLabel
+                savedMeme.memeImage = "\(meme.memedImageString)"
+                savedMeme.savedImage = "\(meme.savedImageString)"
+                savedMeme.userID = (FIRAuth.auth()?.currentUser?.uid)!
+                savedMeme.fontAttributesDB = FontAttributesDB.saveFontAttributes(meme, key:meme.memeID, inManagedObjectContext: context)
+                savedMeme.users = Users.saveUser((FIRAuth.auth()?.currentUser?.uid)!, username: nil, auth: nil, tagLine: nil, inManagedObjectContext: context)
+                do {
+                    try savedMeme.managedObjectContext?.save()
+                } catch {
+                    let saveError = error as NSError
+                    print(saveError)
+                }
             }
         }
     }
@@ -96,12 +120,13 @@ class Memes: NSManagedObject {
                                                         self.fontAttribute = FontAttribute()
                                                         if DataService.ds().setFontAttributes(fontSize, fontName: fontName, fontColor: fontColor, borderColor: borderColor) {
                                                             print("YES")
-                                                            if let savedImageFile = MemeFunctions.loadImageFromPath(MemeFunctions.fileInDocumentsDirectory("saved-\(savedImage)")) {
+                                                            if let savedImageFile = MemeFunctions.loadImageFromPath(MemeFunctions.fileInDocumentsDirectory(savedImage as! String)) {
                                                                 print("YESY")
-                                                               if let memeImagefile = MemeFunctions.loadImageFromPath(MemeFunctions.fileInDocumentsDirectory("meme-\(memeImage).jpg")) {
+                                                               if let memeImagefile = MemeFunctions.loadImageFromPath(MemeFunctions.fileInDocumentsDirectory(memeImage as! String)) {
                                                                     print("HELLLOOOOO STAR")
-                                                                let memeCell = Meme(topLabel: top as? String, bottomLabel: bottom as? String, savedImage: savedImageFile, savedMeme: memeImage as? String, memedImage: memeImagefile, fontAttributer: self.fontAttribute, memeID: memeID as! String)
-                                                                self.memeDict.append(memeCell)                                               }
+                                                                let memeCell = Meme(topLabel: top as? String, bottomLabel: bottom as? String, savedImage: savedImageFile, savedMeme: memeImage as? String, memedImage: memeImagefile, fontAttributer: self.fontAttribute, memeID: memeID as! String, memedImageString: nil, savedImageString: nil)
+                                                                self.memeDict.append(memeCell)
+                                                                }
                                                             }
                                                         }
                                                     }

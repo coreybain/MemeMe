@@ -33,7 +33,7 @@ class RecentVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         recentCollectionView.hidden = true
         recentTableView.hidden = false
         downloadRecentMemes()
-       // Memes.shared.deleteMemes((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: managedObjectContext!)
+        //Memes.shared.deleteMemes((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: managedObjectContext!)
        // Users.deleteUsers((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: managedObjectContext!)
     }
     override func viewWillAppear(animated: Bool) {

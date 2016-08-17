@@ -77,6 +77,9 @@ class DataService {
                 self.downloadUserMemes((user?.uid)!, complete: { (user, meme) in
                     self.managedObjectContext?.performBlock {
                         _ = Users.saveUser(user.userID, username: user.username, auth: user.auth, tagLine: user.tagLine, inManagedObjectContext: self.managedObjectContext!)
+                        if meme != nil {
+                            _ = Memes.shared.saveDownloadedMeme(meme!, inManagedObjectContext: self.managedObjectContext!)
+                        }
                     }
                     print("YAY")
                     complete()
@@ -86,11 +89,19 @@ class DataService {
     }
     
     //MARK: -- Download User details and Memes
-    func downloadUserMemes(userID:String, complete:(user:User, meme:[Meme]) -> ()) {
+    func downloadUserMemes(userID:String, complete:(user:User, meme:[Meme]?) -> ()) {
         ref.child("users").child(userID).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
             if snapshot.exists() {
                 let username = snapshot.value!["username"] as! String
-                let 
+                var tagLine = ""
+                if snapshot.value!["tagLine"] as! String != "" {
+                    tagLine = snapshot.value!["tagLine"] as! String
+                }
+                let auth = snapshot.value!["auth"] as! String
+                let mainUser = User.init(username: username, userID: userID, tagLine: tagLine, auth: auth)
+                self.downloadRecents({ (meme) in
+                    complete(user: mainUser, meme: meme)
+                })
             }
         })
     }
@@ -98,7 +109,7 @@ class DataService {
     //MARK: - setup user entry in database
     func setupUser(username:String, userID:FIRUser, complete:DownloadComplete) {
         let user = userID.uid
-        let userDatabase = ["username":username, "auth":"default"]
+        let userDatabase = ["username":username, "auth":"default", "tagLine":"Trying out MemeMe"]
         ref.child("users").child(user).setValue(userDatabase, withCompletionBlock: { (err, database) in
             if err == nil {
                 print(database.description())
@@ -161,13 +172,15 @@ class DataService {
             if meme.memeID == "" {
                 self.ref.child("memes").childByAutoId().setValue(imageDetails) { (err, database) in
                     print(database.key)
-                    let test = database.key
-                    self.ref.child("users").child(userID).child("memes").child(test).setValue(test, withCompletionBlock: { (err, database) in
+                    let key = database.key
+                    self.ref.child("users").child(userID).child("memes").child(key).setValue(key, withCompletionBlock: { (err, database) in
                         if err == nil {
                             // This is where the connection to core Data will go
+                            let uploadMemeName = "meme-\(uploadName).jpg"
+                            let uploadImageName = "saved-\(uploadName).jpg"
                             self.uploadMeme(memeRef, meme:memeImageData, metadata:metadata, imageSize:imageSize, memeDetails: imageDetails)
                             self.managedObjectContext?.performBlock {
-                                Memes.ms().saveMemeLocal(meme, key: test, memeImage: uploadName, originalImage: imageName, inManagedObjectContext: self.managedObjectContext!)
+                                Memes.ms().saveMemeLocal(meme, key: key, memeImage: uploadMemeName, originalImage: uploadImageName, inManagedObjectContext: self.managedObjectContext!)
                                 complete()
                             }
                         }
