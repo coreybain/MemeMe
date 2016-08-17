@@ -512,7 +512,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Q7R-w5-OJV">
                                                     <rect key="frame" x="8" y="8" width="359" height="39"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="42c-cj-GBU">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock" translatesAutoresizingMaskIntoConstraints="NO" id="42c-cj-GBU">
                                                             <rect key="frame" x="0.0" y="0.0" width="39" height="39"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="39" id="QCl-DV-dJx"/>
@@ -542,29 +542,36 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="55" id="bmh-vq-Kee">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="55" id="bmh-vq-Kee">
                                         <rect key="frame" x="0.0" y="270" width="375" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bmh-vq-Kee" id="0EY-7C-rzE">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="54.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="54.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Xvm-uU-9Ri">
-                                                    <rect key="frame" x="8" y="8" width="326" height="39"/>
+                                                    <rect key="frame" x="8" y="8" width="359" height="39"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rsA-V6-LWC">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="touchid" translatesAutoresizingMaskIntoConstraints="NO" id="rsA-V6-LWC">
                                                             <rect key="frame" x="0.0" y="0.0" width="39" height="39"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="39" id="SbJ-0w-OBz"/>
                                                                 <constraint firstAttribute="height" constant="39" id="gxD-E3-lhx"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Report a problem" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zOv-SK-sfe">
-                                                            <rect key="frame" x="49" y="0.0" width="277" height="39"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lock with TouchID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zOv-SK-sfe">
+                                                            <rect key="frame" x="49" y="0.0" width="251" height="39"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6eo-cI-PDi">
+                                                            <rect key="frame" x="310" y="0.0" width="51" height="39"/>
+                                                            <connections>
+                                                                <action selector="touchIDSwitchPressed:" destination="rQt-3G-DcK" eventType="valueChanged" id="wIp-rI-hSA"/>
+                                                                <action selector="unlockSwitchPressed:" destination="rQt-3G-DcK" eventType="valueChanged" id="h36-z0-0jM"/>
+                                                            </connections>
+                                                        </switch>
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
@@ -586,14 +593,14 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="mFc-e1-Ghd">
                                                     <rect key="frame" x="8" y="8" width="326" height="39"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ias-FL-5lS">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="feedback" translatesAutoresizingMaskIntoConstraints="NO" id="Ias-FL-5lS">
                                                             <rect key="frame" x="0.0" y="0.0" width="39" height="39"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="39" id="Jus-C5-N5S"/>
                                                                 <constraint firstAttribute="width" constant="39" id="d3p-sY-xSQ"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Help" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PCn-Cw-1VQ">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Report a problem" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PCn-Cw-1VQ">
                                                             <rect key="frame" x="49" y="0.0" width="277" height="39"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -620,7 +627,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="H2q-Yt-BHg">
                                                     <rect key="frame" x="8" y="8" width="326" height="39"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k4E-nW-q2M">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shield-ok-icon" translatesAutoresizingMaskIntoConstraints="NO" id="k4E-nW-q2M">
                                                             <rect key="frame" x="0.0" y="0.0" width="39" height="39"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="39" id="03e-n0-45l"/>
@@ -658,7 +665,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="QGX-LH-gmO">
                                                     <rect key="frame" x="8" y="8" width="326" height="39"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aXe-y0-z2s">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="spiritdevsMain" translatesAutoresizingMaskIntoConstraints="NO" id="aXe-y0-z2s">
                                                             <rect key="frame" x="0.0" y="0.0" width="39" height="39"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="39" id="BqR-iH-Ol8"/>
@@ -717,7 +724,12 @@
                     <navigationItem key="navigationItem" title="Settings" id="Ytq-ez-Ht5"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="settingTableView" destination="KeN-3U-5p6" id="tGd-cJ-5BE"/>
+                        <outlet property="statusLabel" destination="GW0-dc-HT6" id="PR2-Wc-UId"/>
+                        <outlet property="touchIDSwitch" destination="6eo-cI-PDi" id="7II-Ro-rSq"/>
                         <outlet property="unlockSwitch" destination="qfc-i6-NOU" id="8sq-5d-Afc"/>
+                        <outlet property="userProfileImage" destination="iRY-54-9WK" id="3xQ-kE-cX1"/>
+                        <outlet property="usernameLabel" destination="fcP-HD-IXU" id="9p7-Vc-kSH"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tgx-Of-Ut0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -902,12 +914,17 @@
         <image name="album" width="36" height="36"/>
         <image name="camera" width="36" height="36"/>
         <image name="color" width="36" height="36"/>
+        <image name="feedback" width="279" height="280"/>
         <image name="font" width="36" height="36"/>
+        <image name="lock" width="512" height="512"/>
         <image name="saved" width="24" height="24"/>
         <image name="settings" width="24" height="24"/>
         <image name="shared" width="24" height="24"/>
+        <image name="shield-ok-icon" width="779" height="903"/>
+        <image name="spiritdevsMain" width="1024" height="1024"/>
         <image name="table" width="30" height="30"/>
         <image name="tick-inside-a-circle" width="128" height="128"/>
+        <image name="touchid" width="426" height="422"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="oW6-2y-cXJ"/>

@@ -31,6 +31,12 @@ class Users: NSManagedObject {
             } else {
                 userEntry.tagLine = tagLine
             }
+            do {
+                try userEntry.managedObjectContext?.save()
+            } catch {
+                let saveError = error as NSError
+                print(saveError)
+            }
             return userEntry
         }
         
@@ -39,8 +45,9 @@ class Users: NSManagedObject {
     
     class func loadUser(userID:String, inManagedObjectContext context: NSManagedObjectContext) -> Users? {
         
+        print(userID)
         let request = NSFetchRequest(entityName: "Users")
-        request.predicate = NSPredicate(format: "uid = %@", userID)
+        request.predicate = NSPredicate(format: "uid == %@", userID)
         
         if let userEntry = (try? context.executeFetchRequest(request))?.first as? Users {
             return userEntry

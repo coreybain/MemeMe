@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Firebase
+import LocalAuthentication
 
 class MemeMain {
     

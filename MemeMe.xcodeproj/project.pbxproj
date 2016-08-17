@@ -40,6 +40,7 @@
 		83D0015D1D500E8100B5F778 /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D0015C1D500E8100B5F778 /* Welcome.storyboard */; };
 		83F39D801D630A4B005BB9D7 /* Users+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F39D7F1D630A4B005BB9D7 /* Users+CoreDataProperties.swift */; };
 		83F39D821D631B5D005BB9D7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F39D811D631B5D005BB9D7 /* User.swift */; };
+		83F39D841D651ADA005BB9D7 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F39D831D651ADA005BB9D7 /* LocalAuthentication.framework */; };
 		B3A1B677375B5DB003EA061B /* Pods_MemeMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0942CDD40CE9C458B469BA6F /* Pods_MemeMe.framework */; };
 /* End PBXBuildFile section */
 
@@ -82,6 +83,7 @@
 		83F39D7E1D630980005BB9D7 /* MemeMeDM 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MemeMeDM 2.xcdatamodel"; sourceTree = "<group>"; };
 		83F39D7F1D630A4B005BB9D7 /* Users+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Users+CoreDataProperties.swift"; path = "CoreData/Users+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		83F39D811D631B5D005BB9D7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		83F39D831D651ADA005BB9D7 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		AE84143D3D7AF50C366D32DD /* Pods-MemeMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MemeMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-MemeMe/Pods-MemeMe.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -90,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83F39D841D651ADA005BB9D7 /* LocalAuthentication.framework in Frameworks */,
 				B3A1B677375B5DB003EA061B /* Pods_MemeMe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -216,6 +219,7 @@
 		A85C10EAD1D6AC22EC6D7C6D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				83F39D831D651ADA005BB9D7 /* LocalAuthentication.framework */,
 				0942CDD40CE9C458B469BA6F /* Pods_MemeMe.framework */,
 			);
 			name = Frameworks;
