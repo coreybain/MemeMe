@@ -9,10 +9,25 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>PasscodeLock.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>830DCB7F1D4FD1C9009F12AC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>83E1D3C51D68FD2D008BD989</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>83E1D3D71D68FD65008BD989</key>
 		<dict>
 			<key>primary</key>
 			<true/>

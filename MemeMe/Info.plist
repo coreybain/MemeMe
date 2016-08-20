@@ -22,10 +22,23 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconType</key>
+			<string>UIApplicationShortcutItemIconTypeAdd</string>
+			<key>UIApplicationShortcutItemSubtitle</key>
+			<string>Make a funny meme</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Create Meme</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>Create</string>
+		</dict>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
+	<string>Welcome</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -42,19 +55,6 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIApplicationShortcutItems</key>
-	<array>
-		<dict>
-			<key>UIApplicationShortcutItemIconType</key>
-			<string>UIApplicationShortcutItemIconTypeAdd</string>
-			<key>UIApplicationShortcutItemSubtitle</key>
-			<string>Make a funny meme</string>
-			<key>UIApplicationShortcutItemTitle</key>
-			<string>Create Meme</string>
-			<key>UIApplicationShortcutItemType</key>
-			<string>Create</string>
-		</dict>
 	</array>
 </dict>
 </plist>

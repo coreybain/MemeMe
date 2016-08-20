@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16A270f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16A201w" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="JPx-BC-uk5">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -7,6 +7,51 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--LoadingVC-->
+        <scene sceneID="k4l-dv-zdK">
+            <objects>
+                <viewController id="JPx-BC-uk5" customClass="LoadingVC" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MAr-kv-5Zp"/>
+                        <viewControllerLayoutGuide type="bottom" id="ar7-4M-vyz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vP7-UG-dRF">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tAI-BF-xeQ">
+                                <rect key="frame" x="159" y="306" width="56" height="56"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="56" id="QqI-Eo-Dbb"/>
+                                    <constraint firstAttribute="height" constant="56" id="oao-td-lhJ"/>
+                                </constraints>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="spiritdevslarge" translatesAutoresizingMaskIntoConstraints="NO" id="FvY-xc-HNS">
+                                <rect key="frame" x="171" y="318" width="32" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="7zd-dB-QTL"/>
+                                    <constraint firstAttribute="width" constant="32" id="GQ9-wV-B1l"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="FvY-xc-HNS" firstAttribute="centerX" secondItem="vP7-UG-dRF" secondAttribute="centerX" id="Ddp-aR-xnK"/>
+                            <constraint firstItem="FvY-xc-HNS" firstAttribute="centerY" secondItem="vP7-UG-dRF" secondAttribute="centerY" id="LgA-om-Sde"/>
+                            <constraint firstItem="tAI-BF-xeQ" firstAttribute="centerY" secondItem="vP7-UG-dRF" secondAttribute="centerY" id="gLu-jt-sua"/>
+                            <constraint firstItem="tAI-BF-xeQ" firstAttribute="centerX" secondItem="vP7-UG-dRF" secondAttribute="centerX" id="xBj-3m-aWM"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="spinView" destination="tAI-BF-xeQ" id="hgQ-OC-y1Z"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sHJ-Wf-hry" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="582.5" y="456.5"/>
+        </scene>
         <!--SigninVC-->
         <scene sceneID="Geb-aC-vFP">
             <objects>
@@ -235,5 +280,6 @@
     <resources>
         <image name="Troll-Face" width="500" height="407"/>
         <image name="logo" width="349" height="107"/>
+        <image name="spiritdevslarge" width="36" height="36"/>
     </resources>
 </document>

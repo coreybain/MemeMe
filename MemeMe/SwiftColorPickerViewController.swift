@@ -129,8 +129,8 @@ final public class SwiftColorPickerViewController: UIViewController
         
         
         // adding gesture regocnizer
-        let tapGr = UITapGestureRecognizer(target: self, action: "handleGestureRecognizer:")
-        let panGr = UIPanGestureRecognizer(target: self, action: "handleGestureRecognizer:")
+        let tapGr = UITapGestureRecognizer(target: self, action: #selector(SwiftColorPickerViewController.handleGestureRecognizer(_:)))
+        let panGr = UIPanGestureRecognizer(target: self, action: #selector(SwiftColorPickerViewController.handleGestureRecognizer(_:)))
         panGr.maximumNumberOfTouches = 1
         colorPaletteView.addGestureRecognizer(tapGr)
         colorPaletteView.addGestureRecognizer(panGr)

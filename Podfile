@@ -8,6 +8,7 @@ target 'MemeMe' do
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
+  pod 'SnapKit', '~> 0.15.0'
   # Pods for MemeMe
 
 end

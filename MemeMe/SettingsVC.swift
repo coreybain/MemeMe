@@ -23,6 +23,7 @@ class SettingsVC: UITableViewController {
     @IBOutlet weak var userProfileImage: UIImageView!
     @IBOutlet var settingTableView: UITableView!
     @IBOutlet weak var editDoneButton: UIBarButtonItem!
+    @IBOutlet var profileImage: UITapGestureRecognizer!
     
     //MARK: - Variables
     var managedObjectContext: NSManagedObjectContext? =
@@ -70,7 +71,7 @@ class SettingsVC: UITableViewController {
                 return 0
             }
         }
-        return 55
+        return 47
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -83,7 +84,7 @@ class SettingsVC: UITableViewController {
         
         if (indexPath.section == 1 && indexPath.row == 1) {
             var error:NSError?
-            //var
+            
             
             
         }
@@ -112,11 +113,16 @@ class SettingsVC: UITableViewController {
         }
     }
     
+    //MARK: -- Actions
+    
     @IBAction func unlockSwitchPressed(sender: AnyObject) {
         unlockApp()
     }
     
-    @IBAction func touchIDSwitchPressed(sender: AnyObject) {
+    @IBAction func profileImagePressed(sender: AnyObject) {
+        
+        
+        
     }
     
     @IBAction func editDoneButtonPressed(sender: AnyObject) {
@@ -132,6 +138,8 @@ class SettingsVC: UITableViewController {
             view.endEditing(true)
         }
     }
+    
+    //MARK -- App Functions
     
     func unlock() {
         if isUdacityFirstApp {
@@ -156,6 +164,8 @@ class SettingsVC: UITableViewController {
                     self.statusLabel.text = self.user?.tagLine!
                     self.statusTF.text = self.user?.tagLine!
                 }
+                self.userProfileImage.image = UIImage(named: "placeholder.png")?.circle
+                self.touchIDSwitch.setOn(false, animated: false)
                 self.settingTableView.reloadData()
             }
         }

@@ -14,7 +14,7 @@
 		8309C4C11D508ABC007B1CF7 /* SharedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8309C4C01D508ABC007B1CF7 /* SharedVC.swift */; };
 		8309C4C31D508F8A007B1CF7 /* EditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8309C4C21D508F8A007B1CF7 /* EditorVC.swift */; };
 		830DCB841D4FD1C9009F12AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830DCB831D4FD1C9009F12AC /* AppDelegate.swift */; };
-		830DCB861D4FD1C9009F12AC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830DCB851D4FD1C9009F12AC /* ViewController.swift */; };
+		830DCB861D4FD1C9009F12AC /* LoadingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830DCB851D4FD1C9009F12AC /* LoadingVC.swift */; };
 		830DCB891D4FD1C9009F12AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 830DCB871D4FD1C9009F12AC /* Main.storyboard */; };
 		830DCB8B1D4FD1C9009F12AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 830DCB8A1D4FD1C9009F12AC /* Assets.xcassets */; };
 		830DCB8E1D4FD1C9009F12AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 830DCB8C1D4FD1C9009F12AC /* LaunchScreen.storyboard */; };
@@ -38,11 +38,59 @@
 		83D001591D50098700B5F778 /* RecentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D001581D50098700B5F778 /* RecentVC.swift */; };
 		83D0015B1D500C0E00B5F778 /* MemeMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D0015A1D500C0E00B5F778 /* MemeMain.swift */; };
 		83D0015D1D500E8100B5F778 /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D0015C1D500E8100B5F778 /* Welcome.storyboard */; };
+		83E1D3A91D68E008008BD989 /* RPCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E1D3A81D68E008008BD989 /* RPCircularProgress.swift */; };
+		83E1D3AB1D68F2C1008BD989 /* SecurityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E1D3AA1D68F2C1008BD989 /* SecurityVC.swift */; };
+		83E1D3DB1D68FD65008BD989 /* PasscodeLock.h in Headers */ = {isa = PBXBuildFile; fileRef = 83E1D3DA1D68FD65008BD989 /* PasscodeLock.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		83E1D3DF1D68FD65008BD989 /* PasscodeLock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E1D3D81D68FD65008BD989 /* PasscodeLock.framework */; };
+		83E1D3E01D68FD65008BD989 /* PasscodeLock.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 83E1D3D81D68FD65008BD989 /* PasscodeLock.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		83E1D3F51D68FE46008BD989 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E1D3F01D68FE46008BD989 /* Functions.swift */; };
+		83E1D3F61D68FE46008BD989 /* PasscodeLock.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83E1D3F11D68FE46008BD989 /* PasscodeLock.strings */; };
+		83E1D3F71D68FE46008BD989 /* PasscodeLockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E1D3F21D68FE46008BD989 /* PasscodeLockViewController.swift */; };
+		83E1D3F81D68FE46008BD989 /* PasscodeLockPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E1D3F31D68FE46008BD989 /* PasscodeLockPresenter.swift */; };
+		83E1D3FE1D68FE65008BD989 /* PasscodeRepositoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E1D3FA1D68FE65008BD989 /* PasscodeRepositoryType.swift */; };
+		83E1D3FF1D68FE65008BD989 /* PasscodeLockStateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E1D3FB1D68FE65008BD989 /* PasscodeLockStateType.swift */; };
+		83E1D4001D68FE65008BD989 /* PasscodeLockConfigurationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E1D3FC1D68FE65008BD989 /* PasscodeLockConfigurationType.swift */; };
+		83E1D4011D68FE65008BD989 /* PasscodeLockType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E1D3FD1D68FE65008BD989 /* PasscodeLockType.swift */; };
+		83E1D4091D68FE81008BD989 /* PasscodeLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E1D4041D68FE81008BD989 /* PasscodeLock.swift */; };
+		83E1D40A1D68FE81008BD989 /* EnterPasscodeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E1D4051D68FE81008BD989 /* EnterPasscodeState.swift */; };
+		83E1D40B1D68FE81008BD989 /* SetPasscodeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E1D4061D68FE81008BD989 /* SetPasscodeState.swift */; };
+		83E1D40C1D68FE81008BD989 /* ConfirmPasscodeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E1D4071D68FE81008BD989 /* ConfirmPasscodeState.swift */; };
+		83E1D40D1D68FE81008BD989 /* ChangePasscodeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E1D4081D68FE81008BD989 /* ChangePasscodeState.swift */; };
+		83E1D4111D68FE88008BD989 /* PasscodeSignPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E1D40E1D68FE88008BD989 /* PasscodeSignPlaceholderView.swift */; };
+		83E1D4121D68FE88008BD989 /* PasscodeSignButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E1D40F1D68FE88008BD989 /* PasscodeSignButton.swift */; };
+		83E1D4131D68FE88008BD989 /* PasscodeLockView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83E1D4101D68FE88008BD989 /* PasscodeLockView.xib */; };
+		83E1D4151D68FF5A008BD989 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F39D831D651ADA005BB9D7 /* LocalAuthentication.framework */; };
+		83E1D4171D6906ED008BD989 /* UserDefaultsPasscodeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E1D4161D6906ED008BD989 /* UserDefaultsPasscodeRepository.swift */; };
+		83E1D4191D6906F9008BD989 /* PasscodeLockConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E1D4181D6906F9008BD989 /* PasscodeLockConfiguration.swift */; };
 		83F39D801D630A4B005BB9D7 /* Users+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F39D7F1D630A4B005BB9D7 /* Users+CoreDataProperties.swift */; };
 		83F39D821D631B5D005BB9D7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F39D811D631B5D005BB9D7 /* User.swift */; };
 		83F39D841D651ADA005BB9D7 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F39D831D651ADA005BB9D7 /* LocalAuthentication.framework */; };
 		B3A1B677375B5DB003EA061B /* Pods_MemeMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0942CDD40CE9C458B469BA6F /* Pods_MemeMe.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		83E1D3DD1D68FD65008BD989 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 830DCB781D4FD1C9009F12AC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 83E1D3D71D68FD65008BD989;
+			remoteInfo = PasscodeLock;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		83E1D3D21D68FD2D008BD989 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				83E1D3E01D68FD65008BD989 /* PasscodeLock.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0942CDD40CE9C458B469BA6F /* Pods_MemeMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MemeMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -55,7 +103,7 @@
 		8309C4C21D508F8A007B1CF7 /* EditorVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorVC.swift; sourceTree = "<group>"; };
 		830DCB801D4FD1C9009F12AC /* MemeMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemeMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		830DCB831D4FD1C9009F12AC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		830DCB851D4FD1C9009F12AC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		830DCB851D4FD1C9009F12AC /* LoadingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingVC.swift; sourceTree = "<group>"; };
 		830DCB881D4FD1C9009F12AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		830DCB8A1D4FD1C9009F12AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		830DCB8D1D4FD1C9009F12AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -80,6 +128,29 @@
 		83D001581D50098700B5F778 /* RecentVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentVC.swift; sourceTree = "<group>"; };
 		83D0015A1D500C0E00B5F778 /* MemeMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeMain.swift; sourceTree = "<group>"; };
 		83D0015C1D500E8100B5F778 /* Welcome.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Welcome.storyboard; sourceTree = "<group>"; };
+		83E1D3A81D68E008008BD989 /* RPCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RPCircularProgress.swift; sourceTree = "<group>"; };
+		83E1D3AA1D68F2C1008BD989 /* SecurityVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityVC.swift; sourceTree = "<group>"; };
+		83E1D3D81D68FD65008BD989 /* PasscodeLock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PasscodeLock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		83E1D3DA1D68FD65008BD989 /* PasscodeLock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PasscodeLock.h; sourceTree = "<group>"; };
+		83E1D3DC1D68FD65008BD989 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		83E1D3F01D68FE46008BD989 /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
+		83E1D3F11D68FE46008BD989 /* PasscodeLock.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = PasscodeLock.strings; sourceTree = "<group>"; };
+		83E1D3F21D68FE46008BD989 /* PasscodeLockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasscodeLockViewController.swift; sourceTree = "<group>"; };
+		83E1D3F31D68FE46008BD989 /* PasscodeLockPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasscodeLockPresenter.swift; sourceTree = "<group>"; };
+		83E1D3FA1D68FE65008BD989 /* PasscodeRepositoryType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasscodeRepositoryType.swift; sourceTree = "<group>"; };
+		83E1D3FB1D68FE65008BD989 /* PasscodeLockStateType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasscodeLockStateType.swift; sourceTree = "<group>"; };
+		83E1D3FC1D68FE65008BD989 /* PasscodeLockConfigurationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasscodeLockConfigurationType.swift; sourceTree = "<group>"; };
+		83E1D3FD1D68FE65008BD989 /* PasscodeLockType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasscodeLockType.swift; sourceTree = "<group>"; };
+		83E1D4041D68FE81008BD989 /* PasscodeLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasscodeLock.swift; sourceTree = "<group>"; };
+		83E1D4051D68FE81008BD989 /* EnterPasscodeState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPasscodeState.swift; sourceTree = "<group>"; };
+		83E1D4061D68FE81008BD989 /* SetPasscodeState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPasscodeState.swift; sourceTree = "<group>"; };
+		83E1D4071D68FE81008BD989 /* ConfirmPasscodeState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmPasscodeState.swift; sourceTree = "<group>"; };
+		83E1D4081D68FE81008BD989 /* ChangePasscodeState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasscodeState.swift; sourceTree = "<group>"; };
+		83E1D40E1D68FE88008BD989 /* PasscodeSignPlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasscodeSignPlaceholderView.swift; sourceTree = "<group>"; };
+		83E1D40F1D68FE88008BD989 /* PasscodeSignButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasscodeSignButton.swift; sourceTree = "<group>"; };
+		83E1D4101D68FE88008BD989 /* PasscodeLockView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasscodeLockView.xib; sourceTree = "<group>"; };
+		83E1D4161D6906ED008BD989 /* UserDefaultsPasscodeRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsPasscodeRepository.swift; sourceTree = "<group>"; };
+		83E1D4181D6906F9008BD989 /* PasscodeLockConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasscodeLockConfiguration.swift; sourceTree = "<group>"; };
 		83F39D7E1D630980005BB9D7 /* MemeMeDM 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MemeMeDM 2.xcdatamodel"; sourceTree = "<group>"; };
 		83F39D7F1D630A4B005BB9D7 /* Users+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Users+CoreDataProperties.swift"; path = "CoreData/Users+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		83F39D811D631B5D005BB9D7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -93,7 +164,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				83F39D841D651ADA005BB9D7 /* LocalAuthentication.framework in Frameworks */,
+				83E1D3DF1D68FD65008BD989 /* PasscodeLock.framework in Frameworks */,
 				B3A1B677375B5DB003EA061B /* Pods_MemeMe.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83E1D3D41D68FD65008BD989 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83E1D4151D68FF5A008BD989 /* LocalAuthentication.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				830DCB821D4FD1C9009F12AC /* MemeMe */,
+				83E1D3D91D68FD65008BD989 /* PasscodeLock */,
 				830DCB811D4FD1C9009F12AC /* Products */,
 				7998F4EB33D126C4736559B8 /* Pods */,
 				A85C10EAD1D6AC22EC6D7C6D /* Frameworks */,
@@ -123,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				830DCB801D4FD1C9009F12AC /* MemeMe.app */,
+				83E1D3D81D68FD65008BD989 /* PasscodeLock.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -136,7 +218,7 @@
 				830DCB991D4FEBEC009F12AC /* Model */,
 				830DCB9C1D4FEC04009F12AC /* Utils */,
 				830DCB831D4FD1C9009F12AC /* AppDelegate.swift */,
-				830DCB851D4FD1C9009F12AC /* ViewController.swift */,
+				830DCB851D4FD1C9009F12AC /* LoadingVC.swift */,
 				830DCB871D4FD1C9009F12AC /* Main.storyboard */,
 				83D0015C1D500E8100B5F778 /* Welcome.storyboard */,
 				830DCB8A1D4FD1C9009F12AC /* Assets.xcassets */,
@@ -179,6 +261,7 @@
 				8309C4C21D508F8A007B1CF7 /* EditorVC.swift */,
 				8342D7F21D56FBA700C5735A /* MemeDetailVC.swift */,
 				83063FBD1D5B32F800192B7A /* SettingsVC.swift */,
+				83E1D3AA1D68F2C1008BD989 /* SecurityVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -186,10 +269,12 @@
 		830DCB9C1D4FEC04009F12AC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				83E1D41A1D690703008BD989 /* Passcode */,
 				83A507B31D6025BB0062691E /* Extentions */,
 				830DCB9D1D4FEC19009F12AC /* Constaints.swift */,
 				830DCB9F1D4FEC23009F12AC /* Strings.swift */,
 				8342D7A11D5564B600C5735A /* Extensions.swift */,
+				83E1D3A81D68E008008BD989 /* RPCircularProgress.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -216,6 +301,64 @@
 			name = Extentions;
 			sourceTree = "<group>";
 		};
+		83E1D3D91D68FD65008BD989 /* PasscodeLock */ = {
+			isa = PBXGroup;
+			children = (
+				83E1D4031D68FE76008BD989 /* Views */,
+				83E1D4021D68FE6D008BD989 /* PasscodeLock */,
+				83E1D3F91D68FE51008BD989 /* protocols */,
+				83E1D3F01D68FE46008BD989 /* Functions.swift */,
+				83E1D3F11D68FE46008BD989 /* PasscodeLock.strings */,
+				83E1D3F21D68FE46008BD989 /* PasscodeLockViewController.swift */,
+				83E1D3F31D68FE46008BD989 /* PasscodeLockPresenter.swift */,
+				83E1D3DA1D68FD65008BD989 /* PasscodeLock.h */,
+				83E1D3DC1D68FD65008BD989 /* Info.plist */,
+			);
+			path = PasscodeLock;
+			sourceTree = "<group>";
+		};
+		83E1D3F91D68FE51008BD989 /* protocols */ = {
+			isa = PBXGroup;
+			children = (
+				83E1D3FA1D68FE65008BD989 /* PasscodeRepositoryType.swift */,
+				83E1D3FB1D68FE65008BD989 /* PasscodeLockStateType.swift */,
+				83E1D3FC1D68FE65008BD989 /* PasscodeLockConfigurationType.swift */,
+				83E1D3FD1D68FE65008BD989 /* PasscodeLockType.swift */,
+			);
+			name = protocols;
+			sourceTree = "<group>";
+		};
+		83E1D4021D68FE6D008BD989 /* PasscodeLock */ = {
+			isa = PBXGroup;
+			children = (
+				83E1D4041D68FE81008BD989 /* PasscodeLock.swift */,
+				83E1D4051D68FE81008BD989 /* EnterPasscodeState.swift */,
+				83E1D4061D68FE81008BD989 /* SetPasscodeState.swift */,
+				83E1D4071D68FE81008BD989 /* ConfirmPasscodeState.swift */,
+				83E1D4081D68FE81008BD989 /* ChangePasscodeState.swift */,
+			);
+			name = PasscodeLock;
+			sourceTree = "<group>";
+		};
+		83E1D4031D68FE76008BD989 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				83E1D40E1D68FE88008BD989 /* PasscodeSignPlaceholderView.swift */,
+				83E1D40F1D68FE88008BD989 /* PasscodeSignButton.swift */,
+				83E1D4101D68FE88008BD989 /* PasscodeLockView.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		83E1D41A1D690703008BD989 /* Passcode */ = {
+			isa = PBXGroup;
+			children = (
+				83E1D4161D6906ED008BD989 /* UserDefaultsPasscodeRepository.swift */,
+				83E1D4181D6906F9008BD989 /* PasscodeLockConfiguration.swift */,
+			);
+			name = Passcode;
+			sourceTree = "<group>";
+		};
 		A85C10EAD1D6AC22EC6D7C6D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -227,12 +370,23 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		83E1D3D51D68FD65008BD989 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83E1D3DB1D68FD65008BD989 /* PasscodeLock.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		830DCB7F1D4FD1C9009F12AC /* MemeMe */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 830DCB921D4FD1C9009F12AC /* Build configuration list for PBXNativeTarget "MemeMe" */;
 			buildPhases = (
-				98FADD4D23C1E24DABA40867 /* 📦 Check Pods Manifest.lock */,
+				98FADD4D23C1E24DABA40867 /* [CP] Check Pods Manifest.lock */,
 				8309DD2ACBEC017E91F0EC98 /* [CP] Check Pods Manifest.lock */,
 				830DCB7C1D4FD1C9009F12AC /* Sources */,
 				830DCB7D1D4FD1C9009F12AC /* Frameworks */,
@@ -241,15 +395,35 @@
 				2BF12FFA509CC78589BCFF48 /* [CP] Copy Pods Resources */,
 				02F13FAF13798C792332B345 /* 📦 Embed Pods Frameworks */,
 				67C4162282EE7634B1919A0B /* 📦 Copy Pods Resources */,
+				83E1D3D21D68FD2D008BD989 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				83E1D3DE1D68FD65008BD989 /* PBXTargetDependency */,
 			);
 			name = MemeMe;
 			productName = MemeMe;
 			productReference = 830DCB801D4FD1C9009F12AC /* MemeMe.app */;
 			productType = "com.apple.product-type.application";
+		};
+		83E1D3D71D68FD65008BD989 /* PasscodeLock */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 83E1D3E11D68FD65008BD989 /* Build configuration list for PBXNativeTarget "PasscodeLock" */;
+			buildPhases = (
+				83E1D3D31D68FD65008BD989 /* Sources */,
+				83E1D3D41D68FD65008BD989 /* Frameworks */,
+				83E1D3D51D68FD65008BD989 /* Headers */,
+				83E1D3D61D68FD65008BD989 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PasscodeLock;
+			productName = PasscodeLock;
+			productReference = 83E1D3D81D68FD65008BD989 /* PasscodeLock.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -262,6 +436,9 @@
 				ORGANIZATIONNAME = "Corey Baines";
 				TargetAttributes = {
 					830DCB7F1D4FD1C9009F12AC = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+					83E1D3D71D68FD65008BD989 = {
 						CreatedOnToolsVersion = 7.3.1;
 					};
 				};
@@ -280,6 +457,7 @@
 			projectRoot = "";
 			targets = (
 				830DCB7F1D4FD1C9009F12AC /* MemeMe */,
+				83E1D3D71D68FD65008BD989 /* PasscodeLock */,
 			);
 		};
 /* End PBXProject section */
@@ -294,6 +472,15 @@
 				830DCB8B1D4FD1C9009F12AC /* Assets.xcassets in Resources */,
 				830DCB961D4FD31F009F12AC /* GoogleService-Info.plist in Resources */,
 				830DCB891D4FD1C9009F12AC /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83E1D3D61D68FD65008BD989 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83E1D3F61D68FE46008BD989 /* PasscodeLock.strings in Resources */,
+				83E1D4131D68FE88008BD989 /* PasscodeLockView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,14 +562,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		98FADD4D23C1E24DABA40867 /* 📦 Check Pods Manifest.lock */ = {
+		98FADD4D23C1E24DABA40867 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -401,6 +588,7 @@
 				83F39D801D630A4B005BB9D7 /* Users+CoreDataProperties.swift in Sources */,
 				8342D7EC1D56B20800C5735A /* FontAttributesDB+CoreDataProperties.swift in Sources */,
 				8342D7ED1D56B20800C5735A /* FontAttributesDB.swift in Sources */,
+				83E1D3AB1D68F2C1008BD989 /* SecurityVC.swift in Sources */,
 				830DCB9E1D4FEC19009F12AC /* Constaints.swift in Sources */,
 				830DCBA01D4FEC23009F12AC /* Strings.swift in Sources */,
 				8342D7F31D56FBA700C5735A /* MemeDetailVC.swift in Sources */,
@@ -408,7 +596,8 @@
 				83D001591D50098700B5F778 /* RecentVC.swift in Sources */,
 				8342D7A51D55C32E00C5735A /* MemeMeDM.xcdatamodeld in Sources */,
 				83063FBE1D5B32F800192B7A /* SettingsVC.swift in Sources */,
-				830DCB861D4FD1C9009F12AC /* ViewController.swift in Sources */,
+				830DCB861D4FD1C9009F12AC /* LoadingVC.swift in Sources */,
+				83E1D4191D6906F9008BD989 /* PasscodeLockConfiguration.swift in Sources */,
 				83D001571D50042100B5F778 /* RecentCollectionViewCell.swift in Sources */,
 				83D0015B1D500C0E00B5F778 /* MemeMain.swift in Sources */,
 				8309C4C11D508ABC007B1CF7 /* SharedVC.swift in Sources */,
@@ -418,17 +607,48 @@
 				8342D7F11D56B20800C5735A /* Memes.swift in Sources */,
 				830DCB841D4FD1C9009F12AC /* AppDelegate.swift in Sources */,
 				83F39D821D631B5D005BB9D7 /* User.swift in Sources */,
+				83E1D4171D6906ED008BD989 /* UserDefaultsPasscodeRepository.swift in Sources */,
 				8342D7A21D5564B600C5735A /* Extensions.swift in Sources */,
 				8309C4BF1D50883E007B1CF7 /* Meme.swift in Sources */,
 				83A507B51D6025DF0062691E /* UIViewControllerExtentions.swift in Sources */,
 				8309C4BB1D5021A2007B1CF7 /* DataService.swift in Sources */,
 				8309C4BD1D502431007B1CF7 /* SigninVC.swift in Sources */,
 				8309C4C31D508F8A007B1CF7 /* EditorVC.swift in Sources */,
+				83E1D3A91D68E008008BD989 /* RPCircularProgress.swift in Sources */,
 				83A507B71D6059590062691E /* TextPickerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		83E1D3D31D68FD65008BD989 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83E1D40A1D68FE81008BD989 /* EnterPasscodeState.swift in Sources */,
+				83E1D40D1D68FE81008BD989 /* ChangePasscodeState.swift in Sources */,
+				83E1D4091D68FE81008BD989 /* PasscodeLock.swift in Sources */,
+				83E1D3F71D68FE46008BD989 /* PasscodeLockViewController.swift in Sources */,
+				83E1D40C1D68FE81008BD989 /* ConfirmPasscodeState.swift in Sources */,
+				83E1D4001D68FE65008BD989 /* PasscodeLockConfigurationType.swift in Sources */,
+				83E1D40B1D68FE81008BD989 /* SetPasscodeState.swift in Sources */,
+				83E1D3F81D68FE46008BD989 /* PasscodeLockPresenter.swift in Sources */,
+				83E1D4121D68FE88008BD989 /* PasscodeSignButton.swift in Sources */,
+				83E1D3F51D68FE46008BD989 /* Functions.swift in Sources */,
+				83E1D3FE1D68FE65008BD989 /* PasscodeRepositoryType.swift in Sources */,
+				83E1D4011D68FE65008BD989 /* PasscodeLockType.swift in Sources */,
+				83E1D3FF1D68FE65008BD989 /* PasscodeLockStateType.swift in Sources */,
+				83E1D4111D68FE88008BD989 /* PasscodeSignPlaceholderView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		83E1D3DE1D68FD65008BD989 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 83E1D3D71D68FD65008BD989 /* PasscodeLock */;
+			targetProxy = 83E1D3DD1D68FD65008BD989 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		830DCB871D4FD1C9009F12AC /* Main.storyboard */ = {
@@ -540,6 +760,7 @@
 			baseConfigurationReference = 218CD4B1B192A02FC90374DE /* Pods-MemeMe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = MemeMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.spiritdevs.MemeMe;
@@ -552,10 +773,60 @@
 			baseConfigurationReference = AE84143D3D7AF50C366D32DD /* Pods-MemeMe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = MemeMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.spiritdevs.MemeMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		83E1D3E21D68FD65008BD989 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PasscodeLock",
+				);
+				INFOPLIST_FILE = PasscodeLock/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.spiritdevs.PasscodeLock;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		83E1D3E31D68FD65008BD989 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PasscodeLock",
+				);
+				INFOPLIST_FILE = PasscodeLock/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.spiritdevs.PasscodeLock;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -579,6 +850,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		83E1D3E11D68FD65008BD989 /* Build configuration list for PBXNativeTarget "PasscodeLock" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83E1D3E21D68FD65008BD989 /* Debug */,
+				83E1D3E31D68FD65008BD989 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 
