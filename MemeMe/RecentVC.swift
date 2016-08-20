@@ -34,7 +34,7 @@ class RecentVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         recentTableView.hidden = false
         downloadRecentMemes()
         //Memes.shared.deleteMemes((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: managedObjectContext!)
-       // Users.deleteUsers((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: managedObjectContext!)
+        //Users.deleteUsers((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: managedObjectContext!)
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -45,7 +45,6 @@ class RecentVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                                       selector: #selector(RecentVC.handleCompleteDownload(_:)),
                                       name: "DownloadProgressNotification",
                                       object: nil)
-            downloadRecentMemes()
             savedReload = false
         }
         if isUdacityFirstApp {
@@ -61,6 +60,7 @@ class RecentVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                 }
             }
         }
+        downloadRecentMemes()
     }
     
     //MARK: - App Functions

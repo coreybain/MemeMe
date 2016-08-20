@@ -62,7 +62,9 @@ class SigninContVC: UIViewController {
         super.viewDidLoad()
         activityIndicator.hidesWhenStopped = true
         
-        
+        //Looks for single or multiple taps and then closes the keyboard
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SigninContVC.dismissKeyboard))
+        view.addGestureRecognizer(tap)
     }
     
     //MARK: - App functions
@@ -200,6 +202,12 @@ class SigninContVC: UIViewController {
             ac.addAction(action)
         }
         presentViewController(ac, animated: true, completion: nil)
+    }
+    
+    //Calls this function when the tap is recognized.
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
     }
     
 

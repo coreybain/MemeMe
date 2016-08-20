@@ -19,8 +19,10 @@ class SettingsVC: UITableViewController {
     @IBOutlet weak var touchIDSwitch: UISwitch!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var statusTF: UITextField!
     @IBOutlet weak var userProfileImage: UIImageView!
     @IBOutlet var settingTableView: UITableView!
+    @IBOutlet weak var editDoneButton: UIBarButtonItem!
     
     //MARK: - Variables
     var managedObjectContext: NSManagedObjectContext? =
@@ -29,6 +31,7 @@ class SettingsVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        statusTF.hidden = true
         self.tableView.backgroundColor = UIColor(red: 243.0/255, green: 243.0/255, blue: 243.0/255, alpha: 1)
     }
     
@@ -56,8 +59,16 @@ class SettingsVC: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if (indexPath.section == 0 && indexPath.row == 0) {
+            return 80
+        }
         if (indexPath.section == 1 && indexPath.row == 1) {
-            return 0
+            //if device has touch id
+            var error: NSError?
+            
+            if error?.code == LAError.TouchIDNotAvailable.rawValue {
+                return 0
+            }
         }
         return 55
     }
@@ -71,17 +82,9 @@ class SettingsVC: UITableViewController {
         }
         
         if (indexPath.section == 1 && indexPath.row == 1) {
+            var error:NSError?
+            //var
             
-            //if device has touch id
-            if #available(iOS 8.0, *) {
-                var error: NSError?
-                let hasTouchID = LAContext().canEvaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, error: &error)
-                
-                //Show the touch id option if the device has touch id hardware feature (even if the passcode is not set or touch id is not enrolled)
-                if(hasTouchID || (error?.code != LAError.TouchIDNotAvailable.rawValue)) {
-                   // touchIDContentView.hidden = false
-                } 
-            }
             
         }
         
@@ -116,6 +119,20 @@ class SettingsVC: UITableViewController {
     @IBAction func touchIDSwitchPressed(sender: AnyObject) {
     }
     
+    @IBAction func editDoneButtonPressed(sender: AnyObject) {
+        if editDoneButton.title == "Edit" {
+            statusLabel.hidden = true
+            statusTF.hidden = false
+            editDoneButton.title = "Done"
+            statusTF.becomeFirstResponder()
+        } else {
+            statusLabel.hidden = false
+            statusTF.hidden = true
+            editDoneButton.title = "Edit"
+            view.endEditing(true)
+        }
+    }
+    
     func unlock() {
         if isUdacityFirstApp {
             isUdacityFirstApp = false
@@ -137,6 +154,7 @@ class SettingsVC: UITableViewController {
                 }
                 if (self.user?.tagLine) != nil {
                     self.statusLabel.text = self.user?.tagLine!
+                    self.statusTF.text = self.user?.tagLine!
                 }
                 self.settingTableView.reloadData()
             }

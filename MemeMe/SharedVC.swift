@@ -20,9 +20,15 @@ class SharedVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let searchBar = UISearchBar()
-        searchBar.sizeToFit()
-        navigationItem.titleView = searchBar
+        //
+        // Search Bar to allow users to search through memes as catalog grows
+        //
+        //let searchBar = UISearchBar()
+        //searchBar.sizeToFit()
+        //navigationItem.titleView = searchBar
+        //
+        
+        //Download the memes to display to user
         downloadSharedMemes()
     }
     
@@ -35,6 +41,22 @@ class SharedVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             self.collectionView.reloadData()
         }
         
+    }
+    
+    
+    //MARK: - Actions
+    
+    @IBAction func newMemeButtonPressed(sender: AnyObject) {
+        //Bypass editor and go directly to editor
+        let editorObject: AnyObject = storyboard!.instantiateViewControllerWithIdentifier("EditorVC")
+        let recentObject: AnyObject = storyboard!.instantiateViewControllerWithIdentifier("RecentVC")
+        let editorVC = editorObject as! EditorVC
+        let recentVC = recentObject as! RecentVC
+        presentViewController(editorVC, animated: true, completion: {
+            editorVC.cancelButton.enabled = true
+            editorVC.saveButton.enabled = false
+            editorVC.recentVC = recentVC
+        })
     }
 
     

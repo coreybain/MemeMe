@@ -89,6 +89,11 @@ extension DataService {
                                 if let fontName = attributes.valueForKey("fontName") {
                                     if let fontSize = attributes.valueForKey("fontSize")  {
                                         if self.setFontAttributes(fontSize as! String, fontName: fontName as! String, fontColor: fontColor as! String, borderColor: borderColor as! String) {
+                                            
+                                            
+                                            
+                                            // BELOW HERE IT STOP WORKING BECAUSE IT CANT FIND THE IMAGE
+                                            
                                             if let savedImageFile = MemeFunctions.loadImageFromPath(MemeFunctions.fileInDocumentsDirectory("\(savedImage)")) {
                                                 if let memeImage = MemeFunctions.loadImageFromPath(MemeFunctions.fileInDocumentsDirectory("\(savedMeme).jpg")) {
                                                     let memeCell = Meme(topLabel: top, bottomLabel: bottom, savedImage: savedImageFile, savedMeme: savedMeme, memedImage: memeImage, fontAttributer: self.fontAttribute, memeID: nil, memedImageString: savedMeme, savedImageString: savedImage)
