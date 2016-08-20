@@ -48,8 +48,8 @@ class LoadingVC: UIViewController, UIAlertViewDelegate {
         let touchToken = NSUserDefaults.standardUserDefaults().objectForKey("touchID") as? Bool
         let firstRun = NSUserDefaults.standardUserDefaults().objectForKey("firstRun") as? Bool
         var passcodeVC: PasscodeLockViewController
-        
-        if (touchToken != nil) && (touchToken == true){
+        print(touchToken)
+        if (touchToken != nil) && (touchToken == true) && (firstRun == nil) {
             self.touchIDAuth()
         } else if hasPasscode && (firstRun == nil) {
             passcodeVC = PasscodeLockViewController(state: .EnterPasscode, configuration: configuration)
@@ -62,7 +62,7 @@ class LoadingVC: UIViewController, UIAlertViewDelegate {
             }
             
             presentViewController(passcodeVC, animated: true, completion: nil)
-        } else {
+        } else if (firstRun == nil) {
             dispatch_async(dispatch_get_main_queue(), {
                 MemeMain.memeShared().presentMemeMeInNewWindow()
             })
@@ -130,13 +130,13 @@ class LoadingVC: UIViewController, UIAlertViewDelegate {
                     case LAError.UserFallback.rawValue:
                         print("User selected to enter custom password")
                         NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                              self.showPasswordAlert()
+                            self.passcode()
                         })
                         
                     default:
                         print("Authentication failed")
                         NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                             self.showPasswordAlert()
+                            self.passcode()
                         })
                     }
                 }
@@ -149,28 +149,39 @@ class LoadingVC: UIViewController, UIAlertViewDelegate {
                 
             case LAError.TouchIDNotEnrolled.rawValue:
                 print("TouchID is not enrolled")
-                
+                NSUserDefaults.standardUserDefaults().setBool(false, forKey: "touchID")
+                passcode()
             case LAError.PasscodeNotSet.rawValue:
                 print("A passcode has not been set")
-                
+                NSUserDefaults.standardUserDefaults().setBool(false, forKey: "touchID")
+                passcode()
             default:
                 // The LAError.TouchIDNotAvailable case.
                 print("TouchID not available")
+                NSUserDefaults.standardUserDefaults().setBool(false, forKey: "touchID")
+                passcode()
             }
             
             // Optionally the error description can be displayed on the console.
             print(error?.localizedDescription)
             
             // Show the custom alert view to allow users to enter the password.
-             self.showPasswordAlert()
+             self.passcode()
         }
         
     }
     
-    func showPasswordAlert() {
-        var passwordAlert : UIAlertView = UIAlertView(title: "TouchIDDemo", message: "Please type your password", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Okay")
-        passwordAlert.alertViewStyle = UIAlertViewStyle.SecureTextInput
-        passwordAlert.show()
+    func passcode() {
+        
+        let hasPasscode = configuration.repository.hasPasscode
+        var passcodeVC: PasscodeLockViewController
+        passcodeVC = PasscodeLockViewController(state: .EnterPasscode, configuration: configuration)
+        passcodeVC.successCallback = { void in
+            dispatch_async(dispatch_get_main_queue(), {
+                MemeMain.memeShared().presentMemeMeInNewWindow()
+            })
+        }
+        presentViewController(passcodeVC, animated: true, completion: nil)
     }
 
 enum LAError : Int {

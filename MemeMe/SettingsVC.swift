@@ -90,6 +90,10 @@ class SettingsVC: UITableViewController {
         }
         
         if (indexPath.section == 2 && indexPath.row == 0) {
+            UIApplication.sharedApplication().openURL(NSURL(string: "https://www.udacity.com/")!)
+        }
+        
+        if (indexPath.section == 2 && indexPath.row == 1) {
             UIApplication.sharedApplication().openURL(NSURL(string: "http://www.spiritdevs.com")!)
         }
         

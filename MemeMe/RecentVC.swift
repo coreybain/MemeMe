@@ -32,6 +32,7 @@ class RecentVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         recentCollectionView.allowsMultipleSelection = true
         recentCollectionView.hidden = true
         recentTableView.hidden = false
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("firstRun")
         downloadRecentMemes()
         //Memes.shared.deleteMemes((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: managedObjectContext!)
         //Users.deleteUsers((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: managedObjectContext!)

@@ -72,48 +72,11 @@ class SecurityVC: UITableViewController {
         var passcodeVC: PasscodeLockViewController
         
         if (indexPath.section == 0 && indexPath.row == 0) {
-            if !passcodeSwitch.on {
-                passcodeVC = PasscodeLockViewController(state: .SetPasscode, configuration: configuration)
-                
-                passcodeVC.successCallback = { [unowned self] Void in
-                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: "touchID")
-                    NSUserDefaults.standardUserDefaults().synchronize()
-                    self.touchIDSwitch.on = true
-                }
-                
-                presentViewController(passcodeVC, animated: true, completion: nil)
-            } else if !touchIDSwitch.on {
-                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "touchID")
-                NSUserDefaults.standardUserDefaults().synchronize()
-                self.touchIDSwitch.on = true
-            } else {
-                NSUserDefaults.standardUserDefaults().setBool(false, forKey: "touchID")
-                NSUserDefaults.standardUserDefaults().synchronize()
-                self.touchIDSwitch.on = false
-            }
+            touchIDActive()
         }
         
         if (indexPath.section == 1 && indexPath.row == 0) {
-            if passcodeSwitch.on {
-                passcodeVC = PasscodeLockViewController(state: .RemovePasscode, configuration: configuration)
-                
-                passcodeVC.successCallback = { [unowned self] lock in
-                    NSUserDefaults.standardUserDefaults().setBool(false, forKey: "touchID")
-                    NSUserDefaults.standardUserDefaults().synchronize()
-                    lock.repository.deletePasscode()
-                    self.passcodeSwitch.on = false
-                    self.changePasscodeLabel.alpha = 0.4
-                    self.passcodeUnlockLabel.text = "Turn on Passcode Unlock"
-                    NSUserDefaults.standardUserDefaults().setBool(false, forKey: "touchID")
-                    NSUserDefaults.standardUserDefaults().synchronize()
-                    self.touchIDSwitch.on = false
-                }
-                presentViewController(passcodeVC, animated: true, completion: nil)
-                
-            } else {
-                passcodeVC = PasscodeLockViewController(state: .SetPasscode, configuration: configuration)
-                presentViewController(passcodeVC, animated: true, completion: nil)
-            }
+            passcodeActive()
         }
         
         if (indexPath.section == 1 && indexPath.row == 1) {
@@ -152,6 +115,61 @@ class SecurityVC: UITableViewController {
             presentViewController(logoutAlert, animated: true, completion: nil)
             
             
+        }
+    }
+    
+    @IBAction func touchIDSwitch(sender: AnyObject) {
+        touchIDActive()
+    }
+    
+    @IBAction func passcodeSwitch(sender: AnyObject) {
+        passcodeActive()
+    }
+    
+    func touchIDActive() {
+        var passcodeVC: PasscodeLockViewController
+        if !passcodeSwitch.on {
+            passcodeVC = PasscodeLockViewController(state: .SetPasscode, configuration: configuration)
+            
+            passcodeVC.successCallback = { [unowned self] Void in
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "touchID")
+                NSUserDefaults.standardUserDefaults().synchronize()
+                self.touchIDSwitch.on = true
+            }
+            
+            presentViewController(passcodeVC, animated: true, completion: nil)
+        } else if !touchIDSwitch.on {
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "touchID")
+            NSUserDefaults.standardUserDefaults().synchronize()
+            self.touchIDSwitch.on = true
+        } else {
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "touchID")
+            NSUserDefaults.standardUserDefaults().synchronize()
+            self.touchIDSwitch.on = false
+        }
+    }
+    
+    func passcodeActive() {
+        var passcodeVC: PasscodeLockViewController
+        if passcodeSwitch.on {
+            passcodeVC = PasscodeLockViewController(state: .RemovePasscode, configuration: configuration)
+            
+            passcodeVC.successCallback = { [unowned self] lock in
+                NSUserDefaults.standardUserDefaults().setBool(false, forKey: "touchID")
+                NSUserDefaults.standardUserDefaults().synchronize()
+                lock.repository.deletePasscode()
+                self.passcodeSwitch.on = false
+                self.changePasscodeLabel.alpha = 0.4
+                self.passcodeUnlockLabel.text = "Turn on Passcode Unlock"
+                NSUserDefaults.standardUserDefaults().setBool(false, forKey: "touchID")
+                NSUserDefaults.standardUserDefaults().synchronize()
+                self.touchIDSwitch.on = false
+            }
+            presentViewController(passcodeVC, animated: true, completion: nil)
+            
+        } else {
+            passcodeVC = PasscodeLockViewController(state: .SetPasscode, configuration: configuration)
+            presentViewController(passcodeVC, animated: true, completion: nil)
         }
     }
     
