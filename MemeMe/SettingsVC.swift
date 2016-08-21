@@ -83,7 +83,7 @@ class SettingsVC: UITableViewController {
         }
         
         if (indexPath.section == 1 && indexPath.row == 1) {
-            var error:NSError?
+            performSegueWithIdentifier("SegueSecurity", sender: nil)
             
             
             
@@ -165,7 +165,7 @@ class SettingsVC: UITableViewController {
                     self.statusTF.text = self.user?.tagLine!
                 }
                 self.userProfileImage.image = UIImage(named: "placeholder.png")?.circle
-                self.touchIDSwitch.setOn(false, animated: false)
+                //self.touchIDSwitch.setOn(false, animated: false)
                 self.settingTableView.reloadData()
             }
         }

@@ -750,7 +750,7 @@
                         <outlet property="unlockSwitch" destination="qfc-i6-NOU" id="8sq-5d-Afc"/>
                         <outlet property="userProfileImage" destination="iRY-54-9WK" id="3xQ-kE-cX1"/>
                         <outlet property="usernameLabel" destination="fcP-HD-IXU" id="9p7-Vc-kSH"/>
-                        <segue destination="MZ8-6D-iNT" kind="show" id="CzB-Fy-48L"/>
+                        <segue destination="MZ8-6D-iNT" kind="show" identifier="SegueSecurity" id="CzB-Fy-48L"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tgx-Of-Ut0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -774,10 +774,10 @@
                             <tableViewSection headerTitle="Use TouchID" id="HdR-fr-2k9">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="47" id="0Pm-mb-Ige">
-                                        <rect key="frame" x="0.0" y="113" width="375" height="47"/>
+                                        <rect key="frame" x="0.0" y="114" width="375" height="47"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0Pm-mb-Ige" id="Sth-g6-Z1k">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="47"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="46"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="h7b-4j-uT7">
@@ -823,10 +823,10 @@
                             <tableViewSection headerTitle="Use Passcode" id="1ME-f6-Mxs">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="47" id="x6m-tg-Klt">
-                                        <rect key="frame" x="0.0" y="210" width="375" height="47"/>
+                                        <rect key="frame" x="0.0" y="211" width="375" height="47"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="x6m-tg-Klt" id="k0Y-mQ-ltG">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="47"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="46"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="btG-Bz-6Tb">
@@ -856,10 +856,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="47" id="yid-Lc-pAH">
-                                        <rect key="frame" x="0.0" y="257" width="375" height="47"/>
+                                        <rect key="frame" x="0.0" y="258" width="375" height="47"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yid-Lc-pAH" id="z6e-Zq-UWu">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="47"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="46"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="L4E-ah-DFm">
@@ -887,19 +887,23 @@
                             <tableViewSection footerTitle="This will erase all local data stored by MemeMe and will require the app to redownload everything before reloading." id="2TU-iD-Kau">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="47" id="DSr-RC-gTM">
-                                        <rect key="frame" x="0.0" y="340" width="375" height="47"/>
+                                        <rect key="frame" x="0.0" y="341" width="375" height="47"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DSr-RC-gTM" id="1rg-2E-CQV">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="47"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="46"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sB7-gQ-Emc">
+                                                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sB7-gQ-Emc">
                                                     <rect key="frame" x="130" y="9" width="116" height="30"/>
                                                     <state key="normal" title="Reset Local Data">
                                                         <color key="titleColor" red="0.74117647060000003" green="0.078431372550000003" blue="0.1647058824" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
                                                 </button>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="sB7-gQ-Emc" firstAttribute="centerY" secondItem="1rg-2E-CQV" secondAttribute="centerY" id="AUD-iR-ocs"/>
+                                                <constraint firstItem="sB7-gQ-Emc" firstAttribute="centerX" secondItem="1rg-2E-CQV" secondAttribute="centerX" id="Kil-mD-Cst"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -907,10 +911,10 @@
                             <tableViewSection footerTitle="Erase all MemeMe data on this iphone and delete your account in the cloud." id="TgD-mb-T84">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="d6O-nX-BeD">
-                                        <rect key="frame" x="0.0" y="448" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="449" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="d6O-nX-BeD" id="1Ri-LQ-MQb">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qLh-YI-1rs">
@@ -938,6 +942,7 @@
                     <connections>
                         <outlet property="changePasscodeLabel" destination="Inu-nb-e7K" id="uN2-zf-i4G"/>
                         <outlet property="passcodeSwitch" destination="cqW-fp-4oL" id="acP-jC-YDX"/>
+                        <outlet property="passcodeUnlockLabel" destination="jtg-zz-35Q" id="U9f-HM-8Ni"/>
                         <outlet property="touchIDSwitch" destination="hdg-ka-2Vb" id="tbW-O4-1Kd"/>
                     </connections>
                 </tableViewController>

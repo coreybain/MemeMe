@@ -38,6 +38,10 @@ class RecentVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("firstRun")
+        NSUserDefaults.standardUserDefaults().synchronize()
+        
         if savedReload {
             // ready for receiving notification
             let defaultCenter = NSNotificationCenter.defaultCenter()

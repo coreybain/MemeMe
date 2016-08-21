@@ -9,12 +9,29 @@
 import UIKit
 import SnapKit
 import LocalAuthentication
+import PasscodeLock
 
 class LoadingVC: UIViewController, UIAlertViewDelegate {
     
     
     @IBOutlet weak var spinView: UIView!
     let container = UIView()
+    private let configuration: PasscodeLockConfigurationType
+    
+    init(configuration: PasscodeLockConfigurationType) {
+        
+        self.configuration = configuration
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        
+        let repository = UserDefaultsPasscodeRepository()
+        configuration = PasscodeLockConfiguration(repository: repository)
+        
+        super.init(coder: aDecoder)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,10 +39,29 @@ class LoadingVC: UIViewController, UIAlertViewDelegate {
         
         constrain(thinIndeterminate)
         thinIndeterminate.enableIndeterminate()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         
+        let hasPasscode = configuration.repository.hasPasscode
         let touchToken = NSUserDefaults.standardUserDefaults().objectForKey("touchID") as? Bool
-        if (touchToken != nil) || (touchToken == true){
+        let firstRun = NSUserDefaults.standardUserDefaults().objectForKey("firstRun") as? Bool
+        var passcodeVC: PasscodeLockViewController
+        
+        if (touchToken != nil) && (touchToken == true){
             self.touchIDAuth()
+        } else if hasPasscode && (firstRun == nil) {
+            passcodeVC = PasscodeLockViewController(state: .EnterPasscode, configuration: configuration)
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "firstRun")
+            
+            passcodeVC.successCallback = { Void in
+                dispatch_async(dispatch_get_main_queue(), {
+                    MemeMain.memeShared().presentMemeMeInNewWindow()
+                })
+            }
+            
+            presentViewController(passcodeVC, animated: true, completion: nil)
         } else {
             dispatch_async(dispatch_get_main_queue(), {
                 MemeMain.memeShared().presentMemeMeInNewWindow()
