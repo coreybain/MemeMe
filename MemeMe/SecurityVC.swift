@@ -10,16 +10,23 @@ import Foundation
 import UIKit
 import PasscodeLock
 import Firebase
+import CoreData
 
 class SecurityVC: UITableViewController {
     
-    var user:Users?
-    private let configuration: PasscodeLockConfigurationType
+    //MARK: - Outlets
     @IBOutlet weak var passcodeSwitch: UISwitch!
     @IBOutlet weak var touchIDSwitch: UISwitch!
     @IBOutlet weak var changePasscodeLabel: UILabel!
     @IBOutlet weak var passcodeUnlockLabel: UILabel!
     
+    //MARK: - Variables
+    var user:Users?
+    private let configuration: PasscodeLockConfigurationType
+    var managedObjectContext: NSManagedObjectContext? =
+        (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext
+    
+    //MARK: - App Lifecycle
     init(configuration: PasscodeLockConfigurationType) {
         
         self.configuration = configuration
@@ -45,6 +52,19 @@ class SecurityVC: UITableViewController {
         super.viewDidAppear(animated)
         updatePasscodeView()
     }
+    
+    
+    //MARK: - Actions
+    @IBAction func touchIDSwitch(sender: AnyObject) {
+        touchIDActive()
+    }
+    
+    @IBAction func passcodeSwitch(sender: AnyObject) {
+        passcodeActive()
+    }
+    
+    
+    //MARK: - App Functions
     func updatePasscodeView() {
         
         let hasPasscode = configuration.repository.hasPasscode
@@ -96,34 +116,77 @@ class SecurityVC: UITableViewController {
         
         if (indexPath.section == 2 && indexPath.row == 0) {
             //This is the wipe local data
+            
+            let resetAlert = UIAlertController(title: "Reset Local Data", message: "Are you sure you want to reset all local data and redownload?", preferredStyle: .Alert)
+            let okButton = UIAlertAction(title: "Ok", style: .Default, handler: { [unowned self] Void in
+                Memes.shared.deleteMemes((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: self.managedObjectContext!)
+                Users.deleteUsers((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: self.managedObjectContext!)
+            })
+            let cancelButton = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            resetAlert.addAction(okButton)
+            resetAlert.addAction(cancelButton)
+            presentViewController(resetAlert, animated: true, completion: nil)
+            
+            
+            
         }
         
         if (indexPath.section == 3 && indexPath.row == 0){
-            let logoutAlert = UIAlertController(title: "Delete Account", message: "Are you sure you want to delete your MemeMe account?", preferredStyle: .Alert)
+            let user = FIRAuth.auth()?.currentUser
             
-            let okButton = UIAlertAction(title: "Ok", style: .Default, handler: { Void in
-                do{
-                    try FIRAuth.auth()!.signOut()
-                    MemeMain.memeShared().presentMemeMeInNewWindow()
-                } catch {
-                    print("ERROR")
-                }
+            let deleteAlert = UIAlertController(title: "Delete Account", message: "Are you sure you want to delete your MemeMe account?", preferredStyle: .Alert)
+            
+            let okButton = UIAlertAction(title: "Ok", style: .Default, handler: { [unowned self] Void in
+                
+                let authAlert = UIAlertController(title: "SpritID Password", message: "Enter the ApiritID password for \(user!.email!) to delete your account.", preferredStyle: .Alert)
+                authAlert.addTextFieldWithConfigurationHandler({ (password) in
+                    password.placeholder = "Enter password here"
+                    password.secureTextEntry = true
+                    password.clearButtonMode = .WhileEditing
+                })
+                authAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action) in
+                    let passField = authAlert.textFields![0] as UITextField
+                    if passField.text != "" {
+                        let credential = FIREmailPasswordAuthProvider.credentialWithEmail((user?.email)!, password: passField.text!)
+                        // Prompt the user to re-provide their sign-in credentials
+                        user?.reauthenticateWithCredential(credential) { error in
+                            if let error = error {
+                                print(error.localizedDescription)
+                                //This is where the error alert would go
+                            } else {
+                                NSUserDefaults.standardUserDefaults().removeObjectForKey("touchID")
+                                NSUserDefaults.standardUserDefaults().removeObjectForKey("passcode.lock.passcode")
+                                NSUserDefaults.standardUserDefaults().synchronize()
+                                Memes.shared.deleteMemes((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: self.managedObjectContext!)
+                                Users.deleteUsers((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: self.managedObjectContext!)
+                                DataService.ds().removeAccount(user!, complete: { (complete) in
+                                    if complete {
+                                        user?.deleteWithCompletion { error in
+                                            if let error = error {
+                                                print(error.localizedDescription)
+                                            } else {
+                                                MemeMain.memeShared().presentMemeMeInNewWindow()
+                                            }
+                                        }
+                                    } else {
+                                        print("error")
+                                    }
+                                })
+                            }
+                        }
+
+                    }
+                }))
+                authAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+                self.presentViewController(authAlert, animated: true, completion: nil)
             })
             let cancelButton = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-            logoutAlert.addAction(okButton)
-            logoutAlert.addAction(cancelButton)
-            presentViewController(logoutAlert, animated: true, completion: nil)
+            deleteAlert.addAction(okButton)
+            deleteAlert.addAction(cancelButton)
+            presentViewController(deleteAlert, animated: true, completion: nil)
             
             
         }
-    }
-    
-    @IBAction func touchIDSwitch(sender: AnyObject) {
-        touchIDActive()
-    }
-    
-    @IBAction func passcodeSwitch(sender: AnyObject) {
-        passcodeActive()
     }
     
     func touchIDActive() {

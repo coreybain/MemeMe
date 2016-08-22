@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Firebase
+import CoreLocation
 
 class Meme {
     
@@ -22,6 +23,9 @@ class Meme {
     var _memedImageString: String!
     var _savedImage: UIImage!
     var _memedImage: UIImage!
+    var _memedImageData: NSData!
+    var _latitude: Double!
+    var _longitude: Double!
     var fontAttribute: FontAttribute!
     
     var topLabel:String {
@@ -90,7 +94,25 @@ class Meme {
         }
     }
     
-    init(topLabel:String?, bottomLabel:String?, savedImage:UIImage, savedMeme:String?, memedImage:UIImage, fontAttributer:FontAttribute, memeID:String?, memedImageString:String?, savedImageString:String?) {
+    var memedImageData:NSData {
+        get {
+            return _memedImageData
+        }
+    }
+    
+    var latitude:Double {
+        get {
+            return _latitude
+        }
+    }
+    
+    var longitude:Double {
+        get {
+            return _longitude
+        }
+    }
+    
+    init(topLabel:String?, bottomLabel:String?, savedImage:UIImage, savedMeme:String?, memedImage:UIImage, fontAttributer:FontAttribute, memeID:String?, memedImageString:String?, savedImageString:String?, latitude:Double?, longitude:Double?) {
         _topLabel = topLabel
         _bottomLabel = bottomLabel
         _savedImage = savedImage
@@ -100,6 +122,16 @@ class Meme {
         _memeID = memeID
         _savedImageString = savedImageString
         _memedImageString = memedImageString
+        _latitude = latitude
+        _longitude = longitude
+    }
+    
+    init(topLabel:String?, bottomLabel:String?, memedImageData:NSData, fontAttributer:FontAttribute, memeID:String?) {
+        _topLabel = topLabel
+        _bottomLabel = bottomLabel
+        _memedImageData = memedImageData
+        fontAttribute = fontAttributer
+        _memeID = memeID
     }
 }
 

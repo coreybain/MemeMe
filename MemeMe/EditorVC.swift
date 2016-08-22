@@ -9,9 +9,10 @@
 import Foundation
 import UIKit
 import CoreData
+import CoreLocation
 
 class EditorVC: UIViewController, UIImagePickerControllerDelegate,
-UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, UIPopoverPresentationControllerDelegate {
+UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, UIPopoverPresentationControllerDelegate, CLLocationManagerDelegate {
     
     //MARK: - Outlets
     // TOP BAR
@@ -19,6 +20,7 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var navigationBar: UINavigationBar!
+    @IBOutlet weak var locationIcon: UIBarButtonItem!
     
     // BOTTOM BAR
     @IBOutlet weak var fontButton: UIBarButtonItem!
@@ -43,6 +45,10 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
     var managedObjectContext: NSManagedObjectContext? =
         (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext
     
+    //Location variables
+    let locationManager = CLLocationManager()
+    var memeLocation: CLLocation?
+    
     //MARK: - App Lifecycle 
     
     override func viewDidLoad() {
@@ -60,6 +66,8 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
         
         subscribeToKeyboardNotification()
         //subscribeToShakeNotifications()
+        
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -67,6 +75,15 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
         
         subscribeToKeyboardNotification()
         //subscribeToShakeNotifications()
+        
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        if let location = locations.last {
+            memeLocation = location
+            self.locationManager.stopUpdatingLocation()
+        }
         
     }
     
@@ -82,6 +99,19 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
         if isUdacityFirstApp {
             fontButton.enabled = false
             colorButton.enabled = false
+        }
+        
+        if NSUserDefaults.standardUserDefaults().boolForKey("locationOn") {
+            locationIcon.image = UIImage(named: "locationOn")
+            if CLLocationManager.authorizationStatus() == .NotDetermined {
+                locationManager.requestWhenInUseAuthorization()
+            }
+            
+            if CLLocationManager.locationServicesEnabled() {
+                locationManager.startUpdatingLocation()
+            }
+        } else {
+            locationIcon.image = UIImage(named: "locationOff")
         }
         
         if let editMeme = meme {
@@ -216,8 +246,19 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
     
     @IBAction func saveButtonPressed(sender: AnyObject) {
         if canSave() {
+            let meme:Meme?
             
-            let meme = Meme(topLabel: topLabel.text, bottomLabel: bottomLabel.text, savedImage: imageView.image!, savedMeme: nil, memedImage: compileMeme(), fontAttributer: fontAttributer, memeID: nil, memedImageString: nil, savedImageString: nil)
+            if CLLocationManager.locationServicesEnabled() && NSUserDefaults.standardUserDefaults().boolForKey("locationOn") {
+                let lat = memeLocation?.coordinate.latitude
+                let long = memeLocation?.coordinate.longitude
+                print(long)
+                
+                meme = Meme(topLabel: topLabel.text, bottomLabel: bottomLabel.text, savedImage: imageView.image!, savedMeme: nil, memedImage: compileMeme(), fontAttributer: fontAttributer, memeID: nil, memedImageString: nil, savedImageString: nil, latitude: Double(lat!), longitude: Double(long!))
+                
+            } else {
+                
+                meme = Meme(topLabel: topLabel.text, bottomLabel: bottomLabel.text, savedImage: imageView.image!, savedMeme: nil, memedImage: compileMeme(), fontAttributer: fontAttributer, memeID: nil, memedImageString: nil, savedImageString: nil, latitude: nil, longitude: nil)
+            }
             
             if editingMeme {
                 if let meme = self.meme {
@@ -232,7 +273,7 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
                 }
             } else {
                 // Upload meme to server
-                MemeFunctions.saveMeme(meme, complete: { 
+                MemeFunctions.saveMeme(meme!, complete: { 
                     print("upload complete and working")
                     
                     // this set the bool for saved reload to true so the tableview is reloaded on save
@@ -256,6 +297,19 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
             }
         }
         presentViewController(shareVC, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func locationIconPressed(sender: AnyObject) {
+        if NSUserDefaults.standardUserDefaults().boolForKey("locationOn") {
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "locationOn")
+            NSUserDefaults.standardUserDefaults().synchronize()
+            locationIcon.image = UIImage(named: "locationOff")
+        } else {
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "locationOn")
+            NSUserDefaults.standardUserDefaults().synchronize()
+            locationIcon.image = UIImage(named: "locationOn")
+        }
     }
     
     //MARK: Segue overrides for color and font picker

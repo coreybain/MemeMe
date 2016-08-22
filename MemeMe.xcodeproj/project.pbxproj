@@ -32,6 +32,8 @@
 		8342D7F01D56B20800C5735A /* Memes+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342D7EA1D56B20800C5735A /* Memes+CoreDataProperties.swift */; };
 		8342D7F11D56B20800C5735A /* Memes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342D7EB1D56B20800C5735A /* Memes.swift */; };
 		8342D7F31D56FBA700C5735A /* MemeDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342D7F21D56FBA700C5735A /* MemeDetailVC.swift */; };
+		835F350B1D6A13C7001916DA /* DataServiceDelete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835F350A1D6A13C7001916DA /* DataServiceDelete.swift */; };
+		835F350D1D6AC15A001916DA /* SharedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835F350C1D6AC15A001916DA /* SharedCollectionViewCell.swift */; };
 		83A507B51D6025DF0062691E /* UIViewControllerExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A507B41D6025DF0062691E /* UIViewControllerExtentions.swift */; };
 		83A507B71D6059590062691E /* TextPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A507B61D6059590062691E /* TextPickerView.swift */; };
 		83D001571D50042100B5F778 /* RecentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D001561D50042100B5F778 /* RecentCollectionViewCell.swift */; };
@@ -122,6 +124,8 @@
 		8342D7EA1D56B20800C5735A /* Memes+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Memes+CoreDataProperties.swift"; path = "CoreData/Memes+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8342D7EB1D56B20800C5735A /* Memes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Memes.swift; path = CoreData/Memes.swift; sourceTree = "<group>"; };
 		8342D7F21D56FBA700C5735A /* MemeDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeDetailVC.swift; sourceTree = "<group>"; };
+		835F350A1D6A13C7001916DA /* DataServiceDelete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataServiceDelete.swift; sourceTree = "<group>"; };
+		835F350C1D6AC15A001916DA /* SharedCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedCollectionViewCell.swift; sourceTree = "<group>"; };
 		83A507B41D6025DF0062691E /* UIViewControllerExtentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtentions.swift; sourceTree = "<group>"; };
 		83A507B61D6059590062691E /* TextPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextPickerView.swift; sourceTree = "<group>"; };
 		83D001561D50042100B5F778 /* RecentCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -237,6 +241,7 @@
 				8309C4BE1D50883E007B1CF7 /* Meme.swift */,
 				83F39D811D631B5D005BB9D7 /* User.swift */,
 				8342D79F1D52B52C00C5735A /* DataServiceRecentVC.swift */,
+				835F350A1D6A13C7001916DA /* DataServiceDelete.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -245,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				830DCBA11D500200009F12AC /* RecentTableViewCell.swift */,
+				835F350C1D6AC15A001916DA /* SharedCollectionViewCell.swift */,
 				83D001561D50042100B5F778 /* RecentCollectionViewCell.swift */,
 				830DCB971D4FE922009F12AC /* SwiftColorPickerViewController.swift */,
 				83A507B61D6059590062691E /* TextPickerView.swift */,
@@ -585,9 +591,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				830DCB981D4FE922009F12AC /* SwiftColorPickerViewController.swift in Sources */,
+				835F350B1D6A13C7001916DA /* DataServiceDelete.swift in Sources */,
 				83F39D801D630A4B005BB9D7 /* Users+CoreDataProperties.swift in Sources */,
 				8342D7EC1D56B20800C5735A /* FontAttributesDB+CoreDataProperties.swift in Sources */,
 				8342D7ED1D56B20800C5735A /* FontAttributesDB.swift in Sources */,
+				835F350D1D6AC15A001916DA /* SharedCollectionViewCell.swift in Sources */,
 				83E1D3AB1D68F2C1008BD989 /* SecurityVC.swift in Sources */,
 				830DCB9E1D4FEC19009F12AC /* Constaints.swift in Sources */,
 				830DCBA01D4FEC23009F12AC /* Strings.swift in Sources */,
@@ -858,6 +866,7 @@
 				83E1D3E31D68FD65008BD989 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

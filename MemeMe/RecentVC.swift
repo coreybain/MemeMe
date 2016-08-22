@@ -33,6 +33,8 @@ class RecentVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         recentCollectionView.hidden = true
         recentTableView.hidden = false
         NSUserDefaults.standardUserDefaults().removeObjectForKey("firstRun")
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "locationOn")
+        NSUserDefaults.standardUserDefaults().synchronize()
         downloadRecentMemes()
         //Memes.shared.deleteMemes((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: managedObjectContext!)
         //Users.deleteUsers((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: managedObjectContext!)

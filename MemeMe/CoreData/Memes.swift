@@ -9,6 +9,7 @@
 import Foundation
 import Firebase
 import CoreData
+import CoreLocation
 
 @objc(Memes)
 class Memes: NSManagedObject {
@@ -35,6 +36,8 @@ class Memes: NSManagedObject {
             savedMeme.topLabel = meme.topLabel
             savedMeme.memeImage = "\(memeImage).jpg"
             savedMeme.savedImage = originalImage
+            savedMeme.longitude = meme.longitude
+            savedMeme.latitude = meme.latitude
             savedMeme.userID = (FIRAuth.auth()?.currentUser?.uid)!
             savedMeme.fontAttributesDB = FontAttributesDB.saveFontAttributes(meme, key:key, inManagedObjectContext: context)
             savedMeme.users = Users.saveUser((FIRAuth.auth()?.currentUser?.uid)!, username: nil, auth: nil, tagLine: nil, inManagedObjectContext: context)
@@ -58,6 +61,8 @@ class Memes: NSManagedObject {
                 savedMeme.topLabel = meme.topLabel
                 savedMeme.memeImage = "\(meme.memedImageString)"
                 savedMeme.savedImage = "\(meme.savedImageString)"
+                savedMeme.longitude = meme.longitude
+                savedMeme.latitude = meme.latitude
                 savedMeme.userID = (FIRAuth.auth()?.currentUser?.uid)!
                 savedMeme.fontAttributesDB = FontAttributesDB.saveFontAttributes(meme, key:meme.memeID, inManagedObjectContext: context)
                 savedMeme.users = Users.saveUser((FIRAuth.auth()?.currentUser?.uid)!, username: nil, auth: nil, tagLine: nil, inManagedObjectContext: context)
@@ -84,6 +89,8 @@ class Memes: NSManagedObject {
             savedMeme.topLabel = meme.topLabel
             savedMeme.memeImage = fileName
             savedMeme.savedImage = imageName
+            savedMeme.longitude = meme.longitude
+            savedMeme.latitude = meme.latitude
             savedMeme.fontAttributesDB = FontAttributesDB.saveFontAttributes(meme, key:memeID, inManagedObjectContext: context)
             do {
                 try savedMeme.managedObjectContext?.save()
@@ -108,24 +115,28 @@ class Memes: NSManagedObject {
                         if let memeID = meme.valueForKey("memeID") {
                             if let memeImage = meme.valueForKey("memeImage") {
                                 if let savedImage = meme.valueForKey("savedImage") {
-                                    if let localFont = FontAttributesDB.loadFontAttributes(memeID as! String, inManagedObjectContext: context) {
-                                        print(localFont)
-                                        print(localFont.fontColor)
-                                        if let fontSize = localFont.fontSize {
-                                            if let fontName = localFont.fontName {
-                                                if let fontColor = localFont.fontColor {
-                                                    if let borderColor = localFont.borderColor {
-                                                        print("SAVED IMAGE::: \(savedImage)")
-                                                        print("MEMED IMAGE::: \(memeImage)")
-                                                        self.fontAttribute = FontAttribute()
-                                                        if DataService.ds().setFontAttributes(fontSize, fontName: fontName, fontColor: fontColor, borderColor: borderColor) {
-                                                            print("YES")
-                                                            if let savedImageFile = MemeFunctions.loadImageFromPath(MemeFunctions.fileInDocumentsDirectory(savedImage as! String)) {
-                                                                print("YESY")
-                                                               if let memeImagefile = MemeFunctions.loadImageFromPath(MemeFunctions.fileInDocumentsDirectory(memeImage as! String)) {
-                                                                    print("HELLLOOOOO STAR")
-                                                                let memeCell = Meme(topLabel: top as? String, bottomLabel: bottom as? String, savedImage: savedImageFile, savedMeme: memeImage as? String, memedImage: memeImagefile, fontAttributer: self.fontAttribute, memeID: memeID as! String, memedImageString: nil, savedImageString: nil)
-                                                                self.memeDict.append(memeCell)
+                                    if let longitude = meme.valueForKey("") {
+                                        if let latitude = meme.valueForKey("") {
+                                        if let localFont = FontAttributesDB.loadFontAttributes(memeID as! String, inManagedObjectContext: context) {
+                                            print(localFont)
+                                            print(localFont.fontColor)
+                                                if let fontSize = localFont.fontSize {
+                                                    if let fontName = localFont.fontName {
+                                                        if let fontColor = localFont.fontColor {
+                                                            if let borderColor = localFont.borderColor {
+                                                                print("SAVED IMAGE::: \(savedImage)")
+                                                                print("MEMED IMAGE::: \(memeImage)")
+                                                                self.fontAttribute = FontAttribute()
+                                                                if DataService.ds().setFontAttributes(fontSize, fontName: fontName, fontColor: fontColor, borderColor: borderColor) {
+                                                                    print("YES")
+                                                                    if let savedImageFile = MemeFunctions.loadImageFromPath(MemeFunctions.fileInDocumentsDirectory(savedImage as! String)) {
+                                                                        print("YESY")
+                                                                       if let memeImagefile = MemeFunctions.loadImageFromPath(MemeFunctions.fileInDocumentsDirectory(memeImage as! String)) {
+                                                                            print("HELLLOOOOO STAR")
+                                                                        let memeCell = Meme(topLabel: top as? String, bottomLabel: bottom as? String, savedImage: savedImageFile, savedMeme: memeImage as? String, memedImage: memeImagefile, fontAttributer: self.fontAttribute, memeID: memeID as! String, memedImageString: nil, savedImageString: nil, latitude: latitude as? Double, longitude: longitude as? Double)
+                                                                        self.memeDict.append(memeCell)
+                                                                        }
+                                                                    }
                                                                 }
                                                             }
                                                         }

@@ -13,15 +13,21 @@ class MemeDetailVC: UIViewController {
     
     //MARK: -- Outlets
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var editButton: UIBarButtonItem!
     
     var meme: Meme?
+    var shared:Bool = false
     
     //# -- MARK: Lifecycle Methods:
     override func viewDidLoad() {
         super.viewDidLoad()
         /* Unwrap meme and set the image view to the memed image */
-        if let meme = meme {
-            imageView.image = meme.memedImage
+        if let meme = meme  {
+            if !shared {
+                imageView.image = meme.memedImage
+            } else {
+                imageView.image = UIImage(data: meme.memedImageData)!
+            }
         }
     }
     
