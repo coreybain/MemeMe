@@ -28,7 +28,7 @@
     </entity>
     <elements>
         <element name="FontAttributesDB" positionX="-416" positionY="234" width="128" height="135"/>
-        <element name="Memes" positionX="-216" positionY="117" width="128" height="178"/>
+        <element name="Memes" positionX="-216" positionY="117" width="128" height="180"/>
         <element name="Users" positionX="81" positionY="-0" width="128" height="120"/>
     </elements>
 </model>

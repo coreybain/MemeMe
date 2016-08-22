@@ -167,7 +167,13 @@ class DataService {
         let borderColor = meme.fontAttribute.borderColor.htmlRGBaColor
         
         if let userID = FIRAuth.auth()?.currentUser?.uid {
-            let imageDetails = ["fontAttributes":["fontSize":fontSize, "fontName":fontName, "fontColor":fontColor, "borderColor":borderColor],"topLabel":meme.topLabel, "bottomLabel":meme.bottomLabel, "savedImage":"saved-\(imageName)", "savedMeme": "meme-\(uploadName)", "memeImage":"\(memeRef)", "userID":"\(userID)"]
+            
+            var imageDetails:NSDictionary?
+            if meme.longitude != 0.0 {
+                imageDetails = ["fontAttributes":["fontSize":fontSize, "fontName":fontName, "fontColor":fontColor, "borderColor":borderColor],"topLabel":meme.topLabel, "bottomLabel":meme.bottomLabel, "savedImage":"saved-\(imageName)", "savedMeme": "meme-\(uploadName)", "memeImage":"\(memeRef)", "userID":"\(userID)", "latitude":meme.latitude, "longitude":meme.longitude, "privacyLabel":meme.privacyLabel]
+            } else {
+                imageDetails = ["fontAttributes":["fontSize":fontSize, "fontName":fontName, "fontColor":fontColor, "borderColor":borderColor],"topLabel":meme.topLabel, "bottomLabel":meme.bottomLabel, "savedImage":"saved-\(imageName)", "savedMeme": "meme-\(uploadName)", "memeImage":"\(memeRef)", "userID":"\(userID)", "latitude":0.0, "longitude":0.0, "privacyLabel":meme.privacyLabel]
+            }
         
             if meme.memeID == "" {
                 self.ref.child("memes").childByAutoId().setValue(imageDetails) { (err, database) in
@@ -178,7 +184,7 @@ class DataService {
                             // This is where the connection to core Data will go
                             let uploadMemeName = "meme-\(uploadName).jpg"
                             let uploadImageName = "saved-\(uploadName).jpg"
-                            self.uploadMeme(memeRef, meme:memeImageData, metadata:metadata, imageSize:imageSize, memeDetails: imageDetails)
+                            self.uploadMeme(memeRef, meme:memeImageData, metadata:metadata, imageSize:imageSize, memeDetails: imageDetails!)
                             self.managedObjectContext?.performBlock {
                                 Memes.ms().saveMemeLocal(meme, key: key, memeImage: uploadMemeName, originalImage: uploadImageName, inManagedObjectContext: self.managedObjectContext!)
                                 complete()
@@ -191,9 +197,9 @@ class DataService {
                 }
             } else {
                 let memeID = meme.memeID
-                self.ref.child("memes").child(memeID).updateChildValues(imageDetails as [NSObject : AnyObject]) { (err, database) in
+                self.ref.child("memes").child(memeID).updateChildValues(imageDetails as! [NSObject : AnyObject]) { (err, database) in
                     if err == nil {
-                        self.uploadMeme(memeRef, meme:memeImageData, metadata:metadata, imageSize:imageSize, memeDetails: imageDetails)
+                        self.uploadMeme(memeRef, meme:memeImageData, metadata:metadata, imageSize:imageSize, memeDetails: imageDetails!)
                         complete()
                     } else {
                         print(err?.localizedDescription)

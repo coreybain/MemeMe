@@ -165,6 +165,7 @@ extension RecentVC {
         } else {
             cell.recentNameLabel.text = "\(meme.bottomLabel)"
         }
+        cell.recentPrivacyLabel.text = meme.privacyLabel
         cell.recentImage.image = meme.memedImage
         return cell
     }
@@ -183,6 +184,32 @@ extension RecentVC {
             detailVC.meme = memeDict[indexPath.row]
             navigationController!.pushViewController(detailVC, animated: true)
         }
+    }
+    
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let delete = UITableViewRowAction(style: .Destructive, title: "Delete") { action, index in
+            print("more button tapped")
+        }
+        delete.backgroundColor = UIColor.redColor()
+        
+        var privatePublic: UITableViewRowAction!
+        
+        if memeDict[indexPath.row].privacyLabel == "Public" {
+            privatePublic = UITableViewRowAction(style: .Normal, title: "Private") { action, index in
+                print("private button tapped")
+            }
+        } else {
+            privatePublic = UITableViewRowAction(style: .Normal, title: "Public") { action, index in
+                print("public button tapped")
+            }
+        }
+        privatePublic.backgroundColor = UIColor.blueColor()
+        
+        return [delete, privatePublic]
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        // you need to implement this method too or you can't swipe to display the actions
     }
     
 }

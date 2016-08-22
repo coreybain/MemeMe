@@ -160,16 +160,28 @@ class SettingsVC: UITableViewController {
     func getUserInfo() {
         managedObjectContext?.performBlock {
             if let userID = FIRAuth.auth()?.currentUser?.uid {
-                self.user = Users.loadUser(userID, inManagedObjectContext: self.managedObjectContext!)
-                if (self.user?.username) != nil {
-                    self.usernameLabel.text = self.user?.username!
-                }
-                if (self.user?.tagLine) != nil {
-                    self.statusLabel.text = self.user?.tagLine!
-                    self.statusTF.text = self.user?.tagLine!
-                }
-                self.userProfileImage.image = UIImage(named: "placeholder.png")?.circle
-                //self.touchIDSwitch.setOn(false, animated: false)
+                
+                Users.loadUser(userID, inManagedObjectContext: self.managedObjectContext!, complete: { (user) in
+                    if user != nil {
+                        print(user?.username)
+                        if FIRAuth.auth()?.currentUser?.email != nil {
+                            self.usernameLabel.text = FIRAuth.auth()?.currentUser?.email!
+                        } else {
+                            self.usernameLabel.text = "User not found"
+                        }
+                        if user?.tagLine != nil {
+                            self.statusLabel.text = user?.tagLine!
+                            self.statusTF.placeholder = user?.tagLine!
+                        } else {
+                            self.statusLabel.text = "Try closing the app and trying again."
+                        }
+                        self.userProfileImage.image = UIImage(named: "placeholder.png")?.circle
+                    } else {
+                        self.usernameLabel.text = "User not found"
+                        self.statusLabel.text = "Try closing the app and trying again."
+                        self.userProfileImage.image = UIImage(named: "placeholder.png")?.circle
+                    }
+                })
                 self.settingTableView.reloadData()
             }
         }

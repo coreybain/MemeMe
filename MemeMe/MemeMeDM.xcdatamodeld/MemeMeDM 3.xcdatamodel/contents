@@ -10,8 +10,11 @@
     </entity>
     <entity name="Memes" representedClassName="Memes" syncable="YES">
         <attribute name="bottomLabel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="memeID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="memeImage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="privacyLabel" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="savedImage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="savedMeme" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="topLabel" optional="YES" attributeType="String" syncable="YES"/>
@@ -27,8 +30,8 @@
         <relationship name="memes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Memes" inverseName="users" inverseEntity="Memes" syncable="YES"/>
     </entity>
     <elements>
-        <element name="FontAttributesDB" positionX="-416" positionY="234" width="128" height="133"/>
-        <element name="Memes" positionX="-216" positionY="117" width="128" height="180"/>
+        <element name="FontAttributesDB" positionX="-416" positionY="234" width="128" height="135"/>
+        <element name="Memes" positionX="-216" positionY="117" width="128" height="225"/>
         <element name="Users" positionX="81" positionY="-0" width="128" height="120"/>
     </elements>
 </model>

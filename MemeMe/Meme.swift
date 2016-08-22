@@ -26,6 +26,7 @@ class Meme {
     var _memedImageData: NSData!
     var _latitude: Double!
     var _longitude: Double!
+    var _privacyLabel: String!
     var fontAttribute: FontAttribute!
     
     var topLabel:String {
@@ -112,7 +113,13 @@ class Meme {
         }
     }
     
-    init(topLabel:String?, bottomLabel:String?, savedImage:UIImage, savedMeme:String?, memedImage:UIImage, fontAttributer:FontAttribute, memeID:String?, memedImageString:String?, savedImageString:String?, latitude:Double?, longitude:Double?) {
+    var privacyLabel:String {
+        get {
+            return _privacyLabel
+        }
+    }
+    
+    init(topLabel:String?, bottomLabel:String?, savedImage:UIImage, savedMeme:String?, memedImage:UIImage, fontAttributer:FontAttribute, memeID:String?, memedImageString:String?, savedImageString:String?, latitude:Double, longitude:Double, privacyLabel:String) {
         _topLabel = topLabel
         _bottomLabel = bottomLabel
         _savedImage = savedImage
@@ -124,14 +131,18 @@ class Meme {
         _memedImageString = memedImageString
         _latitude = latitude
         _longitude = longitude
+        _privacyLabel = privacyLabel
     }
     
-    init(topLabel:String?, bottomLabel:String?, memedImageData:NSData, fontAttributer:FontAttribute, memeID:String?) {
+    init(topLabel:String?, bottomLabel:String?, memedImageData:NSData, fontAttributer:FontAttribute, memeID:String?, latitude:Double, longitude:Double, privacyLabel:String) {
         _topLabel = topLabel
         _bottomLabel = bottomLabel
         _memedImageData = memedImageData
         fontAttribute = fontAttributer
         _memeID = memeID
+        _latitude = latitude
+        _longitude = longitude
+        _privacyLabel = privacyLabel
     }
 }
 
@@ -139,7 +150,7 @@ struct MemeFunctions {
     
     // Add meme to local database before uploading it to firebase
     static func saveMeme(meme:Meme, complete:DownloadComplete) {
-        
+        print(meme)
         let user = FIRAuth.auth()?.currentUser?.uid
         let fileName:String  = "\(user!)-\(MemeMain.memeShared().randomStringWithLength(10))"
         let imageName:String = "\(fileName).jpg"

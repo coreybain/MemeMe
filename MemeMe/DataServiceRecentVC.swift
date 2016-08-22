@@ -34,7 +34,7 @@ extension DataService {
                                     let savedImage = memeSnapshot.value!["savedImage"] as! String
                                     let latitude = memeSnapshot.value!["latitude"] as? Double
                                     let longitude = memeSnapshot.value!["longitude"] as? Double
-                                    
+                                    let privacyLabel = memeSnapshot.value!["privacyLabel"] as! String
                                     let attributes = memeSnapshot.value!["fontAttributes"] as! NSDictionary
                                     if let borderColor = attributes.valueForKey("borderColor") {
                                         if let fontColor = attributes.valueForKey("fontColor") {
@@ -48,10 +48,10 @@ extension DataService {
                                                             if let memeImage = MemeFunctions.loadImageFromPath(MemeFunctions.fileInDocumentsDirectory("\(savedMeme).jpg")) {
                                                                 let memeCell:Meme?
                                                                 
-                                                                if latitude != nil {
-                                                                    memeCell = Meme(topLabel: top, bottomLabel: bottom, savedImage: savedImageFile, savedMeme: savedMeme, memedImage: memeImage, fontAttributer: self.fontAttribute, memeID: nil, memedImageString: savedMeme, savedImageString: savedImage, latitude: latitude, longitude: longitude)
+                                                                if latitude != nil && latitude != 0.0 {
+                                                                    memeCell = Meme(topLabel: top, bottomLabel: bottom, savedImage: savedImageFile, savedMeme: savedMeme, memedImage: memeImage, fontAttributer: self.fontAttribute, memeID: nil, memedImageString: savedMeme, savedImageString: savedImage, latitude: latitude!, longitude: longitude!, privacyLabel: privacyLabel)
                                                                 } else {
-                                                                    memeCell = Meme(topLabel: top, bottomLabel: bottom, savedImage: savedImageFile, savedMeme: savedMeme, memedImage: memeImage, fontAttributer: self.fontAttribute, memeID: nil, memedImageString: savedMeme, savedImageString: savedImage, latitude: nil, longitude: nil)
+                                                                    memeCell = Meme(topLabel: top, bottomLabel: bottom, savedImage: savedImageFile, savedMeme: savedMeme, memedImage: memeImage, fontAttributer: self.fontAttribute, memeID: nil, memedImageString: savedMeme, savedImageString: savedImage, latitude: 0.0, longitude: 0.0, privacyLabel: privacyLabel)
                                                                 }
                                                                 
                                                                 self.memeDict.append(memeCell!)
@@ -84,6 +84,8 @@ extension DataService {
         if let userID = FIRAuth.auth()?.currentUser?.uid {
             self.ref.child("memes").observeEventType(.Value, withBlock: { [unowned self] (memeSnapshot) in
                 if memeSnapshot.exists() {
+                    self.memeDict.removeAll()
+                    self.memeCounter = 0
                     for memeCount in memeSnapshot.children where (memeCount.value!["userID"] as! String != userID) {
                         self.memeCounter += 1
                     }
@@ -92,9 +94,9 @@ extension DataService {
                         let bottom = memes.value!["bottomLabel"] as! String
                         let top = memes.value!["topLabel"] as! String
                         let savedMeme = memes.value!["savedMeme"] as! String
-                        let memeImage = memes.value!["memeImage"] as! String
-                        let savedImage = memes.value!["savedImage"] as! String
-                        
+                        let privacyLabel = memes.value!["privacyLabel"] as! String
+                        let memeLatitude = memes.value!["latitude"] as! Double
+                        let memeLongitude = memes.value!["longitude"] as! Double
                         let attributes = memes.value!["fontAttributes"] as! NSDictionary
                         if let borderColor = attributes.valueForKey("borderColor") {
                             if let fontColor = attributes.valueForKey("fontColor") {
@@ -105,11 +107,17 @@ extension DataService {
                                                 if (error != nil) {
                                                     // Uh-oh, an error occurred!
                                                 } else {
-                                                    let memeCell = Meme(topLabel: top, bottomLabel: bottom, memedImageData: data!, fontAttributer: self.fontAttribute, memeID: nil)
-                                                    self.memeDict.append(memeCell)
+                                                    let memeCell:Meme?
+                                                    if memeLatitude != 0.0 {
+                                                        memeCell = Meme(topLabel: top, bottomLabel: bottom, memedImageData: data!, fontAttributer: self.fontAttribute, memeID: nil, latitude:memeLatitude, longitude:memeLongitude, privacyLabel: privacyLabel)
+                                                    } else {
+                                                        memeCell = Meme(topLabel: top, bottomLabel: bottom, memedImageData: data!, fontAttributer: self.fontAttribute, memeID: nil, latitude:0.0, longitude:0.0, privacyLabel: privacyLabel)
+                                                    }
+                                                    self.memeDict.append(memeCell!)
                                                     print(self.memeCounter)
                                                     print(self.memeDict.count)
                                                     if self.memeCounter == self.memeDict.count {
+                                                        self.memeCounter = 0
                                                         complete(self.memeDict)
                                                     }
                                                 }

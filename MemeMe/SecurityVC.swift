@@ -11,6 +11,7 @@ import UIKit
 import PasscodeLock
 import Firebase
 import CoreData
+import LocalAuthentication
 
 class SecurityVC: UITableViewController {
     
@@ -191,30 +192,39 @@ class SecurityVC: UITableViewController {
     
     func touchIDActive() {
         var passcodeVC: PasscodeLockViewController
-        if !passcodeSwitch.on {
-            passcodeVC = PasscodeLockViewController(state: .SetPasscode, configuration: configuration)
-            
-            passcodeVC.successCallback = { [unowned self] Void in
+        if touchIDCheck() {
+            if !NSUserDefaults.standardUserDefaults().boolForKey("passcode") {
+                passcodeVC = PasscodeLockViewController(state: .SetPasscode, configuration: configuration)
+                
+                passcodeVC.successCallback = { [unowned self] Void in
+                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: "touchID")
+                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: "passcode")
+                    NSUserDefaults.standardUserDefaults().synchronize()
+                    self.touchIDSwitch.on = true
+                }
+                
+                presentViewController(passcodeVC, animated: true, completion: nil)
+            } else if !NSUserDefaults.standardUserDefaults().boolForKey("touchID") {
                 NSUserDefaults.standardUserDefaults().setBool(true, forKey: "touchID")
                 NSUserDefaults.standardUserDefaults().synchronize()
                 self.touchIDSwitch.on = true
+            } else {
+                NSUserDefaults.standardUserDefaults().setBool(false, forKey: "touchID")
+                NSUserDefaults.standardUserDefaults().synchronize()
+                self.touchIDSwitch.on = false
             }
-            
-            presentViewController(passcodeVC, animated: true, completion: nil)
-        } else if !touchIDSwitch.on {
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "touchID")
-            NSUserDefaults.standardUserDefaults().synchronize()
-            self.touchIDSwitch.on = true
         } else {
-            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "touchID")
-            NSUserDefaults.standardUserDefaults().synchronize()
-            self.touchIDSwitch.on = false
+            let touchIDFail = UIAlertController(title: "Touch ID not active", message: "You need to go to settings and setup touch ID to work with this device.", preferredStyle: .Alert)
+            let okButton = UIAlertAction(title: "Ok", style: .Default, handler: nil)
+            touchIDFail.addAction(okButton)
+            presentViewController(touchIDFail, animated: true, completion: nil)
+            touchIDSwitch.on = false
         }
     }
     
     func passcodeActive() {
         var passcodeVC: PasscodeLockViewController
-        if passcodeSwitch.on {
+        if NSUserDefaults.standardUserDefaults().boolForKey("passcode") {
             passcodeVC = PasscodeLockViewController(state: .RemovePasscode, configuration: configuration)
             
             passcodeVC.successCallback = { [unowned self] lock in
@@ -227,12 +237,34 @@ class SecurityVC: UITableViewController {
                 NSUserDefaults.standardUserDefaults().setBool(false, forKey: "touchID")
                 NSUserDefaults.standardUserDefaults().synchronize()
                 self.touchIDSwitch.on = false
+                NSUserDefaults.standardUserDefaults().setBool(false, forKey: "passcode")
+                NSUserDefaults.standardUserDefaults().synchronize()
             }
             presentViewController(passcodeVC, animated: true, completion: nil)
             
         } else {
             passcodeVC = PasscodeLockViewController(state: .SetPasscode, configuration: configuration)
             presentViewController(passcodeVC, animated: true, completion: nil)
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "passcode")
+            NSUserDefaults.standardUserDefaults().synchronize()
+        }
+    }
+    
+    func touchIDCheck() -> Bool {
+        
+        
+        
+        // Get the local authentication context.
+        let context = LAContext()
+        
+        // Declare a NSError variable.
+        var error: NSError?
+        
+        // Check if the device can evaluate the policy.
+        if context.canEvaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, error: &error) {
+            return true
+        } else {
+            return false
         }
     }
     

@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import MapKit
 import CoreLocation
+import Firebase
 
 class SharedVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, CLLocationManagerDelegate, MKMapViewDelegate {
     
@@ -50,6 +51,7 @@ class SharedVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         DataService.ds().downloadShared { [unowned self] (meme) in
             print("DOWNLOADED")
             print(meme.count)
+            self.memeDict.removeAll()
             self.memeDict = meme
             if !self.collectionView.hidden {
                 self.collectionView.reloadData()
@@ -81,6 +83,7 @@ class SharedVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             }
             mapkit.showsUserLocation = true
 
+            memeLocations()
         }
     }
     
@@ -100,9 +103,18 @@ class SharedVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     func memeLocations() {
         for memes in memeDict {
             let annotation = MKPointAnnotation()
-            annotation.title = "\(memes.topLabel)... \(memes.bottomLabel)"
-            annotation.coordinate = CLLocationCoordinate2D(latitude: memes.latitude, longitude: memes.longitude)
-            mapkit.addAnnotation(annotation)
+            if memes.topLabel == "" || memes.bottomLabel == "" {
+                annotation.title = "\(memes.topLabel) \(memes.bottomLabel)"
+            } else {
+                annotation.title = "\(memes.topLabel) ... \(memes.bottomLabel)"
+            }
+            var section = FIRAuth.auth()?.currentUser?.email!.componentsSeparatedByString("@")
+            annotation.subtitle = section![0]
+            
+            if memes.longitude != 0.0 {
+                annotation.coordinate = CLLocationCoordinate2D(latitude: memes.latitude, longitude: memes.longitude)
+                mapkit.addAnnotation(annotation)
+            }
         }
     }
     
@@ -166,3 +178,4 @@ extension SharedVC {
     }
     
 }
+

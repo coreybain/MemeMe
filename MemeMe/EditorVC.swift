@@ -53,6 +53,7 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationManager.delegate = self
         
         //if simulator or camera not working disable camera button
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
@@ -81,7 +82,7 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         if let location = locations.last {
-            memeLocation = location
+            self.memeLocation = location
             self.locationManager.stopUpdatingLocation()
         }
         
@@ -112,6 +113,8 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
             }
         } else {
             locationIcon.image = UIImage(named: "locationOff")
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "locationOn")
+            NSUserDefaults.standardUserDefaults().synchronize()
         }
         
         if let editMeme = meme {
@@ -253,11 +256,11 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
                 let long = memeLocation?.coordinate.longitude
                 print(long)
                 
-                meme = Meme(topLabel: topLabel.text, bottomLabel: bottomLabel.text, savedImage: imageView.image!, savedMeme: nil, memedImage: compileMeme(), fontAttributer: fontAttributer, memeID: nil, memedImageString: nil, savedImageString: nil, latitude: Double(lat!), longitude: Double(long!))
+                meme = Meme(topLabel: topLabel.text, bottomLabel: bottomLabel.text, savedImage: imageView.image!, savedMeme: nil, memedImage: compileMeme(), fontAttributer: fontAttributer, memeID: nil, memedImageString: nil, savedImageString: nil, latitude: lat!, longitude: long!, privacyLabel: "Public")
                 
             } else {
                 
-                meme = Meme(topLabel: topLabel.text, bottomLabel: bottomLabel.text, savedImage: imageView.image!, savedMeme: nil, memedImage: compileMeme(), fontAttributer: fontAttributer, memeID: nil, memedImageString: nil, savedImageString: nil, latitude: nil, longitude: nil)
+                meme = Meme(topLabel: topLabel.text, bottomLabel: bottomLabel.text, savedImage: imageView.image!, savedMeme: nil, memedImage: compileMeme(), fontAttributer: fontAttributer, memeID: nil, memedImageString: nil, savedImageString: nil, latitude: 0.0, longitude: 0.0, privacyLabel: "Public")
             }
             
             if editingMeme {

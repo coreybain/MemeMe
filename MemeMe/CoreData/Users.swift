@@ -43,17 +43,18 @@ class Users: NSManagedObject {
         return nil
     }
     
-    class func loadUser(userID:String, inManagedObjectContext context: NSManagedObjectContext) -> Users? {
+    class func loadUser(userID:String, inManagedObjectContext context: NSManagedObjectContext, complete:(Users?)->()) {
         
         print(userID)
         let request = NSFetchRequest(entityName: "Users")
         request.predicate = NSPredicate(format: "uid == %@", userID)
         
         if let userEntry = (try? context.executeFetchRequest(request))?.first as? Users {
-            return userEntry
+            complete(userEntry)
+            
+        } else {
+            complete(nil)
         }
-        
-        return nil
     }
     
     class func deleteUsers(userID:String, inManagedObjectContext context: NSManagedObjectContext) {

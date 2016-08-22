@@ -2,7 +2,7 @@
 //  Memes+CoreDataProperties.swift
 //  MemeMe
 //
-//  Created by Corey Baines on 21/8/16.
+//  Created by Corey Baines on 23/8/16.
 //  Copyright © 2016 Corey Baines. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -23,6 +23,7 @@ extension Memes {
     @NSManaged var userID: String?
     @NSManaged var latitude: NSNumber?
     @NSManaged var longitude: NSNumber?
+    @NSManaged var privacyLabel: String?
     @NSManaged var fontAttributesDB: FontAttributesDB?
     @NSManaged var users: Users?
 
