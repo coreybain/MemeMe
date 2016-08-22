@@ -101,6 +101,7 @@ class SharedVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         for memes in memeDict {
             let annotation = MKPointAnnotation()
             annotation.title = "\(memes.topLabel)... \(memes.bottomLabel)"
+            annotation.coordinate = CLLocationCoordinate2D(latitude: memes.latitude, longitude: memes.longitude)
             mapkit.addAnnotation(annotation)
         }
     }
