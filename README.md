@@ -1,6 +1,6 @@
 The MemeMe app for the Udacity iOS Developer course.
 
-[![Build Status](https://img.shields.io/badge/Build-Working-blue.svg?style=flat)]
+[![Build Status](https://img.shields.io/badge/Build-Working-blue.svg?style=flat)]()
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Alamofire.svg)](https://img.shields.io/cocoapods/v/Alamofire.svg)
 [![Twitter](https://img.shields.io/badge/twitter-@SpiritDevs-blue.svg?style=flat)](http://twitter.com/Spiritdevsaus)
 [![Facebook](https://img.shields.io/badge/facebook-SpiritDevs-green.svg?style=flat)](https://www.facebook.com/SpiritDevs)
