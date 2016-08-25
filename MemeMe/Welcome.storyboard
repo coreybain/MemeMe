@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16A201w" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="JPx-BC-uk5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16A270f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="JPx-BC-uk5">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -64,11 +64,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="cFj-OE-zja">
-                                <rect key="frame" x="20" y="592" width="343" height="32"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="cFj-OE-zja">
+                                <rect key="frame" x="16" y="578" width="343" height="46"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jxS-bE-eAp">
-                                        <rect key="frame" x="0.0" y="0.0" width="167" height="32"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jxS-bE-eAp" customClass="ButtonRound" customModule="MemeMe" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="162" height="46"/>
                                         <color key="backgroundColor" red="0.46968221664428711" green="0.10945377498865128" blue="0.53361588716506958" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="16"/>
                                         <state key="normal" title="Facebook">
@@ -78,8 +78,8 @@
                                             <action selector="facebookButtonPressed:" destination="UAn-IK-xkn" eventType="touchUpInside" id="1Us-87-pOC"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0gi-4p-WTQ">
-                                        <rect key="frame" x="177" y="0.0" width="167" height="32"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0gi-4p-WTQ" customClass="ButtonRound" customModule="MemeMe" customModuleProvider="target">
+                                        <rect key="frame" x="182" y="0.0" width="162" height="46"/>
                                         <color key="backgroundColor" red="0.46968221659999998" green="0.109453775" blue="0.53361588719999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="16"/>
                                         <state key="normal" title="Password">
@@ -90,6 +90,9 @@
                                         </connections>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="46" id="x6H-Tx-w6o"/>
+                                </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="bAQ-a9-WjN">
                                 <rect key="frame" x="16" y="60" width="343" height="266"/>
@@ -109,8 +112,8 @@
                                     </imageView>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IvJ-We-ked">
-                                <rect key="frame" x="20" y="538" width="335" height="46"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IvJ-We-ked" customClass="ButtonRound" customModule="MemeMe" customModuleProvider="target">
+                                <rect key="frame" x="16" y="515" width="335" height="46"/>
                                 <color key="backgroundColor" red="0.46968221659999998" green="0.109453775" blue="0.53361588719999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="bxf-gv-Wal"/>
@@ -134,7 +137,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="IvJ-We-ked" secondAttribute="trailing" id="9H5-zL-I8y"/>
-                            <constraint firstItem="cFj-OE-zja" firstAttribute="top" secondItem="IvJ-We-ked" secondAttribute="bottom" constant="8" id="DGD-aQ-wvh"/>
+                            <constraint firstItem="cFj-OE-zja" firstAttribute="top" secondItem="IvJ-We-ked" secondAttribute="bottom" constant="16" id="DGD-aQ-wvh"/>
                             <constraint firstAttribute="trailingMargin" secondItem="cFj-OE-zja" secondAttribute="trailing" id="Dyb-bo-xED"/>
                             <constraint firstItem="bAQ-a9-WjN" firstAttribute="leading" secondItem="M7Z-tW-szG" secondAttribute="leadingMargin" id="Gfm-fI-iTg"/>
                             <constraint firstItem="IvJ-We-ked" firstAttribute="leading" secondItem="M7Z-tW-szG" secondAttribute="leadingMargin" id="IC0-Qf-GZv"/>
@@ -194,7 +197,7 @@
                                     <constraint firstAttribute="trailing" secondItem="cec-Gh-kPf" secondAttribute="trailing" id="cSM-Ug-Dcr"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G1s-ur-oQQ">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G1s-ur-oQQ" customClass="ButtonRound" customModule="MemeMe" customModuleProvider="target">
                                 <rect key="frame" x="20" y="601" width="339" height="46"/>
                                 <color key="backgroundColor" red="0.46968221659999998" green="0.109453775" blue="0.53361588719999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -220,10 +223,6 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="RV4-hS-6oQ">
-                                <rect key="frame" x="33" y="614" width="20" height="20"/>
-                                <color key="color" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g4e-2A-hKP">
                                 <rect key="frame" x="20" y="28" width="34" height="30"/>
                                 <state key="normal" title="Back"/>
@@ -235,8 +234,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="G1s-ur-oQQ" firstAttribute="leading" secondItem="ife-dI-vks" secondAttribute="leadingMargin" id="1qy-uK-Fla"/>
-                            <constraint firstItem="RV4-hS-6oQ" firstAttribute="centerX" secondItem="ife-dI-vks" secondAttribute="centerX" id="7Hl-Ru-RRT"/>
-                            <constraint firstItem="RV4-hS-6oQ" firstAttribute="bottom" secondItem="G1s-ur-oQQ" secondAttribute="bottom" id="AXK-ox-zJd"/>
                             <constraint firstItem="g4e-2A-hKP" firstAttribute="leading" secondItem="ife-dI-vks" secondAttribute="leadingMargin" id="Bng-iD-7ie"/>
                             <constraint firstAttribute="trailingMargin" secondItem="G1s-ur-oQQ" secondAttribute="trailing" id="Chy-XW-fi0"/>
                             <constraint firstItem="pdf-qg-yyC" firstAttribute="centerY" secondItem="ife-dI-vks" secondAttribute="centerY" id="Ily-XC-EXU"/>
@@ -245,28 +242,24 @@
                             <constraint firstItem="sfr-ux-9Wj" firstAttribute="trailing" secondItem="ife-dI-vks" secondAttribute="trailingMargin" id="U4f-K3-SES"/>
                             <constraint firstItem="XI4-FI-5L1" firstAttribute="top" secondItem="G1s-ur-oQQ" secondAttribute="bottom" constant="20" id="WHf-Q5-CuS"/>
                             <constraint firstItem="pdf-qg-yyC" firstAttribute="leading" secondItem="ife-dI-vks" secondAttribute="leadingMargin" id="WYe-IS-N7n"/>
-                            <constraint firstItem="G1s-ur-oQQ" firstAttribute="leading" secondItem="RV4-hS-6oQ" secondAttribute="trailing" constant="-33" id="WZJ-Dw-gvq"/>
                             <constraint firstItem="sfr-ux-9Wj" firstAttribute="leading" secondItem="ife-dI-vks" secondAttribute="leadingMargin" id="Z4h-rn-tr7"/>
                             <constraint firstItem="sfr-ux-9Wj" firstAttribute="top" secondItem="fDh-Cc-JWf" secondAttribute="bottom" constant="8" id="anI-xr-R8P"/>
                             <constraint firstItem="sfr-ux-9Wj" firstAttribute="width" secondItem="sfr-ux-9Wj" secondAttribute="height" multiplier="335:128" id="b1G-TN-BoW"/>
                             <constraint firstItem="g4e-2A-hKP" firstAttribute="top" secondItem="fDh-Cc-JWf" secondAttribute="bottom" constant="8" id="cEM-Oy-eVx"/>
-                            <constraint firstItem="RV4-hS-6oQ" firstAttribute="top" secondItem="G1s-ur-oQQ" secondAttribute="top" constant="13" id="fx7-G3-D8R"/>
-                            <constraint firstItem="RV4-hS-6oQ" firstAttribute="centerY" secondItem="ife-dI-vks" secondAttribute="centerY" id="opm-Z8-iBV"/>
                             <constraint firstAttribute="trailingMargin" secondItem="pdf-qg-yyC" secondAttribute="trailing" id="wcK-Rn-xeD"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="b1G-TN-BoW"/>
                                 <exclude reference="TCi-rU-Zan"/>
-                                <exclude reference="7Hl-Ru-RRT"/>
-                                <exclude reference="AXK-ox-zJd"/>
-                                <exclude reference="opm-Z8-iBV"/>
                             </mask>
                         </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="activityIndicator" destination="RV4-hS-6oQ" id="FMC-F6-NRN"/>
+                        <outlet property="backButton" destination="g4e-2A-hKP" id="SJ8-Om-nYA"/>
+                        <outlet property="loginFields" destination="pdf-qg-yyC" id="3iC-zr-Drv"/>
+                        <outlet property="memeMeLogo" destination="sfr-ux-9Wj" id="VLU-qG-1iz"/>
                         <outlet property="passwordTF" destination="kfI-C4-eFc" id="Im5-qT-n8X"/>
                         <outlet property="signLoginButton" destination="G1s-ur-oQQ" id="47l-Sr-KAx"/>
                         <outlet property="usernameTF" destination="cec-Gh-kPf" id="0nk-Iq-Zcf"/>

@@ -37,8 +37,7 @@ class LoadingVC: UIViewController, UIAlertViewDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        constrain(thinIndeterminate)
-        thinIndeterminate.enableIndeterminate()
+        LoadingView.startSpinning(view)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -74,25 +73,6 @@ class LoadingVC: UIViewController, UIAlertViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    
-    lazy private var thinIndeterminate: RPCircularProgress = {
-        let progress = RPCircularProgress()
-        progress.thicknessRatio = 0.02
-        progress.indeterminateProgress = 0.80
-        progress.indeterminateDuration = 1.0
-        progress.progressTintColor = UIColor.blackColor().colorWithAlphaComponent(0.8)
-        return progress
-    }()
-    
-    // MARK: - Setup Helpers
-    
-    func constrain(newView: UIView, topView: UIView? = nil) {
-        spinView.addSubview(newView)
-        newView.snp_makeConstraints { (make) in
-            make.size.equalTo(56)
-            make.center.equalTo(spinView)
-        }
-    }
     //MARK: -- TouchID Functions
     func touchIDAuth()  {
         
@@ -111,6 +91,7 @@ class LoadingVC: UIViewController, UIAlertViewDelegate {
             [context .evaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, localizedReason: reasonString, reply: { (success: Bool, evalPolicyError: NSError?) -> Void in
                 if success {
                     dispatch_async(dispatch_get_main_queue(), {
+                        LoadingView.stopSpinning()
                         MemeMain.memeShared().presentMemeMeInNewWindow()
                     })
                 }
@@ -178,6 +159,7 @@ class LoadingVC: UIViewController, UIAlertViewDelegate {
         passcodeVC = PasscodeLockViewController(state: .EnterPasscode, configuration: configuration)
         passcodeVC.successCallback = { void in
             dispatch_async(dispatch_get_main_queue(), {
+                LoadingView.stopSpinning()
                 MemeMain.memeShared().presentMemeMeInNewWindow()
             })
         }

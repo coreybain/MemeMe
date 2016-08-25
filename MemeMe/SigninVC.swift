@@ -14,6 +14,7 @@ class SigninVC: UIViewController {
     //MARK: - Outlets
     @IBOutlet weak var udacityButton: UIButton!
     
+    
     //MARK: - Variables
     
     //MARK: - Lifecycle
@@ -52,15 +53,16 @@ class SigninContVC: UIViewController {
     //MARK: - Outlets
     @IBOutlet weak var usernameTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var signLoginButton: UIButton!
+    @IBOutlet weak var memeMeLogo: UIImageView!
+    @IBOutlet weak var loginFields: UIStackView!
+    @IBOutlet weak var backButton: UIButton!
     
     //MARK: - Variables
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        activityIndicator.hidesWhenStopped = true
         
         //Looks for single or multiple taps and then closes the keyboard
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SigninContVC.dismissKeyboard))
@@ -73,31 +75,30 @@ class SigninContVC: UIViewController {
             if let password = passwordTF.text {
                 if username != "" {
                     if password != "" {
+                        loadingUi(true)
                         checkUsername(username) {(isUsed) in
                             if !isUsed {
                                 if self.checkPassword(password) {
-                                    self.activityMode(3)
                                     DataService.ds().signUpUser(username, password: password, complete: { (complete) in
                                         if complete {
                                             print("signup complete")
-                                            self.activityIndicator.stopAnimating()
                                             MemeMain.memeShared().presentMemeMeInNewWindow()
                                         } else {
                                             print("signup failes")
+                                            self.loadingUi(false)
                                             self.alertUser("Signup failed", message: "Creating your user on MemeMe failed", actions: [UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil)])
                                         }
                                     })
                                 } else {
+                                    self.loadingUi(false)
                                     print("password did not conform to requirements")
                                     self.alertUser("Password to short", message: "Your password should be at least 6 characters", actions: [UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil)])
-                                    self.activityMode(3)
                                     self.errorPassView("Your password should be at least 6 characters")
                                 }
                             } else {
                                 if self.checkPassword(password) {
                                     DataService.ds().loginUser(username, password: password, complete: { 
                                         print("COMPLETE")
-                                        self.activityMode(2)
                                         MemeMain.memeShared().presentMemeMeInNewWindow()
                                     })
                                 }
@@ -105,16 +106,30 @@ class SigninContVC: UIViewController {
                         }
                     } else {
                         errorPassView("Password incorrect... Please retype")
-                        self.activityMode(1)
                     }
                 } else {
                     errorUsernameView()
                     if password == "" {
                         errorPassView("Password incorrect... Please retype")
                     }
-                    self.activityMode(1)
                 }
             }
+        }
+    }
+    
+    func loadingUi(loading:Bool) {
+        if loading {
+            backButton.hidden = true
+            loginFields.hidden = true
+            backButton.hidden = true
+            signLoginButton.hidden = true
+            LoadingView.startSpinning(view)
+        } else {
+            backButton.hidden = false
+            loginFields.hidden = false
+            backButton.hidden = false
+            signLoginButton.hidden = false
+            LoadingView.stopSpinning()
         }
     }
     
@@ -128,35 +143,10 @@ class SigninContVC: UIViewController {
                 }
             }
         } else {
+            loadingUi(false)
             self.alertUser("Email not valid", message: "Your email address is not valid", actions: [UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil)])
-            self.activityMode(1)
         }
         
-    }
-    
-    func activityMode(status:Int) {
-        switch status {
-        case 1:
-            self.activityIndicator.stopAnimating()
-            self.signLoginButton.enabled = true
-            self.signLoginButton.setTitle("Signup/Login", forState: .Normal)
-        case 2:
-            self.activityIndicator.startAnimating()
-            self.signLoginButton.enabled = false
-            self.signLoginButton.setTitle("Working", forState: .Normal)
-        case 3:
-            self.activityIndicator.stopAnimating()
-            self.signLoginButton.enabled = true
-            self.signLoginButton.setTitle("Register User", forState: .Normal)
-        case 4:
-            self.activityIndicator.stopAnimating()
-            self.signLoginButton.enabled = true
-            self.signLoginButton.setTitle("Login", forState: .Normal)
-        default:
-            self.activityIndicator.stopAnimating()
-            self.signLoginButton.enabled = true
-            self.signLoginButton.setTitle("Signup/Login", forState: .Normal)
-        }
     }
     
     func isValidEmail(testStr:String) -> Bool {
@@ -214,7 +204,6 @@ class SigninContVC: UIViewController {
     
     //MARK: - Actions
     @IBAction func signLoginButtonPressed(sender: AnyObject) {
-        self.activityMode(2)
         signLogin()
     }
     @IBAction func closeButtonPressed(sender: AnyObject) {

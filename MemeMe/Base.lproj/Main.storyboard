@@ -361,6 +361,7 @@
                     <connections>
                         <outlet property="bottomBar" destination="52I-lm-39g" id="how-PH-uZw"/>
                         <outlet property="bottomLabel" destination="OTe-Ul-lab" id="9J7-hQ-O2P"/>
+                        <outlet property="bottomLabelCon" destination="hsy-Vx-h6N" id="qgH-jC-3K7"/>
                         <outlet property="cameraButton" destination="LBA-Gm-WUc" id="ItZ-nA-UQn"/>
                         <outlet property="cancelButton" destination="yVH-Oo-l2D" id="5TM-Vx-lHB"/>
                         <outlet property="colorButton" destination="GmW-AS-DV9" id="OIm-rS-J9k"/>

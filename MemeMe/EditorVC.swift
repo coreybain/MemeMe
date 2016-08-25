@@ -33,6 +33,7 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
     @IBOutlet weak var topLabel: UITextField!
     @IBOutlet weak var bottomLabel: UITextField!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var bottomLabelCon: NSLayoutConstraint!
     
     //MARK: - Variables
     var meme: Meme?
@@ -44,6 +45,7 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
     var activeTextField: UITextField?
     var managedObjectContext: NSManagedObjectContext? =
         (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext
+    var bottomLabelConOriginal:CGFloat!
     
     //Location variables
     let locationManager = CLLocationManager()
@@ -64,6 +66,8 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        bottomLabelConOriginal = bottomLabelCon.constant
         
         subscribeToKeyboardNotification()
         //subscribeToShakeNotifications()
@@ -256,11 +260,11 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
                 let long = memeLocation?.coordinate.longitude
                 print(long)
                 
-                meme = Meme(topLabel: topLabel.text, bottomLabel: bottomLabel.text, savedImage: imageView.image!, savedMeme: nil, memedImage: compileMeme(), fontAttributer: fontAttributer, memeID: nil, memedImageString: nil, savedImageString: nil, latitude: lat!, longitude: long!, privacyLabel: "Public")
+                meme = Meme(topLabel: topLabel.text, bottomLabel: bottomLabel.text, savedImage: imageView.image!, savedMeme: nil, memedImage: compileMeme(), memedImageData: nil, fontAttributer: fontAttributer, memeID: nil, memedImageString: nil, savedImageString: nil, latitude: lat!, longitude: long!, privacyLabel: "Public")
                 
             } else {
                 
-                meme = Meme(topLabel: topLabel.text, bottomLabel: bottomLabel.text, savedImage: imageView.image!, savedMeme: nil, memedImage: compileMeme(), fontAttributer: fontAttributer, memeID: nil, memedImageString: nil, savedImageString: nil, latitude: 0.0, longitude: 0.0, privacyLabel: "Public")
+                meme = Meme(topLabel: topLabel.text, bottomLabel: bottomLabel.text, savedImage: imageView.image!, savedMeme: nil, memedImage: compileMeme(), memedImageData: nil, fontAttributer: fontAttributer, memeID: nil, memedImageString: nil, savedImageString: nil, latitude: 0.0, longitude: 0.0, privacyLabel: "Public")
             }
             
             if editingMeme {
@@ -416,9 +420,12 @@ extension EditorVC {
     
     func keyboardWillShow(notification: NSNotification) {
         // slide the bottom textfield up when keyboard it showing
-        if activeTextField == bottomLabel && view.frame.origin.y == 0.0 {
+        print(bottomLabelCon.constant)
+        print(bottomLabelConOriginal)
+        
+        if bottomLabelCon.constant == bottomLabelConOriginal {
             
-            bottomLabel.frame.origin.y = -getKeyboardHeight(notification)
+            bottomLabelCon.constant = self.bottomLabelConOriginal + getKeyboardHeight(notification)
             saveButton.enabled = false
             
         }
@@ -426,7 +433,7 @@ extension EditorVC {
     
     //Push bottom label down on keyboard hide
     func keyboardWillHide(notification: NSNotification) {
-        bottomLabel.frame.origin.y = 0 // FIX UP
+        bottomLabelCon.constant = self.bottomLabelConOriginal
         saveButton.enabled = canSave()
     }
     

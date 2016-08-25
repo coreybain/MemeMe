@@ -44,19 +44,39 @@ extension DataService {
                                                         print(savedImage)
                                                         print(memeImage)
                                                         print(savedMeme)
+                                                        //THIS FAILS
                                                         if let savedImageFile = MemeFunctions.loadImageFromPath(MemeFunctions.fileInDocumentsDirectory("\(savedImage)")) {
                                                             if let memeImage = MemeFunctions.loadImageFromPath(MemeFunctions.fileInDocumentsDirectory("\(savedMeme).jpg")) {
                                                                 let memeCell:Meme?
                                                                 
                                                                 if latitude != nil && latitude != 0.0 {
-                                                                    memeCell = Meme(topLabel: top, bottomLabel: bottom, savedImage: savedImageFile, savedMeme: savedMeme, memedImage: memeImage, fontAttributer: self.fontAttribute, memeID: nil, memedImageString: savedMeme, savedImageString: savedImage, latitude: latitude!, longitude: longitude!, privacyLabel: privacyLabel)
+                                                                    memeCell = Meme(topLabel: top, bottomLabel: bottom, savedImage: savedImageFile, savedMeme: savedMeme, memedImage: memeImage, memedImageData: nil, fontAttributer: self.fontAttribute, memeID: nil, memedImageString: savedMeme, savedImageString: savedImage, latitude: latitude!, longitude: longitude!, privacyLabel: privacyLabel)
                                                                 } else {
-                                                                    memeCell = Meme(topLabel: top, bottomLabel: bottom, savedImage: savedImageFile, savedMeme: savedMeme, memedImage: memeImage, fontAttributer: self.fontAttribute, memeID: nil, memedImageString: savedMeme, savedImageString: savedImage, latitude: 0.0, longitude: 0.0, privacyLabel: privacyLabel)
+                                                                    memeCell = Meme(topLabel: top, bottomLabel: bottom, savedImage: savedImageFile, savedMeme: savedMeme, memedImage: memeImage, memedImageData: nil, fontAttributer: self.fontAttribute, memeID: nil, memedImageString: savedMeme, savedImageString: savedImage, latitude: 0.0, longitude: 0.0, privacyLabel: privacyLabel)
                                                                 }
                                                                 
                                                                 self.memeDict.append(memeCell!)
                                                                 if self.memeCounter == self.memeDict.count {
                                                                     complete(self.memeDict)
+                                                                }
+                                                            }
+                                                        } else {
+                                                            self.storageRef.child("\(savedMeme).jpg").dataWithMaxSize(1 * 1024 * 1024) { (data, error) -> Void in
+                                                                if (error != nil) {
+                                                                    // Uh-oh, an error occurred!
+                                                                } else {
+                                                                    let memeCell:Meme?
+                                                                    
+                                                                    if latitude != nil && latitude != 0.0 {
+                                                                        memeCell = Meme(topLabel: top, bottomLabel: bottom, savedImage: nil, savedMeme: savedMeme, memedImage: nil, memedImageData: data!, fontAttributer: self.fontAttribute, memeID: nil, memedImageString: savedMeme, savedImageString: savedImage, latitude: latitude!, longitude: longitude!, privacyLabel: privacyLabel)
+                                                                    } else {
+                                                                        memeCell = Meme(topLabel: top, bottomLabel: bottom, savedImage: nil, savedMeme: savedMeme, memedImage: nil, memedImageData: data!, fontAttributer: self.fontAttribute, memeID: nil, memedImageString: savedMeme, savedImageString: savedImage, latitude: 0.0, longitude: 0.0, privacyLabel: privacyLabel)
+                                                                    }
+                                                                    
+                                                                    self.memeDict.append(memeCell!)
+                                                                    if self.memeCounter == self.memeDict.count {
+                                                                        complete(self.memeDict)
+                                                                    }
                                                                 }
                                                             }
                                                         }
@@ -151,6 +171,5 @@ extension DataService {
         }
         return false
     }
-    
     
 }

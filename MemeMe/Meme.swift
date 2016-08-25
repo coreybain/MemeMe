@@ -119,7 +119,7 @@ class Meme {
         }
     }
     
-    init(topLabel:String?, bottomLabel:String?, savedImage:UIImage, savedMeme:String?, memedImage:UIImage, fontAttributer:FontAttribute, memeID:String?, memedImageString:String?, savedImageString:String?, latitude:Double, longitude:Double, privacyLabel:String) {
+    init(topLabel:String?, bottomLabel:String?, savedImage:UIImage?, savedMeme:String?, memedImage:UIImage?, memedImageData:NSData?, fontAttributer:FontAttribute, memeID:String?, memedImageString:String?, savedImageString:String?, latitude:Double, longitude:Double, privacyLabel:String) {
         _topLabel = topLabel
         _bottomLabel = bottomLabel
         _savedImage = savedImage
@@ -132,6 +132,7 @@ class Meme {
         _latitude = latitude
         _longitude = longitude
         _privacyLabel = privacyLabel
+        _memedImageData = memedImageData
     }
     
     init(topLabel:String?, bottomLabel:String?, memedImageData:NSData, fontAttributer:FontAttribute, memeID:String?, latitude:Double, longitude:Double, privacyLabel:String) {

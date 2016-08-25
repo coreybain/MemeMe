@@ -48,14 +48,21 @@ class SharedVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     
     // Download the recent memes by other users to display on the screen
     func downloadSharedMemes() {
+        LoadingView.startSpinning(view)
         DataService.ds().downloadShared { [unowned self] (meme) in
             print("DOWNLOADED")
             print(meme.count)
             self.memeDict.removeAll()
             self.memeDict = meme
             if !self.collectionView.hidden {
+                dispatch_async(dispatch_get_main_queue(), {
+                    LoadingView.stopSpinning()
+                })
                 self.collectionView.reloadData()
             } else {
+                dispatch_async(dispatch_get_main_queue(), {
+                    LoadingView.stopSpinning()
+                })
                 self.memeLocations()
             }
         }

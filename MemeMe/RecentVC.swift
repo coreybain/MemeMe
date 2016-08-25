@@ -87,13 +87,23 @@ class RecentVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     
     // Download the recent memes for the logged in user to display on the screen
     func downloadRecentMemes() {
-        
+        LoadingView.startSpinning(view)
         managedObjectContext?.performBlock {
             if let memeDictRaw = Memes.ms().loadMemeLocal((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: self.managedObjectContext!) {
                 self.memeDict.removeAll()
                 self.memeDict = memeDictRaw
                 print(memeDictRaw.count)
-                self.recentTableView.reloadData()
+                if !self.recentTableView.hidden {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        LoadingView.stopSpinning()
+                    })
+                    self.recentTableView.reloadData()
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        LoadingView.stopSpinning()
+                    })
+                    self.recentCollectionView.reloadData()
+                }
             }
         }
         

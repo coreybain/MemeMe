@@ -89,6 +89,13 @@ class SettingsVC: UITableViewController {
             
         }
         
+        if (indexPath.section == 1 && indexPath.row == 2) {
+            LoadingView.startSpinning(self.view)
+        }
+        
+        
+        LoadingView.startSpinning(self.view)
+        
         if (indexPath.section == 2 && indexPath.row == 0) {
             UIApplication.sharedApplication().openURL(NSURL(string: "https://www.udacity.com/")!)
         }

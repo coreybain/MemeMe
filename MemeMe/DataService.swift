@@ -57,6 +57,10 @@ class DataService {
     
     //MARK: - Login for Udactiy instructor ***** REMOVE BEFORE APP STORE UPLOAD *******
     func udacityLogin(complete:DownloadComplete) {
+        
+        loginUser(udacityEmail, password: udacityPassword) { 
+            complete()
+        } /*
         FIRAuth.auth()?.signInWithEmail(udacityEmail, password: udacityPassword) { (fireUser, error) in
             if let user = fireUser?.uid {
                 self.managedObjectContext?.performBlock {
@@ -67,7 +71,7 @@ class DataService {
                     complete()
                 })
             }
-        }
+        } */
     }
     
     //MARK: - Log in user after checks are done
@@ -102,6 +106,31 @@ class DataService {
                 self.downloadRecents({ (meme) in
                     complete(user: mainUser, meme: meme)
                 })
+            } else {
+                let alert = UIAlertController(title: "Problems...", message: "For some reason we couldnt pull up your account, you will need to create a new one.", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { Void in
+                    dispatch_async(dispatch_get_main_queue(), {
+                        MemeMain.memeShared().presentMemeMeInNewWindow()
+                    })
+                }))
+                let user = FIRAuth.auth()?.currentUser
+                Memes.shared.deleteMemes((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: self.managedObjectContext!)
+                Users.deleteUsers((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: self.managedObjectContext!)
+                DataService.ds().removeAccount(user!, complete: { (complete) in
+                    if complete {
+                        user?.deleteWithCompletion { error in
+                            if let error = error {
+                                print(error.localizedDescription)
+                            } else {
+                                MemeMain.memeShared().presentMemeMeInNewWindow()
+                            }
+                        }
+                    } else {
+                        print("error")
+                    }
+                })
+                dispatch_async(dispatch_get_main_queue(), {UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
+                })
             }
         })
     }
@@ -110,6 +139,10 @@ class DataService {
     func setupUser(username:String, userID:FIRUser, complete:DownloadComplete) {
         let user = userID.uid
         let userDatabase = ["username":username, "auth":"default", "tagLine":"Trying out MemeMe"]
+        let mainUser = User.init(username: userID.email!, userID: user, tagLine: "Trying out MemeMe", auth: "default")
+        self.managedObjectContext?.performBlock {
+            _ = Users.saveUser(mainUser.userID, username: mainUser.username, auth: mainUser.auth, tagLine: mainUser.tagLine, inManagedObjectContext: self.managedObjectContext!)
+        }
         ref.child("users").child(user).setValue(userDatabase, withCompletionBlock: { (err, database) in
             if err == nil {
                 print(database.description())

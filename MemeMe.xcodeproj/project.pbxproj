@@ -64,6 +64,8 @@
 		83E1D4151D68FF5A008BD989 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F39D831D651ADA005BB9D7 /* LocalAuthentication.framework */; };
 		83E1D4171D6906ED008BD989 /* UserDefaultsPasscodeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E1D4161D6906ED008BD989 /* UserDefaultsPasscodeRepository.swift */; };
 		83E1D4191D6906F9008BD989 /* PasscodeLockConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E1D4181D6906F9008BD989 /* PasscodeLockConfiguration.swift */; };
+		83E8003B1D6DB626003C5254 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E8003A1D6DB626003C5254 /* LoadingView.swift */; };
+		83E8003D1D6E46D9003C5254 /* ButtonsRound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E8003C1D6E46D9003C5254 /* ButtonsRound.swift */; };
 		83F39D801D630A4B005BB9D7 /* Users+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F39D7F1D630A4B005BB9D7 /* Users+CoreDataProperties.swift */; };
 		83F39D821D631B5D005BB9D7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F39D811D631B5D005BB9D7 /* User.swift */; };
 		83F39D841D651ADA005BB9D7 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F39D831D651ADA005BB9D7 /* LocalAuthentication.framework */; };
@@ -156,6 +158,8 @@
 		83E1D4101D68FE88008BD989 /* PasscodeLockView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasscodeLockView.xib; sourceTree = "<group>"; };
 		83E1D4161D6906ED008BD989 /* UserDefaultsPasscodeRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsPasscodeRepository.swift; sourceTree = "<group>"; };
 		83E1D4181D6906F9008BD989 /* PasscodeLockConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasscodeLockConfiguration.swift; sourceTree = "<group>"; };
+		83E8003A1D6DB626003C5254 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		83E8003C1D6E46D9003C5254 /* ButtonsRound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonsRound.swift; sourceTree = "<group>"; };
 		83F39D7E1D630980005BB9D7 /* MemeMeDM 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MemeMeDM 2.xcdatamodel"; sourceTree = "<group>"; };
 		83F39D7F1D630A4B005BB9D7 /* Users+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Users+CoreDataProperties.swift"; path = "CoreData/Users+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		83F39D811D631B5D005BB9D7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -255,6 +259,8 @@
 				83D001561D50042100B5F778 /* RecentCollectionViewCell.swift */,
 				830DCB971D4FE922009F12AC /* SwiftColorPickerViewController.swift */,
 				83A507B61D6059590062691E /* TextPickerView.swift */,
+				83E8003A1D6DB626003C5254 /* LoadingView.swift */,
+				83E8003C1D6E46D9003C5254 /* ButtonsRound.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -592,6 +598,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83E8003D1D6E46D9003C5254 /* ButtonsRound.swift in Sources */,
 				830DCB981D4FE922009F12AC /* SwiftColorPickerViewController.swift in Sources */,
 				835F350B1D6A13C7001916DA /* DataServiceDelete.swift in Sources */,
 				83F39D801D630A4B005BB9D7 /* Users+CoreDataProperties.swift in Sources */,
@@ -625,6 +632,7 @@
 				8309C4BD1D502431007B1CF7 /* SigninVC.swift in Sources */,
 				8309C4C31D508F8A007B1CF7 /* EditorVC.swift in Sources */,
 				83E1D3A91D68E008008BD989 /* RPCircularProgress.swift in Sources */,
+				83E8003B1D6DB626003C5254 /* LoadingView.swift in Sources */,
 				83A507B71D6059590062691E /* TextPickerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
