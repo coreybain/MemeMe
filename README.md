@@ -8,9 +8,21 @@ The MemeMe app for the Udacity iOS Developer course.
 
 ## MemeMe Introduciton
 
-The MemeMe app for the Udacity iOS Developer course which is linked to Firebase and Core Data for database sync. This allows users to sync there data across device and share Memes and there memes locations with other users.
+This is the MemeMe app from the [Udacity iOS Developer](https://www.udacity.com/course/ios-developer-nanodegree--nd003) course including both 'Version 1' and 'Version 2' of the app.
 
-This includes a lot more features that the original submission app and has a variable to change between V1 and V2 of the app.
+The SpiritDevs version of MemeMe however working on Firebase and Core data to keep user data synced across device and give MemeMe a social aspect by allowing uses to she other users memes and where they were taken on a map.
+
+## Technologies Used
+
+- Core Data -- Used to store users data locally for quick app response times
+- SnapKit -- Used to display app loading screen and make write UI code easier 
+- Firebase -- Used to store users data and memes on the server and to enable the social features of the app
+- Facebook SDK -- Used to login to the app using Facebook
+- Cocoapods -- Used to install plugins into the MemeMe app
+- Touch ID -- Used to secure the MemeMe app, if Touch ID not available it used a pin code
+- Alamofire -- Used to download and upload files outside of Firebase (easier to read and use than built in iOS networking)
+- MVC design -- Keep code simple ;)
+ 
 
 ## Installation
 
