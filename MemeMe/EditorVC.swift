@@ -42,6 +42,7 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
     var editingMeme:Bool = false
     var memeImage: UIImage!
     weak var recentVC : RecentVC?
+    weak var memeDetailVC: MemeDetailVC?
     var activeTextField: UITextField?
     var managedObjectContext: NSManagedObjectContext? =
         (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext
@@ -101,7 +102,7 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
     func UIToggle() {
         let memeLabelArray = [topLabel, bottomLabel]
         
-        if isUdacityFirstApp {
+        if !NSUserDefaults.standardUserDefaults().boolForKey("fullVersion") {
             fontButton.enabled = false
             colorButton.enabled = false
         }
@@ -254,41 +255,39 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
     @IBAction func saveButtonPressed(sender: AnyObject) {
         if canSave() {
             let meme:Meme?
+            topLabel.resignFirstResponder()
+            bottomLabel.resignFirstResponder()
+            var originalMemeID:String?
+            var originalSavedMeme:String?
+            if editingMeme {
+                originalMemeID = self.meme!.memeID
+                originalSavedMeme = self.meme!.savedMeme
+            }
             
             if CLLocationManager.locationServicesEnabled() && NSUserDefaults.standardUserDefaults().boolForKey("locationOn") {
                 let lat = memeLocation?.coordinate.latitude
                 let long = memeLocation?.coordinate.longitude
                 print(long)
                 
-                meme = Meme(topLabel: topLabel.text, bottomLabel: bottomLabel.text, savedImage: imageView.image!, savedMeme: nil, memedImage: compileMeme(), memedImageData: nil, fontAttributer: fontAttributer, memeID: nil, memedImageString: nil, savedImageString: nil, latitude: lat!, longitude: long!, privacyLabel: "Public")
-                
+                meme = Meme(topLabel: topLabel.text, bottomLabel: bottomLabel.text, savedImage: imageView.image!, savedMeme: originalSavedMeme, memedImage: compileMeme(), memedImageData: nil, fontAttributer: fontAttributer, memeID: originalMemeID, memedImageString: nil, savedImageString: nil, latitude: lat!, longitude: long!, privacyLabel: "Public")
+                print(topLabel.text)
             } else {
                 
-                meme = Meme(topLabel: topLabel.text, bottomLabel: bottomLabel.text, savedImage: imageView.image!, savedMeme: nil, memedImage: compileMeme(), memedImageData: nil, fontAttributer: fontAttributer, memeID: nil, memedImageString: nil, savedImageString: nil, latitude: 0.0, longitude: 0.0, privacyLabel: "Public")
+                meme = Meme(topLabel: topLabel.text, bottomLabel: bottomLabel.text, savedImage: imageView.image!, savedMeme: originalSavedMeme, memedImage: compileMeme(), memedImageData: nil, fontAttributer: fontAttributer, memeID: originalMemeID, memedImageString: nil, savedImageString: nil, latitude: 0.0, longitude: 0.0, privacyLabel: "Public")
+                print(topLabel.text)
             }
-            
-            if editingMeme {
-                if let meme = self.meme {
-                    self.managedObjectContext?.performBlock {
-                        Memes.ms().updateMeme(meme, memeID: meme.memeID, inManagedObjectContext: self.managedObjectContext!)
-                    }
-                    MemeFunctions.saveMeme(meme, complete: { 
-                        self.recentVC?.savedReload = true
-                        self.recentVC?.navigationController?.navigationBar.topItem?.title = "Uploading 0%"
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                    })
-                }
-            } else {
                 // Upload meme to server
-                MemeFunctions.saveMeme(meme!, complete: { 
+                MemeFunctions.saveMeme(meme!, memeID: originalMemeID, complete: {
                     print("upload complete and working")
                     
                     // this set the bool for saved reload to true so the tableview is reloaded on save
-                    self.recentVC?.savedReload = true
-                    self.recentVC?.navigationController?.navigationBar.topItem?.title = "Uploading 0%"
+                    if self.editingMeme {
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.memeDetailVC?.imageView.image = meme!.memedImage
+                        })
+                    }
                     self.dismissViewControllerAnimated(true, completion: nil)
                 })
-            }
             
         } else {
             alertUser("Problem Saving", message: "The meme is missing the following: ", actions: [UIAlertAction(title: "Ok", style: .Default, handler: nil)])

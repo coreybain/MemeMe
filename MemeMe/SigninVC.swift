@@ -8,6 +8,9 @@
 
 import Foundation
 import UIKit
+import Firebase
+import FBSDKCoreKit
+import FBSDKLoginKit
 
 class SigninVC: UIViewController {
     
@@ -16,6 +19,7 @@ class SigninVC: UIViewController {
     
     
     //MARK: - Variables
+    let facebookLogin = FBSDKLoginManager()
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
@@ -33,17 +37,60 @@ class SigninVC: UIViewController {
     //MARK: - Actions
     
     @IBAction func facebookButtonPressed(sender: AnyObject) {
-        
+        facebookLogin.logInWithReadPermissions(["email"], handler: {
+            (facebookResult, facebookError) -> Void in
+            if facebookError != nil {
+                print("Facebook login failed. Error \(facebookError)")
+                AlertView.alertUser("Facebook failed", message: "Facebook login failed. Error \(facebookError.localizedDescription).", actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler:nil)])
+            } else if facebookResult.isCancelled {
+                print("Facebook login was cancelled.")
+            } else {
+                let credential = FIRFacebookAuthProvider.credentialWithAccessToken(FBSDKAccessToken.currentAccessToken().tokenString)
+                
+                FIRAuth.auth()?.signInWithCredential(credential) { (user, error) in
+                    if error != nil {
+                        print("Login failed. \(error)")
+                        AlertView.alertUser("Facebook failed", message: "Login with facebook failed try again in a little while.", actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler:nil)])
+                    } else {
+                        print("Logged in! \(user?.email)")
+                        DataService.ds().addUsernameToList(user!.email!)
+                        DataService.ds().setupUser(user!.email!, userID: user!, complete: {
+                            dispatch_async(dispatch_get_main_queue(), {
+                                MemeMain.memeShared().presentMemeMeInNewWindow()
+                            })
+                        })
+                    }
+
+                }
+            }
+        })
     }
     
     @IBAction func passwordButtonPressed(sender: AnyObject) {
         performSegueWithIdentifier("SegueSignin", sender: nil)
     }
     @IBAction func udacityButtonPressed(sender: AnyObject) {
-        DataService.ds().udacityLogin {
-            print("HELLO")
-            MemeMain.memeShared().presentMemeMeInNewWindow()
-        }
+        
+        AlertView.alertUser("Udacity Instructor", message: "Which version of the app are you assessing?", actions: [
+            UIAlertAction(title: "Version 1", style: UIAlertActionStyle.Default, handler: { Void in
+                NSUserDefaults.standardUserDefaults().setBool(false, forKey: "fullVersion")
+                NSUserDefaults.standardUserDefaults().synchronize()
+                DataService.ds().udacityLogin({ 
+                    dispatch_async(dispatch_get_main_queue(), {
+                        MemeMain.memeShared().presentMemeMeInNewWindow()
+                    })
+                })
+            }),
+            UIAlertAction(title: "Version 2", style: UIAlertActionStyle.Default, handler: { Void in
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "fullVersion")
+                NSUserDefaults.standardUserDefaults().synchronize()
+                DataService.ds().udacityLogin({
+                    dispatch_async(dispatch_get_main_queue(), {
+                        MemeMain.memeShared().presentMemeMeInNewWindow()
+                    })
+                })
+            })
+        ])
     }
 }
 
@@ -86,13 +133,13 @@ class SigninContVC: UIViewController {
                                         } else {
                                             print("signup failes")
                                             self.loadingUi(false)
-                                            self.alertUser("Signup failed", message: "Creating your user on MemeMe failed", actions: [UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil)])
+                                            AlertView.alertUser("Signup failed", message: "Creating your user on MemeMe failed", actions: [UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil)])
                                         }
                                     })
                                 } else {
                                     self.loadingUi(false)
                                     print("password did not conform to requirements")
-                                    self.alertUser("Password to short", message: "Your password should be at least 6 characters", actions: [UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil)])
+                                    AlertView.alertUser("Password to short", message: "Your password should be at least 6 characters", actions: [UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil)])
                                     self.errorPassView("Your password should be at least 6 characters")
                                 }
                             } else {
@@ -144,7 +191,7 @@ class SigninContVC: UIViewController {
             }
         } else {
             loadingUi(false)
-            self.alertUser("Email not valid", message: "Your email address is not valid", actions: [UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil)])
+            AlertView.alertUser("Email not valid", message: "Your email address is not valid", actions: [UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil)])
         }
         
     }
@@ -184,14 +231,6 @@ class SigninContVC: UIViewController {
                     self.usernameTF.backgroundColor = UIColor.clearColor()
                 })
         })
-    }
-    
-    func alertUser(title: String, message: String?, actions: [UIAlertAction]) {
-        let ac = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        for action in actions {
-            ac.addAction(action)
-        }
-        presentViewController(ac, animated: true, completion: nil)
     }
     
     //Calls this function when the tap is recognized.

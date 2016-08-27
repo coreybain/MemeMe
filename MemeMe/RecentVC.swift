@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import CoreData
 import Firebase
+import BRYXBanner
 
 class RecentVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDelegate, UITableViewDataSource {
     
@@ -21,10 +22,10 @@ class RecentVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     
     //MARK: - Variables
     var memeDict:[Meme] = []
-    var savedReload:Bool = false
     var isEditingMeme:Bool = false
     var managedObjectContext: NSManagedObjectContext? =
         (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext
+    let defaultCenter = NSNotificationCenter.defaultCenter()
     
     //MARK: - App Lifecycle
     override func viewDidLoad() {
@@ -44,17 +45,8 @@ class RecentVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         
         NSUserDefaults.standardUserDefaults().removeObjectForKey("firstRun")
         NSUserDefaults.standardUserDefaults().synchronize()
-        
-        if savedReload {
-            // ready for receiving notification
-            let defaultCenter = NSNotificationCenter.defaultCenter()
-            defaultCenter.addObserver(self,
-                                      selector: #selector(RecentVC.handleCompleteDownload(_:)),
-                                      name: "DownloadProgressNotification",
-                                      object: nil)
-            savedReload = false
-        }
-        if isUdacityFirstApp {
+        startNotifications()
+        if !NSUserDefaults.standardUserDefaults().boolForKey("fullVersion") {
             if let tabBarController = self.tabBarController {
                 let indexToRemove = 1
                 print(tabBarController.viewControllers?.count)
@@ -104,19 +96,76 @@ class RecentVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                     })
                     self.recentCollectionView.reloadData()
                 }
+            } else {
+                
+                DataService.ds().downloadMeme((FIRAuth.auth()?.currentUser?.uid)!, shared: false) { (meme) in
+                    print("DOWNLOADED")
+                    if meme != nil {
+                        print(meme!.count)
+                        self.memeDict = meme!
+                        
+                        if !self.recentTableView.hidden {
+                            dispatch_async(dispatch_get_main_queue(), {
+                                LoadingView.stopSpinning()
+                            })
+                            self.recentTableView.reloadData()
+                        } else {
+                            dispatch_async(dispatch_get_main_queue(), {
+                                LoadingView.stopSpinning()
+                            })
+                            self.recentCollectionView.reloadData()
+                        }
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), {
+                            LoadingView.stopSpinning()
+                        })
+                    }
+                }
             }
         }
+    }
+    
+    //MARK: - Actions
+    @IBAction func toggleButtonPressed(sender: AnyObject) {
+        viewToggle()
+    }
+    @IBAction func newMemeButtonPressed(sender: AnyObject) {
+        //Bypass editor and go directly to editor
+        let object: AnyObject = storyboard!.instantiateViewControllerWithIdentifier("EditorVC")
+        let editorVC = object as! EditorVC
+        presentViewController(editorVC, animated: true, completion: {
+            editorVC.cancelButton.enabled = true
+            editorVC.saveButton.enabled = false
+            editorVC.recentVC = self
+        })
+    }
+    
+    //MARK: Notification Observers 
+    func startNotifications() {
+        defaultCenter.addObserver(self, selector: #selector(RecentVC.uploadStatus(_:)), name: "uploadProgressNotification", object: nil)
+        defaultCenter.addObserver(self, selector: #selector(RecentVC.uploadComplete(_:)), name: "uploadProgressNotificationSuccess", object: nil)
+    }
+    
+    func uploadStatus(notification: NSNotification) {
+        let tmp : [NSObject : AnyObject] = notification.userInfo!
         
-        /*
-        DataService.ds().downloadRecents { (meme) in
-            print("DOWNLOADED")
-            print(meme.count)
-            self.memeDict = meme
-            self.recentTableView.reloadData()
-            self.recentCollectionView.reloadData()
-        }
-         */
+        // if notification received, change label value 0% - 100%
+        let progress = tmp["progress"] as! String!
         
+        let banner = Banner(title: "Upload Status", subtitle: "Upload at: \(progress)", image: UIImage(named: "spiritdevs"), backgroundColor: UIColor(red:48.00/255.0, green:174.0/255.0, blue:51.5/255.0, alpha:1.000))
+        banner.dismissesOnTap = true
+        banner.show(duration: 3.0)
+    }
+    
+    func uploadComplete(notification: NSNotification) {
+        let tmp : [NSObject : AnyObject] = notification.userInfo!
+        
+        // if notification received, change label value 0% - 100%
+        let progress = tmp["progress"] as! String!
+        
+        let banner = Banner(title: "Upload Status", subtitle: "Upload successful", image: UIImage(named: "spiritdevs"), backgroundColor: UIColor(red:48.00/255.0, green:174.0/255.0, blue:51.5/255.0, alpha:1.000))
+        banner.dismissesOnTap = true
+        banner.show(duration: 3.0)
     }
     
     func handleCompleteDownload(notification: NSNotification) {
@@ -134,24 +183,6 @@ class RecentVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             }
         }
     }
-    
-    
-    //MARK: - Actions
-    @IBAction func toggleButtonPressed(sender: AnyObject) {
-        viewToggle()
-    }
-    @IBAction func newMemeButtonPressed(sender: AnyObject) {
-        //Bypass editor and go directly to editor
-        let object: AnyObject = storyboard!.instantiateViewControllerWithIdentifier("EditorVC")
-        let editorVC = object as! EditorVC
-        presentViewController(editorVC, animated: true, completion: {
-            editorVC.cancelButton.enabled = true
-            editorVC.saveButton.enabled = false
-            editorVC.recentVC = self
-        })
-    }
-    
-    
 }
 
 //MARK: - UITableView Lifecycle
@@ -176,7 +207,11 @@ extension RecentVC {
             cell.recentNameLabel.text = "\(meme.bottomLabel)"
         }
         cell.recentPrivacyLabel.text = meme.privacyLabel
-        cell.recentImage.image = meme.memedImage
+        if meme.savedMeme != "" {
+            cell.recentImage.image = meme.memedImage
+        } else {
+            cell.recentImage.image = UIImage(data: meme.memedImageData)!
+        }
         return cell
     }
     
@@ -192,13 +227,23 @@ extension RecentVC {
             
             /* Pass the data from the selected row to the detail view and present it */
             detailVC.meme = memeDict[indexPath.row]
+            if memeDict[indexPath.row].savedMeme == "" {
+                detailVC.editButton.enabled = false
+            }
             navigationController!.pushViewController(detailVC, animated: true)
         }
     }
     
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .Destructive, title: "Delete") { action, index in
-            print("more button tapped")
+            DataService.ds().deleteOnlineMeme(self.memeDict[indexPath.row])
+            self.managedObjectContext?.performBlock {
+                Memes.ms().deleteSpecificMeme(self.memeDict[indexPath.row].memeID, inManagedObjectContext: self.managedObjectContext!)
+                tableView.beginUpdates()
+                self.memeDict.removeAtIndex(indexPath.row)
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                tableView.endUpdates()
+            }
         }
         delete.backgroundColor = UIColor.redColor()
         

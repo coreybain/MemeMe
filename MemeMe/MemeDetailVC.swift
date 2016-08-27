@@ -23,7 +23,7 @@ class MemeDetailVC: UIViewController {
         super.viewDidLoad()
         /* Unwrap meme and set the image view to the memed image */
         if let meme = meme  {
-            if !shared {
+            if !shared && meme.savedMeme != "" {
                 imageView.image = meme.memedImage
             } else {
                 imageView.image = UIImage(data: meme.memedImageData)!
@@ -55,6 +55,7 @@ class MemeDetailVC: UIViewController {
         let editorVC = object as! EditorVC
         editorVC.meme = self.meme
         editorVC.editingMeme = true
+        editorVC.memeDetailVC = self
         presentViewController(editorVC, animated: true, completion: nil)
     }
 }

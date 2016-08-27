@@ -39,7 +39,7 @@ class SettingsVC: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if !isUdacityFirstApp {
+        if NSUserDefaults.standardUserDefaults().boolForKey("fullVersion") {
             unlockSwitch.setOn(true, animated: false)
         } else {
             unlockSwitch.setOn(false, animated: false)
@@ -93,9 +93,6 @@ class SettingsVC: UITableViewController {
             LoadingView.startSpinning(self.view)
         }
         
-        
-        LoadingView.startSpinning(self.view)
-        
         if (indexPath.section == 2 && indexPath.row == 0) {
             UIApplication.sharedApplication().openURL(NSURL(string: "https://www.udacity.com/")!)
         }
@@ -105,6 +102,8 @@ class SettingsVC: UITableViewController {
         }
         
         if (indexPath.section == 3 && indexPath.row == 0){
+            
+            
             let logoutAlert = UIAlertController(title: "Logout", message: "Do you wish to log out of MemeMe", preferredStyle: .Alert)
             
             let okButton = UIAlertAction(title: "Ok", style: .Default, handler: { Void in
@@ -121,6 +120,21 @@ class SettingsVC: UITableViewController {
             presentViewController(logoutAlert, animated: true, completion: nil)
             
 
+            AlertView.alertUser("Logout", message: "Do you wish to log out of MemeMe?", actions: [
+                UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { Void in
+                    do{
+                        try FIRAuth.auth()!.signOut()
+                        NSUserDefaults.standardUserDefaults().removeObjectForKey("fullVersion")
+                        MemeMain.memeShared().presentMemeMeInNewWindow()
+                    } catch {
+                        AlertView.alertUser("Whoops", message: "Looks like there was an issue logging out, if this keeps happening reinstall the app", actions: [
+                            UIAlertAction(title: "Ok", style: UIAlertActionStyle.Destructive, handler: nil)
+                            ])
+                    }
+                }),
+                UIAlertAction(title: "No", style: UIAlertActionStyle.Destructive, handler: nil)
+            ])
+            
         }
     }
     
@@ -151,18 +165,6 @@ class SettingsVC: UITableViewController {
     }
     
     //MARK -- App Functions
-    
-    func unlock() {
-        if isUdacityFirstApp {
-            isUdacityFirstApp = false
-            unlockSwitch.setOn(false, animated: true)
-            MemeMain.memeShared().presentMemeMeInNewWindow()
-        } else {
-            isUdacityFirstApp = true
-            unlockSwitch.setOn(true, animated: true)
-            MemeMain.memeShared().presentMemeMeInNewWindow()
-        }
-    }
     
     func getUserInfo() {
         managedObjectContext?.performBlock {
@@ -195,40 +197,29 @@ class SettingsVC: UITableViewController {
     }
     
     func unlockApp() {
-        if !isUdacityFirstApp {
-            let unlockAlert = UIAlertController(title: "Unlock app", message: "Are you assessing V2 of the MemeMe app?", preferredStyle: .Alert)
-            
-            let yesButton = UIAlertAction(title: "Yes", style: .Default, handler: { Void in
-                self.unlock()
-            })
-            let noButton = UIAlertAction(title: "No", style: .Cancel, handler: {
-                Void in
-                if isUdacityFirstApp {
-                    self.unlockSwitch.setOn(false, animated: true)
-                } else {
+        
+        if NSUserDefaults.standardUserDefaults().boolForKey("fullVersion") {
+            AlertView.alertUser("Switch Versions", message: "Did you want to switch to Version 1 of this app?", actions: [
+                UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { Void in
+                    NSUserDefaults.standardUserDefaults().setBool(false, forKey: "fullVersion")
+                    NSUserDefaults.standardUserDefaults().synchronize()
+                    MemeMain.memeShared().presentMemeMeInNewWindow()
+                }),
+                UIAlertAction(title: "No", style: UIAlertActionStyle.Destructive, handler: { Void in
                     self.unlockSwitch.setOn(true, animated: true)
-                }
-            })
-            unlockAlert.addAction(yesButton)
-            unlockAlert.addAction(noButton)
-            presentViewController(unlockAlert, animated: true, completion: nil)
+                })
+            ])
         } else {
-            let unlockAlert = UIAlertController(title: "Revert to V1", message: "Your about to revert the App to V1 for assestment", preferredStyle: .Alert)
-            
-            let okButton = UIAlertAction(title: "Ok", style: .Default, handler: { Void in
-                self.unlock()
-            })
-            let cancelButton = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
-                Void in
-                if !isUdacityFirstApp {
+            AlertView.alertUser("Switch Versions", message: "Did you want to switch to Version 2 of this app?", actions: [
+                UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { Void in
+                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: "fullVersion")
+                    NSUserDefaults.standardUserDefaults().synchronize()
+                    MemeMain.memeShared().presentMemeMeInNewWindow()
+                }),
+                UIAlertAction(title: "No", style: UIAlertActionStyle.Destructive, handler: { Void in
                     self.unlockSwitch.setOn(false, animated: true)
-                } else {
-                    self.unlockSwitch.setOn(true, animated: true)
-                }
-            })
-            unlockAlert.addAction(okButton)
-            unlockAlert.addAction(cancelButton)
-            presentViewController(unlockAlert, animated: true, completion: nil)
+                })
+            ])
         }
     }
 }

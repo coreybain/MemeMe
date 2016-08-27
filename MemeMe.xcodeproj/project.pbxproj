@@ -34,6 +34,13 @@
 		8342D7F31D56FBA700C5735A /* MemeDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342D7F21D56FBA700C5735A /* MemeDetailVC.swift */; };
 		835F350B1D6A13C7001916DA /* DataServiceDelete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835F350A1D6A13C7001916DA /* DataServiceDelete.swift */; };
 		835F350D1D6AC15A001916DA /* SharedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835F350C1D6AC15A001916DA /* SharedCollectionViewCell.swift */; };
+		839BE4771D71A8DB00F189CE /* FacebookCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839BE4711D71A8DB00F189CE /* FacebookCore.framework */; };
+		839BE4781D71A8DB00F189CE /* FacebookLogin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839BE4721D71A8DB00F189CE /* FacebookLogin.framework */; };
+		839BE4791D71A8DB00F189CE /* FacebookShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839BE4731D71A8DB00F189CE /* FacebookShare.framework */; };
+		839BE47A1D71A8DB00F189CE /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839BE4741D71A8DB00F189CE /* FBSDKCoreKit.framework */; };
+		839BE47B1D71A8DB00F189CE /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839BE4751D71A8DB00F189CE /* FBSDKLoginKit.framework */; };
+		839BE47C1D71A8DB00F189CE /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839BE4761D71A8DB00F189CE /* FBSDKShareKit.framework */; };
+		839BE47E1D71BBC600F189CE /* BRYXBanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839BE47D1D71BBC600F189CE /* BRYXBanner.framework */; };
 		83A507B51D6025DF0062691E /* UIViewControllerExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A507B41D6025DF0062691E /* UIViewControllerExtentions.swift */; };
 		83A507B71D6059590062691E /* TextPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A507B61D6059590062691E /* TextPickerView.swift */; };
 		83D001571D50042100B5F778 /* RecentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D001561D50042100B5F778 /* RecentCollectionViewCell.swift */; };
@@ -69,6 +76,7 @@
 		83F39D801D630A4B005BB9D7 /* Users+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F39D7F1D630A4B005BB9D7 /* Users+CoreDataProperties.swift */; };
 		83F39D821D631B5D005BB9D7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F39D811D631B5D005BB9D7 /* User.swift */; };
 		83F39D841D651ADA005BB9D7 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F39D831D651ADA005BB9D7 /* LocalAuthentication.framework */; };
+		83FAA4991D711B6E00427347 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FAA4981D711B6E00427347 /* AlertView.swift */; };
 		B3A1B677375B5DB003EA061B /* Pods_MemeMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0942CDD40CE9C458B469BA6F /* Pods_MemeMe.framework */; };
 /* End PBXBuildFile section */
 
@@ -129,6 +137,13 @@
 		8342D7F21D56FBA700C5735A /* MemeDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeDetailVC.swift; sourceTree = "<group>"; };
 		835F350A1D6A13C7001916DA /* DataServiceDelete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataServiceDelete.swift; sourceTree = "<group>"; };
 		835F350C1D6AC15A001916DA /* SharedCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedCollectionViewCell.swift; sourceTree = "<group>"; };
+		839BE4711D71A8DB00F189CE /* FacebookCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookCore.framework; path = "../../Library/Developer/Xcode/DerivedData/MemeMe-fkmkepaqqtjcxugxhewmfbieukyl/Build/Products/Debug-iphoneos/FacebookCore/FacebookCore.framework"; sourceTree = "<group>"; };
+		839BE4721D71A8DB00F189CE /* FacebookLogin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookLogin.framework; path = "../../Library/Developer/Xcode/DerivedData/MemeMe-fkmkepaqqtjcxugxhewmfbieukyl/Build/Products/Debug-iphoneos/FacebookLogin/FacebookLogin.framework"; sourceTree = "<group>"; };
+		839BE4731D71A8DB00F189CE /* FacebookShare.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookShare.framework; path = "../../Library/Developer/Xcode/DerivedData/MemeMe-fkmkepaqqtjcxugxhewmfbieukyl/Build/Products/Debug-iphoneos/FacebookShare/FacebookShare.framework"; sourceTree = "<group>"; };
+		839BE4741D71A8DB00F189CE /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "Pods/../build/Debug-iphoneos/FBSDKCoreKit/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
+		839BE4751D71A8DB00F189CE /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "Pods/../build/Debug-iphoneos/FBSDKLoginKit/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
+		839BE4761D71A8DB00F189CE /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = "Pods/../build/Debug-iphoneos/FBSDKShareKit/FBSDKShareKit.framework"; sourceTree = "<group>"; };
+		839BE47D1D71BBC600F189CE /* BRYXBanner.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BRYXBanner.framework; path = "../../Library/Developer/Xcode/DerivedData/MemeMe-fkmkepaqqtjcxugxhewmfbieukyl/Build/Products/Debug-iphoneos/BRYXBanner/BRYXBanner.framework"; sourceTree = "<group>"; };
 		83A507B41D6025DF0062691E /* UIViewControllerExtentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtentions.swift; sourceTree = "<group>"; };
 		83A507B61D6059590062691E /* TextPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextPickerView.swift; sourceTree = "<group>"; };
 		83D001561D50042100B5F778 /* RecentCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -164,6 +179,7 @@
 		83F39D7F1D630A4B005BB9D7 /* Users+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Users+CoreDataProperties.swift"; path = "CoreData/Users+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		83F39D811D631B5D005BB9D7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		83F39D831D651ADA005BB9D7 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
+		83FAA4981D711B6E00427347 /* AlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		AE84143D3D7AF50C366D32DD /* Pods-MemeMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MemeMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-MemeMe/Pods-MemeMe.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -172,6 +188,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				839BE47E1D71BBC600F189CE /* BRYXBanner.framework in Frameworks */,
+				839BE4771D71A8DB00F189CE /* FacebookCore.framework in Frameworks */,
+				839BE4781D71A8DB00F189CE /* FacebookLogin.framework in Frameworks */,
+				839BE4791D71A8DB00F189CE /* FacebookShare.framework in Frameworks */,
+				839BE47A1D71A8DB00F189CE /* FBSDKCoreKit.framework in Frameworks */,
+				839BE47B1D71A8DB00F189CE /* FBSDKLoginKit.framework in Frameworks */,
+				839BE47C1D71A8DB00F189CE /* FBSDKShareKit.framework in Frameworks */,
 				83F39D841D651ADA005BB9D7 /* LocalAuthentication.framework in Frameworks */,
 				83E1D3DF1D68FD65008BD989 /* PasscodeLock.framework in Frameworks */,
 				B3A1B677375B5DB003EA061B /* Pods_MemeMe.framework in Frameworks */,
@@ -227,7 +250,6 @@
 				830DCB991D4FEBEC009F12AC /* Model */,
 				830DCB9C1D4FEC04009F12AC /* Utils */,
 				830DCB831D4FD1C9009F12AC /* AppDelegate.swift */,
-				830DCB851D4FD1C9009F12AC /* LoadingVC.swift */,
 				830DCB871D4FD1C9009F12AC /* Main.storyboard */,
 				83D0015C1D500E8100B5F778 /* Welcome.storyboard */,
 				830DCB8A1D4FD1C9009F12AC /* Assets.xcassets */,
@@ -260,6 +282,7 @@
 				830DCB971D4FE922009F12AC /* SwiftColorPickerViewController.swift */,
 				83A507B61D6059590062691E /* TextPickerView.swift */,
 				83E8003A1D6DB626003C5254 /* LoadingView.swift */,
+				83FAA4981D711B6E00427347 /* AlertView.swift */,
 				83E8003C1D6E46D9003C5254 /* ButtonsRound.swift */,
 			);
 			name = View;
@@ -275,6 +298,7 @@
 				8342D7F21D56FBA700C5735A /* MemeDetailVC.swift */,
 				83063FBD1D5B32F800192B7A /* SettingsVC.swift */,
 				83E1D3AA1D68F2C1008BD989 /* SecurityVC.swift */,
+				830DCB851D4FD1C9009F12AC /* LoadingVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -375,6 +399,13 @@
 		A85C10EAD1D6AC22EC6D7C6D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				839BE47D1D71BBC600F189CE /* BRYXBanner.framework */,
+				839BE4711D71A8DB00F189CE /* FacebookCore.framework */,
+				839BE4721D71A8DB00F189CE /* FacebookLogin.framework */,
+				839BE4731D71A8DB00F189CE /* FacebookShare.framework */,
+				839BE4741D71A8DB00F189CE /* FBSDKCoreKit.framework */,
+				839BE4751D71A8DB00F189CE /* FBSDKLoginKit.framework */,
+				839BE4761D71A8DB00F189CE /* FBSDKShareKit.framework */,
 				83F39D831D651ADA005BB9D7 /* LocalAuthentication.framework */,
 				0942CDD40CE9C458B469BA6F /* Pods_MemeMe.framework */,
 			);
@@ -399,6 +430,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 830DCB921D4FD1C9009F12AC /* Build configuration list for PBXNativeTarget "MemeMe" */;
 			buildPhases = (
+				39384F63C43EB09FFC3D3AD4 /* [CP] Check Pods Manifest.lock */,
 				98FADD4D23C1E24DABA40867 /* [CP] Check Pods Manifest.lock */,
 				8309DD2ACBEC017E91F0EC98 /* [CP] Check Pods Manifest.lock */,
 				830DCB7C1D4FD1C9009F12AC /* Sources */,
@@ -531,6 +563,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MemeMe/Pods-MemeMe-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		39384F63C43EB09FFC3D3AD4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		67C4162282EE7634B1919A0B /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -615,6 +662,7 @@
 				83063FBE1D5B32F800192B7A /* SettingsVC.swift in Sources */,
 				830DCB861D4FD1C9009F12AC /* LoadingVC.swift in Sources */,
 				83E1D4191D6906F9008BD989 /* PasscodeLockConfiguration.swift in Sources */,
+				83FAA4991D711B6E00427347 /* AlertView.swift in Sources */,
 				83D001571D50042100B5F778 /* RecentCollectionViewCell.swift in Sources */,
 				83D0015B1D500C0E00B5F778 /* MemeMain.swift in Sources */,
 				8309C4C11D508ABC007B1CF7 /* SharedVC.swift in Sources */,
@@ -781,6 +829,12 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/FBSDKCoreKit",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/FBSDKLoginKit",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/FBSDKShareKit",
+				);
 				INFOPLIST_FILE = MemeMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.spiritdevs.MemeMe;
@@ -797,6 +851,12 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/FBSDKCoreKit",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/FBSDKLoginKit",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/FBSDKShareKit",
+				);
 				INFOPLIST_FILE = MemeMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.spiritdevs.MemeMe;

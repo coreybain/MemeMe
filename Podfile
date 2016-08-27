@@ -9,6 +9,10 @@ target 'MemeMe' do
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
   pod 'SnapKit', '~> 0.15.0'
+  pod 'FacebookCore'
+  pod 'FacebookLogin'
+  pod 'FacebookShare'
+  pod 'BRYXBanner'
   # Pods for MemeMe
 
 end

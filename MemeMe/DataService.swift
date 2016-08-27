@@ -25,6 +25,7 @@ class DataService {
     var fontAttribute: FontAttribute!
     var downloadedMeme: Meme?
     var memeCounter = 0
+    var memeDictCounter = 0
     var uploading:Bool = false
     
     // MARK: - Firebase URLS
@@ -60,18 +61,7 @@ class DataService {
         
         loginUser(udacityEmail, password: udacityPassword) { 
             complete()
-        } /*
-        FIRAuth.auth()?.signInWithEmail(udacityEmail, password: udacityPassword) { (fireUser, error) in
-            if let user = fireUser?.uid {
-                self.managedObjectContext?.performBlock {
-                    _ = Users.saveUser(user, username: udacityEmail, auth: nil, tagLine: nil, inManagedObjectContext: self.managedObjectContext!)
-                }
-                self.setupUser(udacityEmail, userID: fireUser!, complete: {
-                    print("YAY")
-                    complete()
-                })
-            }
-        } */
+        }
     }
     
     //MARK: - Log in user after checks are done
@@ -103,9 +93,10 @@ class DataService {
                 }
                 let auth = snapshot.value!["auth"] as! String
                 let mainUser = User.init(username: username, userID: userID, tagLine: tagLine, auth: auth)
-                self.downloadRecents({ (meme) in
+                
+                self.downloadMeme((FIRAuth.auth()?.currentUser?.uid)!, shared: false) { (meme) in
                     complete(user: mainUser, meme: meme)
-                })
+                }
             } else {
                 let alert = UIAlertController(title: "Problems...", message: "For some reason we couldnt pull up your account, you will need to create a new one.", preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { Void in
@@ -176,17 +167,17 @@ class DataService {
     
     
     //MARK: -- Prepare Meme for upload -------
-    func prepareMemeForUpload(meme:Meme, uploadName:String, imageName:String, complete:DownloadComplete) {
+    func prepareMemeForUpload(meme:Meme, memeName:String, complete:DownloadComplete) {
         
         // Local file you want to upload
-        let memeImageData:NSURL = NSURL(fileURLWithPath: "\(MemeFunctions.fileInDocumentsDirectory("meme-\(imageName)"))")
-        let memeRef = storageRef.child("meme-\(imageName)")
+        let memeImageData:NSURL = NSURL(fileURLWithPath: "\(MemeFunctions.fileInDocumentsDirectory("meme-\(memeName)"))")
+        let memeRef = storageRef.child("meme-\(memeName)")
         
         //Get UserID of the user uploading the photo
         let userID = FIRAuth.auth()?.currentUser?.uid
         
         //Image total size
-        let imageSize = MemeFunctions.sizeForLocalFilePath(MemeFunctions.fileInDocumentsDirectory("meme-\(imageName)"))
+        let imageSize = MemeFunctions.sizeForLocalFilePath(MemeFunctions.fileInDocumentsDirectory("meme-\(memeName)"))
         
         // Create the file metadata
         let metadata = FIRStorageMetadata()
@@ -203,9 +194,9 @@ class DataService {
             
             var imageDetails:NSDictionary?
             if meme.longitude != 0.0 {
-                imageDetails = ["fontAttributes":["fontSize":fontSize, "fontName":fontName, "fontColor":fontColor, "borderColor":borderColor],"topLabel":meme.topLabel, "bottomLabel":meme.bottomLabel, "savedImage":"saved-\(imageName)", "savedMeme": "meme-\(uploadName)", "memeImage":"\(memeRef)", "userID":"\(userID)", "latitude":meme.latitude, "longitude":meme.longitude, "privacyLabel":meme.privacyLabel]
+                imageDetails = ["fontAttributes":["fontSize":fontSize, "fontName":fontName, "fontColor":fontColor, "borderColor":borderColor],"topLabel":meme.topLabel, "bottomLabel":meme.bottomLabel, "savedImage":"saved-\(memeName)", "savedMeme": "meme-\(memeName)", "memeImage":"\(memeRef)", "userID":"\(userID)", "latitude":meme.latitude, "longitude":meme.longitude, "privacyLabel":meme.privacyLabel]
             } else {
-                imageDetails = ["fontAttributes":["fontSize":fontSize, "fontName":fontName, "fontColor":fontColor, "borderColor":borderColor],"topLabel":meme.topLabel, "bottomLabel":meme.bottomLabel, "savedImage":"saved-\(imageName)", "savedMeme": "meme-\(uploadName)", "memeImage":"\(memeRef)", "userID":"\(userID)", "latitude":0.0, "longitude":0.0, "privacyLabel":meme.privacyLabel]
+                imageDetails = ["fontAttributes":["fontSize":fontSize, "fontName":fontName, "fontColor":fontColor, "borderColor":borderColor],"topLabel":meme.topLabel, "bottomLabel":meme.bottomLabel, "savedImage":"saved-\(memeName).jpg", "savedMeme": "meme-\(memeName).jpg", "memeImage":"\(memeRef)", "userID":"\(userID)", "latitude":0.0, "longitude":0.0, "privacyLabel":meme.privacyLabel]
             }
         
             if meme.memeID == "" {
@@ -215,11 +206,9 @@ class DataService {
                     self.ref.child("users").child(userID).child("memes").child(key).setValue(key, withCompletionBlock: { (err, database) in
                         if err == nil {
                             // This is where the connection to core Data will go
-                            let uploadMemeName = "meme-\(uploadName).jpg"
-                            let uploadImageName = "saved-\(uploadName).jpg"
                             self.uploadMeme(memeRef, meme:memeImageData, metadata:metadata, imageSize:imageSize, memeDetails: imageDetails!)
                             self.managedObjectContext?.performBlock {
-                                Memes.ms().saveMemeLocal(meme, key: key, memeImage: uploadMemeName, originalImage: uploadImageName, inManagedObjectContext: self.managedObjectContext!)
+                                Memes.ms().saveMemeLocal(meme, key: key, memeName: memeName, inManagedObjectContext: self.managedObjectContext!)
                                 complete()
                             }
                         }
@@ -230,10 +219,16 @@ class DataService {
                 }
             } else {
                 let memeID = meme.memeID
+                print(memeID)
                 self.ref.child("memes").child(memeID).updateChildValues(imageDetails as! [NSObject : AnyObject]) { (err, database) in
+                    print(database.key)
+                    let key = database.key
                     if err == nil {
                         self.uploadMeme(memeRef, meme:memeImageData, metadata:metadata, imageSize:imageSize, memeDetails: imageDetails!)
-                        complete()
+                        self.managedObjectContext?.performBlock {
+                            Memes.ms().saveMemeLocal(meme, key: key, memeName: memeName, inManagedObjectContext: self.managedObjectContext!)
+                            complete()
+                        }
                     } else {
                         print(err?.localizedDescription)
                     }
@@ -273,9 +268,10 @@ class DataService {
                 
                 print("\(Int(percentComplete))%")
                 let defaultCenter = NSNotificationCenter.defaultCenter()
-                defaultCenter.postNotificationName("DownloadProgressNotification",
+                defaultCenter.postNotificationName("uploadProgressNotification",
                                                    object: nil,
                                                    userInfo: fileInfo)
+            
             }
         }
         
@@ -287,7 +283,7 @@ class DataService {
             var fileInfo = [NSObject:AnyObject]()
             fileInfo["progress"] = "Recent Memes"
             let defaultCenter = NSNotificationCenter.defaultCenter()
-            defaultCenter.postNotificationName("DownloadProgressNotification",
+            defaultCenter.postNotificationName("uploadProgressNotificationSuccess",
                                                object: nil,
                                                userInfo: fileInfo)
             
@@ -316,6 +312,10 @@ class DataService {
             }
         }
     
+    }
+    
+    func deleteOnlineMeme (meme:Meme) {
+        ref.child("memes").child(meme.memeID).removeValue()
     }
     
     

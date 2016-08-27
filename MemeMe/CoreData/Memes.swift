@@ -24,10 +24,16 @@ class Memes: NSManagedObject {
     var fontAttribute: FontAttribute!
     var memeDict: [Meme] = []
 
-// Insert code here to add functionality to your managed object subclass
-    
-    func saveMemeLocal(meme:Meme, key:String, memeImage:String, originalImage:String, inManagedObjectContext context: NSManagedObjectContext) {
+
+    //MARK: SaveMeme Function -- This function saves memes in core data
+    func saveMemeLocal(meme:Meme, key:String, memeName:String, inManagedObjectContext context: NSManagedObjectContext) {
         
+        
+        let request = NSFetchRequest(entityName: "Memes")
+        request.predicate = NSPredicate(format: "memeID == %@", key)
+        if ((try? context.executeFetchRequest(request))?.first as? Memes) != nil {
+            deleteSpecificMeme(key, inManagedObjectContext: context)
+        }
         if let savedMemes = NSEntityDescription.insertNewObjectForEntityForName("Memes", inManagedObjectContext: context) as? Memes {
             // created a new tweet in the database
             // load it up with information from the Twitter.Tweet ...
@@ -36,8 +42,9 @@ class Memes: NSManagedObject {
             savedMemes.memeID = key
             savedMemes.bottomLabel = meme.bottomLabel
             savedMemes.topLabel = meme.topLabel
-            savedMemes.memeImage = "\(memeImage).jpg"
-            savedMemes.savedImage = originalImage
+            print("\(memeName).jpg")
+            savedMemes.memeImage = "meme-\(memeName).jpg"
+            savedMemes.savedImage = "saved-\(memeName).jpg"
             savedMemes.longitude = meme.longitude
             savedMemes.latitude = meme.latitude
             savedMemes.privacyLabel = meme.privacyLabel
@@ -53,6 +60,7 @@ class Memes: NSManagedObject {
         }
     }
     
+    //MARK: SaveDownloaded Function -- This function saves memes in core data that have been downloaded from Firebase
     func saveDownloadedMeme(memes:[Meme], inManagedObjectContext context: NSManagedObjectContext) {
         
         for meme in memes {
@@ -66,6 +74,7 @@ class Memes: NSManagedObject {
                 savedMeme.savedImage = "\(meme.savedImageString)"
                 savedMeme.longitude = meme.longitude
                 savedMeme.latitude = meme.latitude
+                savedMeme.memedImageData = meme.memedImageData
                 savedMeme.privacyLabel = meme.privacyLabel
                 savedMeme.userID = (FIRAuth.auth()?.currentUser?.uid)!
                 savedMeme.fontAttributesDB = FontAttributesDB.saveFontAttributes(meme, key:meme.memeID, inManagedObjectContext: context)
@@ -80,18 +89,21 @@ class Memes: NSManagedObject {
         }
     }
     
+    //MARK: UpdateMemes Function -- This function updates memes in core data
     func updateMeme(meme:Meme, memeID:String, inManagedObjectContext context: NSManagedObjectContext) {
         let request = NSFetchRequest(entityName: "Memes")
         request.predicate = NSPredicate(format: "memeID == %@", memeID)
-        
+        print(meme)
         let user = FIRAuth.auth()?.currentUser?.uid
-        let fileName:String  = "\(user!)-\(MemeMain.memeShared().randomStringWithLength(10))"
-        let imageName:String = "\(fileName).jpg"
+        let firstPass = meme.savedMeme.stringByReplacingOccurrencesOfString("meme-", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        let fileName = firstPass.stringByReplacingOccurrencesOfString(".jpg", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        let savedFile:String = "meme-\(fileName).jpg"
+        let imageName:String = "saved-\(fileName).jpg"
         
         if let savedMeme = (try? context.executeFetchRequest(request))?.first as? Memes {
             savedMeme.bottomLabel = meme.bottomLabel
             savedMeme.topLabel = meme.topLabel
-            savedMeme.memeImage = fileName
+            savedMeme.memeImage = savedFile
             savedMeme.savedImage = imageName
             savedMeme.longitude = meme.longitude
             savedMeme.latitude = meme.latitude
@@ -105,6 +117,7 @@ class Memes: NSManagedObject {
         }
     }
     
+    //MARK: LoadMemes Function -- This function loads memes from core data
     func loadMemeLocal(userID:String, inManagedObjectContext context: NSManagedObjectContext) -> [Meme]? {
         memeDict.removeAll()
         let request = NSFetchRequest(entityName: "Memes")
@@ -112,63 +125,102 @@ class Memes: NSManagedObject {
         request.predicate = NSPredicate(format: "userID == %@", userID)
         
         if let results = (try? context.executeFetchRequest(request)) {
-            print(results)
             for meme in results {
-                if let top = meme.valueForKey("topLabel") {
-                    if let bottom = meme.valueForKey("bottomLabel") {
-                        if let memeID = meme.valueForKey("memeID") {
-                            if let memeImage = meme.valueForKey("memeImage") {
-                                if let savedImage = meme.valueForKey("savedImage") {
-                                    if let longitude = meme.valueForKey("longitude") {
-                                        if let latitude = meme.valueForKey("latitude") {
-                                            if let privacyLabel = meme.valueForKey("privacyLabel") {
-                                            if let localFont = FontAttributesDB.loadFontAttributes(memeID as! String, inManagedObjectContext: context) {
-                                                print(localFont)
-                                                print(localFont.fontColor)
-                                                    if let fontSize = localFont.fontSize {
-                                                        if let fontName = localFont.fontName {
-                                                            if let fontColor = localFont.fontColor {
-                                                                if let borderColor = localFont.borderColor {
-                                                                    print("SAVED IMAGE::: \(savedImage)")
-                                                                    print("MEMED IMAGE::: \(memeImage)")
-                                                                    self.fontAttribute = FontAttribute()
-                                                                    if DataService.ds().setFontAttributes(fontSize, fontName: fontName, fontColor: fontColor, borderColor: borderColor) {
-                                                                        print("YES")
-                                                                        if let savedImageFile = MemeFunctions.loadImageFromPath(MemeFunctions.fileInDocumentsDirectory(savedImage as! String)) {
-                                                                            print("YESY")
-                                                                           if let memeImagefile = MemeFunctions.loadImageFromPath(MemeFunctions.fileInDocumentsDirectory(memeImage as! String)) {
-                                                                                print("HELLLOOOOO STAR")
-                                                                            let memeCell:Meme?
-                                                                            if (longitude as? Double)! == 0.0 {
-                                                                                memeCell = Meme(topLabel: top as? String, bottomLabel: bottom as? String, savedImage: savedImageFile, savedMeme: memeImage as? String, memedImage: memeImagefile, memedImageData: nil, fontAttributer: self.fontAttribute, memeID: (memeID as? String)!, memedImageString: nil, savedImageString: nil, latitude: (latitude as? Double)!, longitude: (longitude as? Double)!, privacyLabel: (privacyLabel as? String)!)
-                                                                            } else {
-                                                                                memeCell = Meme(topLabel: top as? String, bottomLabel: bottom as? String, savedImage: savedImageFile, savedMeme: memeImage as? String, memedImage: memeImagefile, fontAttributer: self.fontAttribute, memeID: (memeID as? String)!, memedImageString: nil, savedImageString: nil, latitude: 0.0, longitude: 0.0, privacyLabel: (privacyLabel as? String)!)
-                                                                                
-                                                                            }
-                                                                            self.memeDict.append(memeCell!)
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
+                
+                let topLabel = meme.valueForKey("topLabel") as! String
+                let bottomLabel = meme.valueForKey("bottomLabel") as! String
+                let memeID = meme.valueForKey("memeID") as! String
+                let longitude = meme.valueForKey("longitude") as! Double
+                let latitude = meme.valueForKey("latitude") as! Double
+                let privacyLabel = meme.valueForKey("privacyLabel") as! String
+                    
+                    if editableMeme(meme) {
+                        
+                        if let localFont = FontAttributesDB.loadFontAttributes(memeID, inManagedObjectContext: context) {
+                            let fontSize = localFont.fontSize
+                            let fontName = localFont.fontName
+                            let fontColor = localFont.fontColor
+                            let borderColor = localFont.borderColor
+                            self.fontAttribute = FontAttribute()
+                            
+                            let savedImage = meme.valueForKey("savedImage") as! String
+                            print(savedImage)
+                            let memeImage = meme.valueForKey("memeImage") as! String
+                            print(memeImage)
+                            
+                            
+                            
+                            
+                            if let savedImageFile = MemeFunctions.loadImageFromPath(MemeFunctions.fileInDocumentsDirectory(savedImage)) {
+                                print("YESY")
+                                if let memeImagefile = MemeFunctions.loadImageFromPath(MemeFunctions.fileInDocumentsDirectory(memeImage)) {
+                                    print("HELLLOOOOO STAR")
+                                    let memeCell:Meme?
+                                    if (longitude as? Double)! == 0.0 {
+                                        memeCell = Meme(topLabel: topLabel, bottomLabel: bottomLabel, savedImage: savedImageFile, savedMeme: memeImage, memedImage: memeImagefile, memedImageData: nil, fontAttributer: self.fontAttribute, memeID: memeID, memedImageString: nil, savedImageString: nil, latitude: (latitude as? Double)!, longitude: (longitude as? Double)!, privacyLabel: privacyLabel)
+                                    } else {
+                                        memeCell = Meme(topLabel: topLabel, bottomLabel: bottomLabel, savedImage: savedImageFile, savedMeme: memeImage, memedImage: memeImagefile, memedImageData: nil, fontAttributer: self.fontAttribute, memeID: memeID, memedImageString: nil, savedImageString: nil, latitude: 0.0, longitude: 0.0, privacyLabel: privacyLabel)
                                     }
+                                    self.memeDict.append(memeCell!)
                                 }
                             }
                         }
+                    } else {
+                        let memeData = meme.valueForKey("memedImageData") as! NSData
+                        let memeCell:Meme?
+                        if (longitude as? Double)! == 0.0 {
+                            memeCell = Meme(topLabel: topLabel, bottomLabel: bottomLabel, savedImage: nil, savedMeme: nil, memedImage: nil, memedImageData: memeData, fontAttributer: nil, memeID: memeID, memedImageString: nil, savedImageString: nil, latitude: (latitude as? Double)!, longitude: (longitude as? Double)!, privacyLabel: privacyLabel)
+                        } else {
+                            print(topLabel)
+                            print(bottomLabel)
+                            print(memeData)
+                            print(memeID)
+                            print(privacyLabel)
+                            memeCell = Meme(topLabel: topLabel, bottomLabel: bottomLabel, savedImage: nil, savedMeme: nil, memedImage: nil, memedImageData: memeData, fontAttributer: nil, memeID: memeID, memedImageString: nil, savedImageString: nil, latitude: 0.0, longitude: 0.0, privacyLabel: privacyLabel)
+                        }
+                        self.memeDict.append(memeCell!)
                     }
                 }
-            }
             memeDict = memeDict.reverse()
             return memeDict
         }
         return nil
     }
     
+    func editableMeme(meme:AnyObject) -> Bool {
+        if meme.valueForKey("memedImageData") != nil {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    func deleteSpecificMeme(memeID:String, inManagedObjectContext context: NSManagedObjectContext) {
+        
+        let request = NSFetchRequest(entityName: "Memes")
+        request.predicate = NSPredicate(format: "memeID == %@", memeID)
+        if var savedMeme = (try? context.executeFetchRequest(request)) {
+            
+            var objectForDeletion: NSManagedObject!
+            
+            for objectForDeletion: AnyObject in savedMeme
+            {
+                context.deleteObject(objectForDeletion as! NSManagedObject)
+            }
+            
+            savedMeme.removeAll(keepCapacity: false)
+            
+            do {
+                try context.save()
+            } catch {
+                let saveError = error as NSError
+                print(saveError)
+            }
+        }
+        
+    }
+    
+    //MARK: DELETE Function -- This DELETEs memes hahahaha
     func deleteMemes(userID:String, inManagedObjectContext context: NSManagedObjectContext) {
         
         let request = NSFetchRequest(entityName: "Memes")

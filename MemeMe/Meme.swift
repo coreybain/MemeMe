@@ -119,7 +119,7 @@ class Meme {
         }
     }
     
-    init(topLabel:String?, bottomLabel:String?, savedImage:UIImage?, savedMeme:String?, memedImage:UIImage?, memedImageData:NSData?, fontAttributer:FontAttribute, memeID:String?, memedImageString:String?, savedImageString:String?, latitude:Double, longitude:Double, privacyLabel:String) {
+    init(topLabel:String?, bottomLabel:String?, savedImage:UIImage?, savedMeme:String?, memedImage:UIImage?, memedImageData:NSData?, fontAttributer:FontAttribute?, memeID:String?, memedImageString:String?, savedImageString:String?, latitude:Double, longitude:Double, privacyLabel:String) {
         _topLabel = topLabel
         _bottomLabel = bottomLabel
         _savedImage = savedImage
@@ -150,19 +150,28 @@ class Meme {
 struct MemeFunctions {
     
     // Add meme to local database before uploading it to firebase
-    static func saveMeme(meme:Meme, complete:DownloadComplete) {
+    static func saveMeme(meme:Meme, memeID:String?, complete:DownloadComplete) {
         print(meme)
         let user = FIRAuth.auth()?.currentUser?.uid
-        let fileName:String  = "\(user!)-\(MemeMain.memeShared().randomStringWithLength(10))"
-        let imageName:String = "\(fileName).jpg"
-        
+        var fileName:String = ""
+        if memeID == "" || memeID == nil { 
+            fileName = "\(user!)-\(MemeMain.memeShared().randomStringWithLength(10))"
+            
+        } else {
+            print(meme.savedMeme)
+            let firstPass = meme.savedMeme.stringByReplacingOccurrencesOfString("meme-", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            print(firstPass)
+            fileName = firstPass.stringByReplacingOccurrencesOfString(".jpg", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        }
+        print(fileName)
         let memeImage = meme.memedImage
         let originalImage = meme.savedImage
         
-        saveImage(memeImage, path: fileInDocumentsDirectory("meme-\(imageName)"))
-        saveImage(originalImage, path: fileInDocumentsDirectory("saved-\(imageName)"))
+        print(fileName)
+        saveImage(memeImage, path: fileInDocumentsDirectory("meme-\(fileName)"))
+        saveImage(originalImage, path: fileInDocumentsDirectory("saved-\(fileName)"))
         
-        DataService.ds().prepareMemeForUpload(meme, uploadName: fileName, imageName: imageName) {
+        DataService.ds().prepareMemeForUpload(meme, memeName: fileName) {
             //GO HERE
             print("finished")
             complete()

@@ -1,4 +1,32 @@
 PODS:
+  - Bolts (1.8.4):
+    - Bolts/AppLinks (= 1.8.4)
+    - Bolts/Tasks (= 1.8.4)
+  - Bolts/AppLinks (1.8.4):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.8.4)
+  - BRYXBanner (0.5.2):
+    - BRYXBanner/Core (= 0.5.2)
+  - BRYXBanner/Core (0.5.2)
+  - FacebookCore (0.1.1):
+    - Bolts (~> 1.8)
+    - FBSDKCoreKit (~> 4.14)
+  - FacebookLogin (0.1.1):
+    - Bolts (~> 1.8)
+    - FacebookCore
+    - FBSDKCoreKit (~> 4.14)
+    - FBSDKLoginKit (~> 4.14)
+  - FacebookShare (0.1.1):
+    - Bolts (~> 1.8)
+    - FacebookCore
+    - FBSDKCoreKit (~> 4.14)
+    - FBSDKShareKit (~> 4.14)
+  - FBSDKCoreKit (4.15.0):
+    - Bolts (~> 1.7)
+  - FBSDKLoginKit (4.15.0):
+    - FBSDKCoreKit
+  - FBSDKShareKit (4.15.0):
+    - FBSDKCoreKit
   - Firebase (3.3.0):
     - Firebase/Core (= 3.3.0)
   - Firebase/Analytics (3.3.0):
@@ -43,6 +71,10 @@ PODS:
   - SnapKit (0.15.0)
 
 DEPENDENCIES:
+  - BRYXBanner
+  - FacebookCore
+  - FacebookLogin
+  - FacebookShare
   - Firebase
   - Firebase/Auth
   - Firebase/Database
@@ -50,6 +82,14 @@ DEPENDENCIES:
   - SnapKit (~> 0.15.0)
 
 SPEC CHECKSUMS:
+  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  BRYXBanner: 5f0911d52e0a77e088f7ea7ddcdebd02afb7828a
+  FacebookCore: 14f27add6888c27470d42a100374e6361f4e0f79
+  FacebookLogin: 748f4e621e874da3e0bf63bccf6fd1542c786a1b
+  FacebookShare: ea0370ca0b914eccc42a753abcd937265c17b030
+  FBSDKCoreKit: 6680cbd33a4243d80700f182d0af36b3fa7f3118
+  FBSDKLoginKit: 96d9b70b5784490f02ab86119e542a1f182017a8
+  FBSDKShareKit: 06ef20cb2f16828ca4b20055333313dd445de362
   Firebase: 6250071f0e2440a5c4c67b8cb6b868f868237ac3
   FirebaseAnalytics: 0fd6532cb2c3d03cd5cf26ad295ccb091efd3104
   FirebaseAuth: 5efddc3fae47042b73585f083f956462be4f5b8e
@@ -63,6 +103,6 @@ SPEC CHECKSUMS:
   GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
   SnapKit: 4962eed2ee18e48cbd2b2292fffc57efe7235f87
 
-PODFILE CHECKSUM: 6b2b500a6456fb057f90fddf1a6b97a9d291f4ef
+PODFILE CHECKSUM: d9e584724327be7a5de43835083d12ab064e7054
 
 COCOAPODS: 1.0.1
