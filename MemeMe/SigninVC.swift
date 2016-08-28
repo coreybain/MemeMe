@@ -16,6 +16,8 @@ class SigninVC: UIViewController {
     
     //MARK: - Outlets
     @IBOutlet weak var udacityButton: UIButton!
+    @IBOutlet weak var constraintTopLogo: NSLayoutConstraint!
+    @IBOutlet weak var loginButtons: UIStackView!
     
     
     //MARK: - Variables
@@ -45,10 +47,16 @@ class SigninVC: UIViewController {
             } else if facebookResult.isCancelled {
                 print("Facebook login was cancelled.")
             } else {
+                dispatch_async(dispatch_get_main_queue(), {
+                    loading(true)
+                })
                 let credential = FIRFacebookAuthProvider.credentialWithAccessToken(FBSDKAccessToken.currentAccessToken().tokenString)
                 
                 FIRAuth.auth()?.signInWithCredential(credential) { (user, error) in
                     if error != nil {
+                        dispatch_async(dispatch_get_main_queue(), {
+                            loading(false)
+                        })
                         print("Login failed. \(error)")
                         AlertView.alertUser("Facebook failed", message: "Login with facebook failed try again in a little while.", actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler:nil)])
                     } else {
@@ -73,6 +81,9 @@ class SigninVC: UIViewController {
         
         AlertView.alertUser("Udacity Instructor", message: "Which version of the app are you assessing?", actions: [
             UIAlertAction(title: "Version 1", style: UIAlertActionStyle.Default, handler: { Void in
+                dispatch_async(dispatch_get_main_queue(), {
+                    loading(true)
+                })
                 NSUserDefaults.standardUserDefaults().setBool(false, forKey: "fullVersion")
                 NSUserDefaults.standardUserDefaults().synchronize()
                 DataService.ds().udacityLogin({ 
@@ -82,6 +93,9 @@ class SigninVC: UIViewController {
                 })
             }),
             UIAlertAction(title: "Version 2", style: UIAlertActionStyle.Default, handler: { Void in
+                dispatch_async(dispatch_get_main_queue(), {
+                    loading(true)
+                })
                 NSUserDefaults.standardUserDefaults().setBool(true, forKey: "fullVersion")
                 NSUserDefaults.standardUserDefaults().synchronize()
                 DataService.ds().udacityLogin({
@@ -91,6 +105,18 @@ class SigninVC: UIViewController {
                 })
             })
         ])
+    }
+    
+    func loading(loading:Bool) {
+        if loading {
+            udacityButton.hidden = true
+            loginButtons.hidden = true
+            LoadingView.startSpinning(view)
+        } else {
+            udacityButton.hidden = false
+            loginButtons.hidden = false
+            LoadingView.stopSpinning()
+        }
     }
 }
 

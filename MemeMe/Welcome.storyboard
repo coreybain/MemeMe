@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16A270f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="JPx-BC-uk5">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="JPx-BC-uk5">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -156,6 +156,8 @@
                     <navigationItem key="navigationItem" id="KG8-bS-ncW"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="constraintTopLogo" destination="fYs-PV-ioh" id="Rtv-f5-Kzk"/>
+                        <outlet property="loginButtons" destination="cFj-OE-zja" id="I6k-pn-uBv"/>
                         <outlet property="udacityButton" destination="IvJ-We-ked" id="gCz-0f-yqr"/>
                         <segue destination="iOJ-Z6-X04" kind="show" identifier="SegueSignin" id="11g-0d-HIP"/>
                     </connections>
