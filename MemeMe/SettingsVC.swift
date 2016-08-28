@@ -155,6 +155,7 @@ class SettingsVC: UITableViewController {
             statusLabel.hidden = true
             statusTF.hidden = false
             editDoneButton.title = "Done"
+            statusTF.returnKeyType = .Done
             statusTF.becomeFirstResponder()
         } else {
             statusLabel.hidden = false

@@ -318,6 +318,13 @@ class DataService {
         ref.child("memes").child(meme.memeID).removeValue()
     }
     
+    func updatePrivacyLabel(memeID:String, privacyLabel:Bool) {
+        if privacyLabel {
+            ref.child("memes").child(memeID).child("privacyLabel").setValue("Private")
+        } else {
+            ref.child("memes").child(memeID).child("privacyLabel").setValue("Public")
+        }
+    }
     
     
 }

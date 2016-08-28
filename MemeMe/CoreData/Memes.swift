@@ -89,25 +89,17 @@ class Memes: NSManagedObject {
         }
     }
     
-    //MARK: UpdateMemes Function -- This function updates memes in core data
-    func updateMeme(meme:Meme, memeID:String, inManagedObjectContext context: NSManagedObjectContext) {
+    //MARK: Update Memes privacy label -- hide or show in global share
+    func updatePrivacy(memeID:String, privateLabel:Bool, inManagedObjectContext context: NSManagedObjectContext) {
         let request = NSFetchRequest(entityName: "Memes")
         request.predicate = NSPredicate(format: "memeID == %@", memeID)
-        print(meme)
-        let user = FIRAuth.auth()?.currentUser?.uid
-        let firstPass = meme.savedMeme.stringByReplacingOccurrencesOfString("meme-", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        let fileName = firstPass.stringByReplacingOccurrencesOfString(".jpg", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        let savedFile:String = "meme-\(fileName).jpg"
-        let imageName:String = "saved-\(fileName).jpg"
         
         if let savedMeme = (try? context.executeFetchRequest(request))?.first as? Memes {
-            savedMeme.bottomLabel = meme.bottomLabel
-            savedMeme.topLabel = meme.topLabel
-            savedMeme.memeImage = savedFile
-            savedMeme.savedImage = imageName
-            savedMeme.longitude = meme.longitude
-            savedMeme.latitude = meme.latitude
-            savedMeme.fontAttributesDB = FontAttributesDB.saveFontAttributes(meme, key:memeID, inManagedObjectContext: context)
+            if privateLabel {
+                savedMeme.privacyLabel = "Private"
+            } else {
+                savedMeme.privacyLabel = "Public"
+            }
             do {
                 try savedMeme.managedObjectContext?.save()
             } catch {

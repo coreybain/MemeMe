@@ -9,6 +9,9 @@
 import Foundation
 import UIKit
 
+
+//MARK: UIColor extensions
+
 extension UIColor {
     var rgbComponents:(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
         var r:CGFloat = 0
@@ -66,6 +69,8 @@ extension UIColor {
         return nil
     }
 }
+
+//MARK: UIImage extensions
 
 extension UIImage {
     var rounded: UIImage? {

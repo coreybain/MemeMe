@@ -215,6 +215,12 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
         navigationController?.setNavigationBarHidden(saving, animated: false)
         navigationBar.hidden = saving
         bottomBar.hidden = saving
+        if topLabel.text == "" {
+            topLabel.hidden = saving
+        }
+        if bottomLabel.text == ""{
+            bottomLabel.hidden = saving
+        }
     }
     
     //MARK: - Actions
@@ -428,6 +434,25 @@ extension EditorVC {
             saveButton.enabled = false
             
         }
+    }
+    
+    //Next responder for keyboard after clicking done/return
+    func textFieldShouldReturn(textField: UITextField) -> Bool
+    {
+        switch textField
+        {
+        case topLabel:
+            topLabel.resignFirstResponder()
+            bottomLabel.returnKeyType = .Done
+            bottomLabel.becomeFirstResponder()
+            break
+        case bottomLabel:
+            bottomLabel.resignFirstResponder()
+            break
+        default:
+            textField.resignFirstResponder()
+        }
+        return true
     }
     
     //Push bottom label down on keyboard hide

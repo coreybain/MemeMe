@@ -158,10 +158,6 @@ class RecentVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     }
     
     func uploadComplete(notification: NSNotification) {
-        let tmp : [NSObject : AnyObject] = notification.userInfo!
-        
-        // if notification received, change label value 0% - 100%
-        let progress = tmp["progress"] as! String!
         
         let banner = Banner(title: "Upload Status", subtitle: "Upload successful", image: UIImage(named: "spiritdevs"), backgroundColor: UIColor(red:48.00/255.0, green:174.0/255.0, blue:51.5/255.0, alpha:1.000))
         banner.dismissesOnTap = true
@@ -251,11 +247,19 @@ extension RecentVC {
         
         if memeDict[indexPath.row].privacyLabel == "Public" {
             privatePublic = UITableViewRowAction(style: .Normal, title: "Private") { action, index in
-                print("private button tapped")
+                Memes.ms().updatePrivacy(self.memeDict[indexPath.row].memeID, privateLabel: true, inManagedObjectContext: self.managedObjectContext!)
+                DataService.ds().updatePrivacyLabel(self.memeDict[indexPath.row].memeID, privacyLabel: true)
+                tableView.beginUpdates()
+                self.downloadRecentMemes()
+                tableView.endUpdates()
             }
         } else {
             privatePublic = UITableViewRowAction(style: .Normal, title: "Public") { action, index in
-                print("public button tapped")
+                Memes.ms().updatePrivacy(self.memeDict[indexPath.row].memeID, privateLabel: false, inManagedObjectContext: self.managedObjectContext!)
+                DataService.ds().updatePrivacyLabel(self.memeDict[indexPath.row].memeID, privacyLabel: false)
+                tableView.beginUpdates()
+                self.downloadRecentMemes()
+                tableView.endUpdates()
             }
         }
         privatePublic.backgroundColor = UIColor.blueColor()

@@ -233,12 +233,33 @@ class SigninContVC: UIViewController {
         })
     }
     
+    //MARK: Keyboard Functions
+    
     //Calls this function when the tap is recognized.
     func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
     }
     
+    //Next responder for keyboard after clicking done/return
+    func textFieldShouldReturn(textField: UITextField) -> Bool
+    {
+        switch textField
+        {
+        case usernameTF:
+            usernameTF.resignFirstResponder()
+            passwordTF.returnKeyType = .Done
+            passwordTF.becomeFirstResponder()
+            break
+        case passwordTF:
+            passwordTF.resignFirstResponder()
+            self.signLogin()
+            break
+        default:
+            textField.resignFirstResponder()
+        }
+        return true
+    }
 
     
     //MARK: - Actions

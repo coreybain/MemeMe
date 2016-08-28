@@ -108,13 +108,6 @@ class SecurityVC: UITableViewController {
             }
         }
         
-        if (indexPath.section == 1 && indexPath.row == 1) {
-            var error:NSError?
-            
-            
-            
-        }
-        
         if (indexPath.section == 2 && indexPath.row == 0) {
             //This is the wipe local data
             

@@ -483,6 +483,11 @@
 					830DCB7F1D4FD1C9009F12AC = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 4444F36N8Z;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					83E1D3D71D68FD65008BD989 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -836,8 +841,9 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos/FBSDKShareKit",
 				);
 				INFOPLIST_FILE = MemeMe/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.spiritdevs.MemeMe;
+				PRODUCT_BUNDLE_IDENTIFIER = com.spiritdevs.mememe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -848,8 +854,8 @@
 			baseConfigurationReference = AE84143D3D7AF50C366D32DD /* Pods-MemeMe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -858,8 +864,9 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos/FBSDKShareKit",
 				);
 				INFOPLIST_FILE = MemeMe/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.spiritdevs.MemeMe;
+				PRODUCT_BUNDLE_IDENTIFIER = com.spiritdevs.mememe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

@@ -52,20 +52,33 @@ extension DataService {
                                                         }
                                                     }
                                                 } else {
-                                                    let memeCell:Meme?
-                                                    if memeLatitude != 0.0 {
-                                                        memeCell = Meme(topLabel: top, bottomLabel: bottom, memedImageData: data!, fontAttributer: self.fontAttribute, memeID: nil, latitude:memeLatitude, longitude:memeLongitude, privacyLabel: privacyLabel)
+                                                    if privacyLabel == "Public" {
+                                                        let memeCell:Meme?
+                                                        if memeLatitude != 0.0 {
+                                                            memeCell = Meme(topLabel: top, bottomLabel: bottom, memedImageData: data!, fontAttributer: self.fontAttribute, memeID: nil, latitude:memeLatitude, longitude:memeLongitude, privacyLabel: privacyLabel)
+                                                        } else {
+                                                            memeCell = Meme(topLabel: top, bottomLabel: bottom, memedImageData: data!, fontAttributer: self.fontAttribute, memeID: nil, latitude:0.0, longitude:0.0, privacyLabel: privacyLabel)
+                                                        }
+                                                        self.memeDict.append(memeCell!)
+                                                        print(self.memeCounter)
+                                                        print(self.memeDict.count)
+                                                        self.memeDictCounter += 1
+                                                        if self.memeCounter == self.memeDictCounter {
+                                                            self.memeCounter = 0
+                                                            self.memeDictCounter = 0
+                                                            complete(self.memeDict)
+                                                        }
                                                     } else {
-                                                        memeCell = Meme(topLabel: top, bottomLabel: bottom, memedImageData: data!, fontAttributer: self.fontAttribute, memeID: nil, latitude:0.0, longitude:0.0, privacyLabel: privacyLabel)
-                                                    }
-                                                    self.memeDict.append(memeCell!)
-                                                    print(self.memeCounter)
-                                                    print(self.memeDict.count)
-                                                    self.memeDictCounter += 1
-                                                    if self.memeCounter == self.memeDictCounter {
-                                                        self.memeCounter = 0
-                                                        self.memeDictCounter = 0
-                                                        complete(self.memeDict)
+                                                        self.memeDictCounter += 1
+                                                        if self.memeCounter == self.memeDictCounter {
+                                                            self.memeCounter = 0
+                                                            self.memeDictCounter = 0
+                                                            if self.memeDict.count == 0 {
+                                                                complete(nil)
+                                                            } else {
+                                                                complete(self.memeDict)
+                                                            }
+                                                        }
                                                     }
                                                 }
                                             }

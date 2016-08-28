@@ -154,7 +154,6 @@ class LoadingVC: UIViewController, UIAlertViewDelegate {
     
     func passcode() {
         
-        let hasPasscode = configuration.repository.hasPasscode
         var passcodeVC: PasscodeLockViewController
         passcodeVC = PasscodeLockViewController(state: .EnterPasscode, configuration: configuration)
         passcodeVC.successCallback = { void in
