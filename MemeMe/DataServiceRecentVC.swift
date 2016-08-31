@@ -95,12 +95,18 @@ extension DataService {
         } else {
             //This is where the app will download the recent images posted by the current user (if there signing into a new device)
             
+            self.memeDict.removeAll()
+            self.memeCounter = 0
+            self.memeDictCounter = 0
             ref.child("users").child(userID).child("memes").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                 if snapshot.exists() {
                     if Int(snapshot.childrenCount) > self.memeDict.count {
                         for snap in snapshot.children {
                             self.ref.child("memes").child(snap.key!).observeSingleEventOfType(.Value, withBlock: { (memeSnapshot) in
                                 self.memeCounter = Int(snapshot.childrenCount)
+                                print(self.memeCounter)
+                                print(snapshot.childrenCount)
+                                print(memeSnapshot.childrenCount)
                                 if memeSnapshot.exists() {
                                     self.fontAttribute = FontAttribute()
                                     let bottom = memeSnapshot.value!["bottomLabel"] as! String
@@ -116,11 +122,21 @@ extension DataService {
                                             if let fontName = attributes.valueForKey("fontName") {
                                                 if let fontSize = attributes.valueForKey("fontSize")  {
                                                     if self.setFontAttributes(fontSize as! String, fontName: fontName as! String, fontColor: fontColor as! String, borderColor: borderColor as! String) {
-                                                            self.storageRef.child("\(savedMeme).jpg").dataWithMaxSize(1 * 1024 * 1024) { (data, error) -> Void in
+                                                            self.storageRef.child("\(savedMeme)").dataWithMaxSize(1 * 1024 * 1024) { (data, error) -> Void in
                                                                 if (error != nil) {
                                                                     print(error?.localizedDescription)
-                                                                    // Uh-oh, an error occurred!
-                                                                    self.memeCounter += 1
+                                                                    self.memeDictCounter += 1
+                                                                    print(self.memeDictCounter)
+                                                                    print(self.memeCounter)
+                                                                    if self.memeCounter == self.memeDictCounter {
+                                                                        self.memeCounter = 0
+                                                                        self.memeDictCounter = 0
+                                                                        if self.memeDict.count == 0 {
+                                                                            complete(nil)
+                                                                        } else {
+                                                                            complete(self.memeDict)
+                                                                        }
+                                                                    }
                                                                 } else {
                                                                     let memeCell:Meme?
                                                                     
@@ -129,10 +145,13 @@ extension DataService {
                                                                     } else {
                                                                         memeCell = Meme(topLabel: top, bottomLabel: bottom, savedImage: nil, savedMeme: savedMeme, memedImage: nil, memedImageData: data!, fontAttributer: self.fontAttribute, memeID: nil, memedImageString: savedMeme, savedImageString: nil, latitude: 0.0, longitude: 0.0, privacyLabel: privacyLabel)
                                                                     }
-                                                                    
                                                                     self.memeDict.append(memeCell!)
-                                                                    print("\(self.memeCounter) + \(self.memeDict.count)")
-                                                                    if self.memeCounter == self.memeDict.count {
+                                                                    print(self.memeCounter)
+                                                                    print(self.memeDict.count)
+                                                                    self.memeDictCounter += 1
+                                                                    if self.memeCounter == self.memeDictCounter {
+                                                                        self.memeCounter = 0
+                                                                        self.memeDictCounter = 0
                                                                         complete(self.memeDict)
                                                                     }
                                                             }
@@ -140,6 +159,19 @@ extension DataService {
                                                     }
                                                 }
                                             }
+                                        }
+                                    }
+                                } else {
+                                    self.memeDictCounter += 1
+                                    print(self.memeDictCounter)
+                                    print(self.memeCounter)
+                                    if self.memeCounter == self.memeDictCounter {
+                                        self.memeCounter = 0
+                                        self.memeDictCounter = 0
+                                        if self.memeDict.count == 0 {
+                                            complete(nil)
+                                        } else {
+                                            complete(self.memeDict)
                                         }
                                     }
                                 }

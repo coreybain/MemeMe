@@ -36,6 +36,16 @@ class SigninVC: UIViewController {
     
     //MARK: - App functions
     
+    func checkUsername(username:String, complete:(Bool) -> ()) {
+        DataService.ds().checkUsername(username) { (usernameUsed) in
+            if usernameUsed {
+                complete(true)
+            } else {
+                complete(false)
+            }
+        }
+    }
+    
     //MARK: - Actions
     
     @IBAction func facebookButtonPressed(sender: AnyObject) {
@@ -48,19 +58,42 @@ class SigninVC: UIViewController {
                 print("Facebook login was cancelled.")
             } else {
                 dispatch_async(dispatch_get_main_queue(), {
-                    loading(true)
+                    self.loading(true)
                 })
                 let credential = FIRFacebookAuthProvider.credentialWithAccessToken(FBSDKAccessToken.currentAccessToken().tokenString)
                 
                 FIRAuth.auth()?.signInWithCredential(credential) { (user, error) in
                     if error != nil {
                         dispatch_async(dispatch_get_main_queue(), {
-                            loading(false)
+                            self.loading(false)
                         })
                         print("Login failed. \(error)")
                         AlertView.alertUser("Facebook failed", message: "Login with facebook failed try again in a little while.", actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler:nil)])
                     } else {
                         print("Logged in! \(user?.email)")
+                        
+                        
+                        self.checkUsername((user?.email)!) {(isUsed) in
+                            if !isUsed {
+                                DataService.ds().addUsernameToList(user!.email!)
+                                DataService.ds().setupUser(user!.email!, userID: user!, complete: {
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        MemeMain.memeShared().presentMemeMeInNewWindow()
+                                    })
+                                })
+                            } else {
+                                DataService.ds().loginUser(username, password: password, complete: {
+                                    print("COMPLETE")
+                                    MemeMain.memeShared().presentMemeMeInNewWindow()
+                                })
+                            }
+                        }
+
+                        
+                        
+                        
+                        
+                        
                         DataService.ds().addUsernameToList(user!.email!)
                         DataService.ds().setupUser(user!.email!, userID: user!, complete: {
                             dispatch_async(dispatch_get_main_queue(), {
@@ -82,7 +115,7 @@ class SigninVC: UIViewController {
         AlertView.alertUser("Udacity Instructor", message: "Which version of the app are you assessing?", actions: [
             UIAlertAction(title: "Version 1", style: UIAlertActionStyle.Default, handler: { Void in
                 dispatch_async(dispatch_get_main_queue(), {
-                    loading(true)
+                    self.loading(true)
                 })
                 NSUserDefaults.standardUserDefaults().setBool(false, forKey: "fullVersion")
                 NSUserDefaults.standardUserDefaults().synchronize()
@@ -94,7 +127,7 @@ class SigninVC: UIViewController {
             }),
             UIAlertAction(title: "Version 2", style: UIAlertActionStyle.Default, handler: { Void in
                 dispatch_async(dispatch_get_main_queue(), {
-                    loading(true)
+                    self.loading(true)
                 })
                 NSUserDefaults.standardUserDefaults().setBool(true, forKey: "fullVersion")
                 NSUserDefaults.standardUserDefaults().synchronize()
