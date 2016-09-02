@@ -59,16 +59,31 @@ class DataService {
     //MARK: - Login for Udactiy instructor ***** REMOVE BEFORE APP STORE UPLOAD *******
     func udacityLogin(complete:DownloadComplete) {
         
-        loginUser(udacityEmail, password: udacityPassword) { 
+        loginUser(udacityEmail, password: udacityPassword, facebook: false, userID: nil) {
             complete()
         }
     }
     
     //MARK: - Log in user after checks are done
-    func loginUser(username:String, password:String, complete:DownloadComplete) {
-        FIRAuth.auth()?.signInWithEmail(username, password: password) { (user, error) in
-            if user?.uid != nil {
-                self.downloadUserMemes((user?.uid)!, complete: { (user, meme) in
+    func loginUser(username:String, password:String?, facebook:Bool, userID:String?, complete:DownloadComplete) {
+        if !facebook && (password != nil) {
+            FIRAuth.auth()?.signInWithEmail(username, password: password!) { (user, error) in
+                if user?.uid != nil {
+                    self.downloadUserMemes((user?.uid)!, complete: { (user, meme) in
+                        self.managedObjectContext?.performBlock {
+                            _ = Users.saveUser(user.userID, username: user.username, auth: user.auth, tagLine: user.tagLine, inManagedObjectContext: self.managedObjectContext!)
+                            if meme != nil {
+                                _ = Memes.shared.saveDownloadedMeme(meme!, inManagedObjectContext: self.managedObjectContext!)
+                            }
+                        }
+                        print("YAY")
+                        complete()
+                    })
+                }
+            }
+        } else if facebook {
+            if (userID != nil) {
+                self.downloadUserMemes(userID!, complete: { (user, meme) in
                     self.managedObjectContext?.performBlock {
                         _ = Users.saveUser(user.userID, username: user.username, auth: user.auth, tagLine: user.tagLine, inManagedObjectContext: self.managedObjectContext!)
                         if meme != nil {
@@ -78,8 +93,36 @@ class DataService {
                     print("YAY")
                     complete()
                 })
+            } else {
+                AlertView.alertUser("Login Error", message: "There was an issue logging you in using Facebook.", actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { Void in
+                    dispatch_async(dispatch_get_main_queue(), {
+                        //PUT The reset command here
+                    })
+                })])
             }
+        } else {
+            AlertView.alertUser("Login Error", message: "There was an issue logging into the Meme App", actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { Void in
+                dispatch_async(dispatch_get_main_queue(), {
+                    //PUT The reset command here
+                })
+            })])
         }
+    }
+    
+    //MARK: - setup user entry in database
+    func setupUser(username:String, userID:FIRUser, complete:DownloadComplete) {
+        let user = userID.uid
+        let userDatabase = ["username":username, "auth":"default", "tagLine":"Trying out MemeMe"]
+        let mainUser = User.init(username: userID.email!, userID: user, tagLine: "Trying out MemeMe", auth: "default")
+        self.managedObjectContext?.performBlock {
+            _ = Users.saveUser(mainUser.userID, username: mainUser.username, auth: mainUser.auth, tagLine: mainUser.tagLine, inManagedObjectContext: self.managedObjectContext!)
+        }
+        ref.child("users").child(user).setValue(userDatabase, withCompletionBlock: { (err, database) in
+            if err == nil {
+                print(database.description())
+                complete()
+            }
+        })
     }
     
     //MARK: -- Download User details and Memes
@@ -122,22 +165,6 @@ class DataService {
                 })
                 dispatch_async(dispatch_get_main_queue(), {UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
                 })
-            }
-        })
-    }
-    
-    //MARK: - setup user entry in database
-    func setupUser(username:String, userID:FIRUser, complete:DownloadComplete) {
-        let user = userID.uid
-        let userDatabase = ["username":username, "auth":"default", "tagLine":"Trying out MemeMe"]
-        let mainUser = User.init(username: userID.email!, userID: user, tagLine: "Trying out MemeMe", auth: "default")
-        self.managedObjectContext?.performBlock {
-            _ = Users.saveUser(mainUser.userID, username: mainUser.username, auth: mainUser.auth, tagLine: mainUser.tagLine, inManagedObjectContext: self.managedObjectContext!)
-        }
-        ref.child("users").child(user).setValue(userDatabase, withCompletionBlock: { (err, database) in
-            if err == nil {
-                print(database.description())
-                complete()
             }
         })
     }

@@ -82,7 +82,7 @@ class SigninVC: UIViewController {
                                     })
                                 })
                             } else {
-                                DataService.ds().loginUser(username, password: password, complete: {
+                                DataService.ds().loginUser((user?.email)!, password:nil, facebook:true, userID:(user?.uid)!, complete: {
                                     print("COMPLETE")
                                     MemeMain.memeShared().presentMemeMeInNewWindow()
                                 })
@@ -203,7 +203,7 @@ class SigninContVC: UIViewController {
                                 }
                             } else {
                                 if self.checkPassword(password) {
-                                    DataService.ds().loginUser(username, password: password, complete: { 
+                                    DataService.ds().loginUser(username, password: password, facebook:false, userID:nil, complete: {
                                         print("COMPLETE")
                                         MemeMain.memeShared().presentMemeMeInNewWindow()
                                     })
