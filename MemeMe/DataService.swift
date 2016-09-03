@@ -27,6 +27,7 @@ class DataService {
     var memeCounter = 0
     var memeDictCounter = 0
     var uploading:Bool = false
+    var alertView = AlertView()
     
     // MARK: - Firebase URLS
     var ref = FIRDatabase.database().reference()
@@ -57,28 +58,34 @@ class DataService {
     }
     
     //MARK: - Login for Udactiy instructor ***** REMOVE BEFORE APP STORE UPLOAD *******
-    func udacityLogin(complete:DownloadComplete) {
+    func udacityLogin(complete:DownloadComplete, error:DownloadError) {
         
-        loginUser(udacityEmail, password: udacityPassword, facebook: false, userID: nil) {
+        loginUser(udacityEmail, password: udacityPassword, facebook: false, userID: nil, complete: { 
             complete()
-        }
+            }, error: { userError in
+                error(userError)
+        })
     }
     
     //MARK: - Log in user after checks are done
-    func loginUser(username:String, password:String?, facebook:Bool, userID:String?, complete:DownloadComplete) {
+    func loginUser(username:String, password:String?, facebook:Bool, userID:String?, complete:DownloadComplete, error:DownloadError) {
         if !facebook && (password != nil) {
-            FIRAuth.auth()?.signInWithEmail(username, password: password!) { (user, error) in
-                if user?.uid != nil {
-                    self.downloadUserMemes((user?.uid)!, complete: { (user, meme) in
-                        self.managedObjectContext?.performBlock {
-                            _ = Users.saveUser(user.userID, username: user.username, auth: user.auth, tagLine: user.tagLine, inManagedObjectContext: self.managedObjectContext!)
-                            if meme != nil {
-                                _ = Memes.shared.saveDownloadedMeme(meme!, inManagedObjectContext: self.managedObjectContext!)
+            FIRAuth.auth()?.signInWithEmail(username, password: password!) { (user, userError) in
+                if userError == nil {
+                    if user?.uid != nil {
+                        self.downloadUserMemes((user?.uid)!, complete: { (user, meme) in
+                            self.managedObjectContext?.performBlock {
+                                _ = Users.saveUser(user.userID, username: user.username, auth: user.auth, tagLine: user.tagLine, inManagedObjectContext: self.managedObjectContext!)
+                                if meme != nil {
+                                    _ = Memes.shared.saveDownloadedMeme(meme!, inManagedObjectContext: self.managedObjectContext!)
+                                }
                             }
-                        }
-                        print("YAY")
-                        complete()
-                    })
+                            print("YAY")
+                            complete()
+                        })
+                    }
+                } else {
+                    error(userError!)
                 }
             }
         } else if facebook {
@@ -94,18 +101,18 @@ class DataService {
                     complete()
                 })
             } else {
-                AlertView.alertUser("Login Error", message: "There was an issue logging you in using Facebook.", actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { Void in
+                self.alertView.alertUser("Login Error", message: "There was an issue logging you in using Facebook.", actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { Void in
                     dispatch_async(dispatch_get_main_queue(), {
                         //PUT The reset command here
                     })
-                })])
+                })], fromController: nil)
             }
         } else {
-            AlertView.alertUser("Login Error", message: "There was an issue logging into the Meme App", actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { Void in
+            self.alertView.alertUser("Login Error", message: "There was an issue logging into the Meme App", actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { Void in
                 dispatch_async(dispatch_get_main_queue(), {
                     //PUT The reset command here
                 })
-            })])
+            })], fromController: nil)
         }
     }
     

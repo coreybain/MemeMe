@@ -12,13 +12,17 @@ import UIKit
 class AlertView {
     
     
-    class func alertUser(title: String, message: String?, actions: [UIAlertAction]) {
+    func alertUser(title: String, message: String?, actions: [UIAlertAction], fromController controller: UIViewController?) {
         let ac = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         for action in actions {
             ac.addAction(action)
         }
         dispatch_async(dispatch_get_main_queue(), {
-            UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(ac, animated: true, completion: nil)
+            if controller == nil {
+                UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(ac, animated: true, completion: nil)
+            } else {
+                controller!.presentViewController(ac, animated: true, completion: nil)
+            }
         })
     }
     

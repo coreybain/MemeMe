@@ -23,6 +23,7 @@ var udacityPassword:String = "udacityMemeMe"
 
 
 typealias DownloadComplete = () -> ()
+typealias DownloadError = (NSError)->()
 
 // Color for text fields when error happens
 let TEXT_ERROR_COLOR = UIColor(red: 254.0/255.0, green: 86.0/255.0, blue: 64.0/255.0, alpha: 1.0)

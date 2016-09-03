@@ -29,6 +29,7 @@ class SettingsVC: UITableViewController {
     var managedObjectContext: NSManagedObjectContext? =
         (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext
     var user:Users?
+    let alertView = AlertView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,20 +121,20 @@ class SettingsVC: UITableViewController {
             presentViewController(logoutAlert, animated: true, completion: nil)
             
 
-            AlertView.alertUser("Logout", message: "Do you wish to log out of MemeMe?", actions: [
+            alertView.alertUser("Logout", message: "Do you wish to log out of MemeMe?", actions: [
                 UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { Void in
                     do{
                         try FIRAuth.auth()!.signOut()
                         NSUserDefaults.standardUserDefaults().removeObjectForKey("fullVersion")
                         MemeMain.memeShared().presentMemeMeInNewWindow()
                     } catch {
-                        AlertView.alertUser("Whoops", message: "Looks like there was an issue logging out, if this keeps happening reinstall the app", actions: [
+                        self.alertView.alertUser("Whoops", message: "Looks like there was an issue logging out, if this keeps happening reinstall the app", actions: [
                             UIAlertAction(title: "Ok", style: UIAlertActionStyle.Destructive, handler: nil)
-                            ])
+                            ], fromController: self)
                     }
                 }),
                 UIAlertAction(title: "No", style: UIAlertActionStyle.Destructive, handler: nil)
-            ])
+            ], fromController: self)
             
         }
     }
@@ -200,7 +201,7 @@ class SettingsVC: UITableViewController {
     func unlockApp() {
         
         if NSUserDefaults.standardUserDefaults().boolForKey("fullVersion") {
-            AlertView.alertUser("Switch Versions", message: "Did you want to switch to Version 1 of this app?", actions: [
+            alertView.alertUser("Switch Versions", message: "Did you want to switch to Version 1 of this app?", actions: [
                 UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { Void in
                     NSUserDefaults.standardUserDefaults().setBool(false, forKey: "fullVersion")
                     NSUserDefaults.standardUserDefaults().synchronize()
@@ -209,9 +210,9 @@ class SettingsVC: UITableViewController {
                 UIAlertAction(title: "No", style: UIAlertActionStyle.Destructive, handler: { Void in
                     self.unlockSwitch.setOn(true, animated: true)
                 })
-            ])
+            ], fromController: self)
         } else {
-            AlertView.alertUser("Switch Versions", message: "Did you want to switch to Version 2 of this app?", actions: [
+            alertView.alertUser("Switch Versions", message: "Did you want to switch to Version 2 of this app?", actions: [
                 UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { Void in
                     NSUserDefaults.standardUserDefaults().setBool(true, forKey: "fullVersion")
                     NSUserDefaults.standardUserDefaults().synchronize()
@@ -220,7 +221,7 @@ class SettingsVC: UITableViewController {
                 UIAlertAction(title: "No", style: UIAlertActionStyle.Destructive, handler: { Void in
                     self.unlockSwitch.setOn(false, animated: true)
                 })
-            ])
+            ], fromController: self)
         }
     }
 }

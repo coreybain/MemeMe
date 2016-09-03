@@ -22,6 +22,7 @@ class SigninVC: UIViewController {
     
     //MARK: - Variables
     let facebookLogin = FBSDKLoginManager()
+    let alertView = AlertView()
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
@@ -53,7 +54,7 @@ class SigninVC: UIViewController {
             (facebookResult, facebookError) -> Void in
             if facebookError != nil {
                 print("Facebook login failed. Error \(facebookError)")
-                AlertView.alertUser("Facebook failed", message: "Facebook login failed. Error \(facebookError.localizedDescription).", actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler:nil)])
+                self.alertView.alertUser("Facebook failed", message: "Facebook login failed. Error \(facebookError.localizedDescription).", actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler:nil)], fromController: self)
             } else if facebookResult.isCancelled {
                 print("Facebook login was cancelled.")
             } else {
@@ -68,7 +69,7 @@ class SigninVC: UIViewController {
                             self.loading(false)
                         })
                         print("Login failed. \(error)")
-                        AlertView.alertUser("Facebook failed", message: "Login with facebook failed try again in a little while.", actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler:nil)])
+                        self.alertView.alertUser("Facebook failed", message: "Login with facebook failed try again in a little while.", actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler:nil)], fromController: self)
                     } else {
                         print("Logged in! \(user?.email)")
                         
@@ -85,6 +86,8 @@ class SigninVC: UIViewController {
                                 DataService.ds().loginUser((user?.email)!, password:nil, facebook:true, userID:(user?.uid)!, complete: {
                                     print("COMPLETE")
                                     MemeMain.memeShared().presentMemeMeInNewWindow()
+                                    }, error: { userError in
+                                        print(userError)
                                 })
                             }
                         }
@@ -112,7 +115,7 @@ class SigninVC: UIViewController {
     }
     @IBAction func udacityButtonPressed(sender: AnyObject) {
         
-        AlertView.alertUser("Udacity Instructor", message: "Which version of the app are you assessing?", actions: [
+        alertView.alertUser("Udacity Instructor", message: "Which version of the app are you assessing?", actions: [
             UIAlertAction(title: "Version 1", style: UIAlertActionStyle.Default, handler: { Void in
                 dispatch_async(dispatch_get_main_queue(), {
                     self.loading(true)
@@ -123,6 +126,10 @@ class SigninVC: UIViewController {
                     dispatch_async(dispatch_get_main_queue(), {
                         MemeMain.memeShared().presentMemeMeInNewWindow()
                     })
+                    }, error: { userError in
+                        self.loading(false)
+                        print(userError)
+                        self.alertView.alertUser("Udacity Login Error", message: "Um well thats embarrising, there was an error logging in..", actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler:nil)], fromController: self)
                 })
             }),
             UIAlertAction(title: "Version 2", style: UIAlertActionStyle.Default, handler: { Void in
@@ -135,9 +142,13 @@ class SigninVC: UIViewController {
                     dispatch_async(dispatch_get_main_queue(), {
                         MemeMain.memeShared().presentMemeMeInNewWindow()
                     })
+                    }, error: { userError in
+                        self.loading(false)
+                        print(userError)
+                        self.alertView.alertUser("Udacity Login Error", message: "Um well thats embarrising, there was an error logging in..", actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler:nil)], fromController: self)
                 })
             })
-        ])
+        ], fromController: self)
     }
     
     func loading(loading:Bool) {
@@ -165,6 +176,7 @@ class SigninContVC: UIViewController {
     @IBOutlet weak var backButton: UIButton!
     
     //MARK: - Variables
+    let alertView = AlertView()
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
@@ -177,6 +189,7 @@ class SigninContVC: UIViewController {
     
     //MARK: - App functions
     func signLogin() {
+        alertView.alertUser("Signup failed", message: "Creating your user on MemeMe failed", actions: [UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil)], fromController: self)
         if let username = usernameTF.text {
             if let password = passwordTF.text {
                 if username != "" {
@@ -188,25 +201,42 @@ class SigninContVC: UIViewController {
                                     DataService.ds().signUpUser(username, password: password, complete: { (complete) in
                                         if complete {
                                             print("signup complete")
-                                            MemeMain.memeShared().presentMemeMeInNewWindow()
+                                            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "fullVersion")
+                                            NSUserDefaults.standardUserDefaults().synchronize()
+                                            dispatch_async(dispatch_get_main_queue(), {
+                                                MemeMain.memeShared().presentMemeMeInNewWindow()
+                                            })
                                         } else {
                                             print("signup failes")
                                             self.loadingUi(false)
-                                            AlertView.alertUser("Signup failed", message: "Creating your user on MemeMe failed", actions: [UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil)])
+                                            self.alertView.alertUser("Signup failed", message: "Creating your user on MemeMe failed", actions: [UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil)], fromController: self)
                                         }
                                     })
                                 } else {
                                     self.loadingUi(false)
                                     print("password did not conform to requirements")
-                                    AlertView.alertUser("Password to short", message: "Your password should be at least 6 characters", actions: [UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil)])
+                                    self.alertView.alertUser("Password to short", message: "Your password should be at least 6 characters", actions: [UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil)], fromController: self)
                                     self.errorPassView("Your password should be at least 6 characters")
                                 }
                             } else {
                                 if self.checkPassword(password) {
                                     DataService.ds().loginUser(username, password: password, facebook:false, userID:nil, complete: {
                                         print("COMPLETE")
-                                        MemeMain.memeShared().presentMemeMeInNewWindow()
+                                        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "fullVersion")
+                                        NSUserDefaults.standardUserDefaults().synchronize()
+                                        dispatch_async(dispatch_get_main_queue(), {
+                                            MemeMain.memeShared().presentMemeMeInNewWindow()
+                                        })
+                                        }, error: { userError in
+                                            print(userError)
+                                            print(userError.localizedDescription)
+                                            self.displayError(userError.code)
                                     })
+                                } else {
+                                    self.loadingUi(false)
+                                    print("password did not conform to requirements")
+                                    self.alertView.alertUser("Password to short", message: "Your password should be at least 6 characters", actions: [UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil)], fromController: self)
+                                    self.errorPassView("Your password should be at least 6 characters")
                                 }
                             }
                         }
@@ -238,6 +268,15 @@ class SigninContVC: UIViewController {
             LoadingView.stopSpinning()
         }
     }
+    func displayError(errorCode:Int) {
+        switch errorCode {
+        case 17009:
+            loadingUi(false)
+            self.alertView.alertUser("Password Error", message: "Looks like you entered the wrong username or password", actions: [UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil)], fromController: self)
+        default:
+            break
+        }
+    }
     
     func checkUsername(username:String, complete:(Bool) -> ()) {
         if isValidEmail(username) {
@@ -250,7 +289,7 @@ class SigninContVC: UIViewController {
             }
         } else {
             loadingUi(false)
-            AlertView.alertUser("Email not valid", message: "Your email address is not valid", actions: [UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil)])
+            self.alertView.alertUser("Email not valid", message: "Your email address is not valid", actions: [UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil)], fromController: self)
         }
         
     }
