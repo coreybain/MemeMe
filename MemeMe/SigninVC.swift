@@ -71,12 +71,12 @@ class SigninVC: UIViewController {
                         print("Login failed. \(error)")
                         self.alertView.alertUser("Facebook failed", message: "Login with facebook failed try again in a little while.", actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler:nil)], fromController: self)
                     } else {
-                        print("Logged in! \(user?.email)")
+                        print("Logged in! \((user?.email)!)")
                         
                         
                         self.checkUsername((user?.email)!) {(isUsed) in
                             if !isUsed {
-                                DataService.ds().addUsernameToList(user!.email!)
+                                DataService.ds().addUsernameToList((user?.email)!)
                                 DataService.ds().setupUser(user!.email!, userID: user!, complete: {
                                     NSUserDefaults.standardUserDefaults().setBool(true, forKey: "fullVersion")
                                     NSUserDefaults.standardUserDefaults().synchronize()
