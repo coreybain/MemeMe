@@ -37,14 +37,12 @@ class RecentVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: "locationOn")
         NSUserDefaults.standardUserDefaults().synchronize()
         downloadRecentMemes()
-        //Memes.shared.deleteMemes((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: managedObjectContext!)
-        //Users.deleteUsers((FIRAuth.auth()?.currentUser?.uid)!, inManagedObjectContext: managedObjectContext!)
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("firstRun")
+        NSUserDefaults.standardUserDefaults().synchronize()
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        NSUserDefaults.standardUserDefaults().removeObjectForKey("firstRun")
-        NSUserDefaults.standardUserDefaults().synchronize()
         startNotifications()
         if !NSUserDefaults.standardUserDefaults().boolForKey("fullVersion") {
             if let tabBarController = self.tabBarController {
@@ -59,7 +57,11 @@ class RecentVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                 }
             }
         }
-        downloadRecentMemes()
+        if NSUserDefaults.standardUserDefaults().boolForKey("reload") {
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "reload")
+            NSUserDefaults.standardUserDefaults().synchronize()
+            downloadRecentMemes()
+        }
     }
     
     //MARK: - App Functions
