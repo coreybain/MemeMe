@@ -186,7 +186,7 @@ class DataService {
     }
     
     //MARK: - Sign user up to MemeMe
-    func signUpUser(username:String, password:String, complete:Bool -> ()) {
+    func signUpUser(username:String, password:String, complete:Bool -> (), userError:DownloadError) {
         FIRAuth.auth()?.createUserWithEmail(username, password: password) { (user, error) in
             if (user != nil) {
                 self.addUsernameToList(username)
@@ -194,7 +194,11 @@ class DataService {
                     complete(true)
                 })
             } else {
-                complete(false)
+                if error != nil {
+                    userError(error!)
+                } else {
+                    complete(false)
+                }
             }
         }
     }

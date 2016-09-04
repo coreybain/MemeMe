@@ -78,6 +78,8 @@ class SigninVC: UIViewController {
                             if !isUsed {
                                 DataService.ds().addUsernameToList(user!.email!)
                                 DataService.ds().setupUser(user!.email!, userID: user!, complete: {
+                                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: "fullVersion")
+                                    NSUserDefaults.standardUserDefaults().synchronize()
                                     dispatch_async(dispatch_get_main_queue(), {
                                         MemeMain.memeShared().presentMemeMeInNewWindow()
                                     })
@@ -85,6 +87,8 @@ class SigninVC: UIViewController {
                             } else {
                                 DataService.ds().loginUser((user?.email)!, password:nil, facebook:true, userID:(user?.uid)!, complete: {
                                     print("COMPLETE")
+                                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: "fullVersion")
+                                    NSUserDefaults.standardUserDefaults().synchronize()
                                     MemeMain.memeShared().presentMemeMeInNewWindow()
                                     }, error: { userError in
                                         print(userError)
@@ -189,7 +193,6 @@ class SigninContVC: UIViewController {
     
     //MARK: - App functions
     func signLogin() {
-        alertView.alertUser("Signup failed", message: "Creating your user on MemeMe failed", actions: [UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil)], fromController: self)
         if let username = usernameTF.text {
             if let password = passwordTF.text {
                 if username != "" {
@@ -206,11 +209,10 @@ class SigninContVC: UIViewController {
                                             dispatch_async(dispatch_get_main_queue(), {
                                                 MemeMain.memeShared().presentMemeMeInNewWindow()
                                             })
-                                        } else {
-                                            print("signup failes")
-                                            self.loadingUi(false)
-                                            self.alertView.alertUser("Signup failed", message: "Creating your user on MemeMe failed", actions: [UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil)], fromController: self)
                                         }
+                                    }, userError: { error in
+                                        self.loadingUi(false)
+                                        self.alertView.alertUser("Signup failed", message: error.localizedDescription, actions: [UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil)], fromController: self)
                                     })
                                 } else {
                                     self.loadingUi(false)

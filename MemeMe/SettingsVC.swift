@@ -91,7 +91,7 @@ class SettingsVC: UITableViewController {
         }
         
         if (indexPath.section == 1 && indexPath.row == 2) {
-            LoadingView.startSpinning(self.view)
+            alertView.alertUser("EASTER EGGS", message: "Time to go on the hunt", actions: [UIAlertAction(title:"Ok", style: .Cancel, handler: nil)], fromController: self)
         }
         
         if (indexPath.section == 2 && indexPath.row == 0) {
