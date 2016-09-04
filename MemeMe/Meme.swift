@@ -11,7 +11,7 @@ import UIKit
 import Firebase
 import CoreLocation
 
-class Meme {
+struct Meme {
     
     //MARK: - Variables
     
@@ -32,7 +32,7 @@ class Meme {
     var topLabel:String {
         get {
             if _topLabel == nil {
-                _topLabel = ""
+                return ""
             }
             return _topLabel!
         }
@@ -41,7 +41,7 @@ class Meme {
     var bottomLabel:String {
         get {
             if _bottomLabel == nil {
-                _bottomLabel = ""
+                return ""
             }
             return _bottomLabel!
         }
@@ -50,7 +50,7 @@ class Meme {
     var savedMeme:String {
         get {
             if _savedMeme == nil {
-                _savedMeme = ""
+                return ""
             }
             return _savedMeme!
         }
@@ -59,7 +59,7 @@ class Meme {
     var memeID:String {
         get {
             if _memeID == nil {
-                _memeID = ""
+                return ""
             }
             return _memeID!
         }
@@ -68,7 +68,7 @@ class Meme {
     var savedImageString:String {
         get {
             if _savedImageString == nil {
-                _savedImageString = ""
+                return ""
             }
             return _savedImageString!
         }
@@ -77,7 +77,7 @@ class Meme {
     var memedImageString:String {
         get {
             if _memedImageString == nil {
-                _memedImageString = ""
+                return ""
             }
             return _memedImageString!
         }

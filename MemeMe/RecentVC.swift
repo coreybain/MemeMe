@@ -289,7 +289,11 @@ extension RecentVC {
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CollectionCell", forIndexPath: indexPath) as! RecentCollectionViewCell
         let meme = memeDict[indexPath.row]
-        cell.recentCollectionImage.image = meme.memedImage
+        if meme.savedMeme != "" {
+            cell.recentCollectionImage.image = meme.memedImage
+        } else {
+            cell.recentCollectionImage.image = UIImage(data: meme.memedImageData)!
+        }
         return cell
     }
     

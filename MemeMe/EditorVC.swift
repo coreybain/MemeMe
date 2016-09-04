@@ -223,6 +223,22 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
         }
     }
     
+    //Camera/Photo picker func
+    func cameraPhotoPicker(isCamera:Bool) {
+        imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        if !isCamera {
+             // Check if gallery is available to app
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum) {
+                imagePickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+                imagePickerController.allowsEditing = false
+            }
+        } else {
+            imagePickerController.sourceType = UIImagePickerControllerSourceType.Camera
+        }
+        presentViewController(imagePickerController, animated: true, completion: nil)
+    }
+    
     //MARK: - Actions
     
     @IBAction func cancelButtonPressed(sender: AnyObject) {
@@ -240,24 +256,11 @@ UINavigationControllerDelegate, UITextFieldDelegate, SwiftColorPickerDelegate, U
     }
     
     @IBAction func galleryButtonPressed(sender: AnyObject) {
-        // Check if gallery is available to app
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum) {
-            // Setup the image picker controller and display editor
-            imagePickerController = UIImagePickerController()
-            imagePickerController.delegate = self
-            imagePickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-            imagePickerController.allowsEditing = false
-            
-            presentViewController(imagePickerController, animated: true, completion: nil)
-        }
+        cameraPhotoPicker(false)
     }
     
     @IBAction func cameraButtonPressed(sender: AnyObject) {
-        // Create cameraVC based on check done in viewdidload
-        imagePickerController = UIImagePickerController()
-        imagePickerController.delegate = self
-        imagePickerController.sourceType = UIImagePickerControllerSourceType.Camera
-        presentViewController(imagePickerController, animated: true, completion: nil)
+        cameraPhotoPicker(true)
     }
     
     @IBAction func saveButtonPressed(sender: AnyObject) {
